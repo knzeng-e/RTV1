@@ -27,7 +27,7 @@
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
 # define MALLOC_PARAMS_ERROR -1
-# include <mlx.h>
+# include "../mlx/mlx.h"
 # include <libft.h>
 # include <stdlib.h>
 # include <stdio.h>

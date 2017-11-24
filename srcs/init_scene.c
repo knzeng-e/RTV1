@@ -49,10 +49,10 @@ void	init_mlx(t_params *params)
 	params->img_data = (int *)mlx_get_data_addr(params->ptr_img, &(params->bpp),  &(params->size_line), &(params->endian));
 }
 
-double	get_first_pixel(t_params *params)
+t_vect	get_first_pixel(t_params *params)
 {
-	t_vect	screen_center;
-	t_vect	camera;
+	t_vect		screen_center;
+	t_camera	camera;
 
 	/* Screen_center = cam_pos + (vect_dir * veiw_dist)*/
 	camera = params->eye;
@@ -61,6 +61,7 @@ double	get_first_pixel(t_params *params)
 	screen_center.vect_z = camera.cam_pos.vect_z + (camera.vect_dir.vect_z * camera.view_dist);
 
 	// viewPlaneUpLeft = camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))
+	return ;
 }
 
 void	init_scene(t_params *params)
@@ -74,7 +75,7 @@ void	init_scene(t_params *params)
 	params->eye.vect_dir.vect_x = 0;
 	params->eye.vect_dir.vect_y = 0;
 	params->eye.vect_dir.vect_z = 1;
-	params->eye.vew_left_up = get_first_pixel(params);
+	params->eye.view_left_up = get_first_pixel(params);
 	params->rays_to_free = 0;
 	params->x_indent = params->eye.view_width / params->x_resolution;
 	params->y_indent = params->eye.view_height / params->y_resolution;
