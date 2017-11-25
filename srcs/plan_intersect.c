@@ -30,7 +30,11 @@ int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 
 	denom = dot_product(ray->direction, plane->normale);
 	if (fabs(denom) < pow(1,-6))
+	{
+		ft_putnbr(denom);
 		return (0);
+	}
+	ft_putstr("\nYOUPI");
 	delta.vect_x = plane->position.vect_x - ray->origin.vect_x;
 	delta.vect_y = plane->position.vect_y - ray->origin.vect_y;
 	delta.vect_z = plane->position.vect_z - ray->origin.vect_z;

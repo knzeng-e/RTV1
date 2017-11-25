@@ -60,8 +60,35 @@ t_vect	get_first_pixel(t_params *params)
 	screen_center.vect_y = camera.cam_pos.vect_y + (camera.vect_dir.vect_y * camera.view_dist);
 	screen_center.vect_z = camera.cam_pos.vect_z + (camera.vect_dir.vect_z * camera.view_dist);
 
+	/* camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) */
+	
+	screen_center.vect_x += params->eye.up_vect.vect_x * (params->eye.view_height / 2.0);
+	screen_center.vect_y += params->eye.up_vect.vect_y * (params->eye.view_height / 2.0);
+	screen_center.vect_z += params->eye.up_vect.vect_z * (params->eye.view_height / 2.0);
+	
+	/* camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))*/
+	
+	screen_center.vect_x -= params->eye.right_vect.vect_x * params->eye.view_width / 2.0;
+	screen_center.vect_x -= params->eye.right_vect.vect_y * params->eye.view_width / 2.0;
+	screen_center.vect_x -= params->eye.right_vect.vect_z * params->eye.view_width / 2.0;
+
 	// viewPlaneUpLeft = camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))
-	return ;
+	return (screen_center);
+}
+
+void	create_plane(t_params *params)
+{
+	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
+		exit(ft_free(params));
+	/*Init position*/
+	params->plane->position.vect_x = 0;
+	params->plane->position.vect_y = 0;
+	params->plane->position.vect_z = 0;
+
+	/*Init Normale*/
+	params->plane->normale.vect_x = 0;
+	params->plane->normale.vect_y = 0;
+	params->plane->normale.vect_z = 1;
 }
 
 void	init_scene(t_params *params)
@@ -89,5 +116,6 @@ void	init_scene(t_params *params)
 	init_mlx(params);
 	//set_view(params);
 	create_sphere(params, 70, WIDTH / 2, HEIGHT / 2);
+	create_plane(params);
 	//create_sphere(params, 40, WIDTH / 4, HEIGHT / 2);
 }

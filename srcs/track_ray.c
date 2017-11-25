@@ -34,14 +34,16 @@ int	track_ray(t_params *params)
 				return (ft_free(params));
 			params->rays_to_free++;
 			set_origin(i, j, ray, params);
+			/*if (plane_intersect(ray, (params->plane), params))
+				draw_pixel(params, i, j, 0x00FFFFFF);*/
 			if (sphere_intersect(ray, params->sphere2, params))
 				draw_pixel(params, i, j, 0x000000FF);
-			if (sphere_intersect(ray, params->sphere3, params))
+			else if (sphere_intersect(ray, params->sphere3, params))
 				draw_pixel(params, i, j, 0x0000FF00);
-			if (sphere_intersect(ray, params->sphere, params))
+			else if (sphere_intersect(ray, params->sphere, params))
 				draw_pixel(params, i, j, 0x00FFFF00);
-			if (plane_intersect(ray, &(params->plane), params))
-				draw_pixel(params, i, j, 0x00FFFFFF);
+			else
+				draw_pixel(params, i, j, 0x00FF0000);
 			j++;
 		}
 		i++;

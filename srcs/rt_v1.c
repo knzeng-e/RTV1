@@ -51,7 +51,7 @@ int		main(void)
 	t_params	*params;
 
 	params = init_params();
-	printf("\nX_resolution => %d\nY_resolution => %d\n", params->x_resolution, params->y_resolution);
+	printf("\nX_resolution => %f\nY_resolution => %f\n", params->x_resolution, params->y_resolution);
 	init_scene(params);
 	track_ray(params);
 	mlx_draw(params);
