@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 09:57:49 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/08 08:39:01 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/11/25 04:07:44 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	set_origin(int i, int j, t_ray *ray, t_params *params)
 	ray->direction.vect_z = 1;
 	ray->t = 20000;
 	params->tab_rays[j][i] = ray;
+	/*viewPlaneUpLeft + rightVec*xIndent*x - upVec*yIndent*y*/
 }

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/23 02:46:22 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/11/25 03:05:31 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 int		expose_hook(t_params *infos)
 {
-	ft_putstr("\nDylan a fait caca");
 	ft_bzero(infos->img_data, HEIGHT * infos->size_line);
 	mlx_clear_window(infos->mlx, infos->win);
 	track_ray(infos);

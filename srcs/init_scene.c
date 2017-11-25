@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/23 10:02:02 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/11/25 03:17:28 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	create_sphere(t_params *params, double radius, double x, double y)
 	params->sphere2.is_selected = 0;
 	params->sphere2.rayon = radius - 30;
 	params->sphere2.center.vect_x = x;
-	params->sphere2.center.vect_y = y - 250;
+	params->sphere2.center.vect_y = y - 25;
 	params->sphere2.center.vect_z = 50;
 	params->sphere2.color.red = 255;
 	params->sphere2.color.green = 0;
 	params->sphere2.color.blue = 0;
 
 	params->sphere3.is_selected = 0;
-	params->sphere3.rayon = radius + 30;
-	params->sphere3.center.vect_x = x + 250;
-	params->sphere3.center.vect_y = y;
-	params->sphere3.center.vect_z = 10;
+	params->sphere3.rayon = radius + 21;
+	params->sphere3.center.vect_x = x;
+	params->sphere3.center.vect_y = y + 47;
+	params->sphere3.center.vect_z = -10;
 	params->sphere3.color.red = 255;
 	params->sphere3.color.green = 0;
 	params->sphere3.color.blue = 0;
@@ -61,13 +61,13 @@ t_vect	get_first_pixel(t_params *params)
 	screen_center.vect_z = camera.cam_pos.vect_z + (camera.vect_dir.vect_z * camera.view_dist);
 
 	/* camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) */
-	
+
 	screen_center.vect_x += params->eye.up_vect.vect_x * (params->eye.view_height / 2.0);
 	screen_center.vect_y += params->eye.up_vect.vect_y * (params->eye.view_height / 2.0);
 	screen_center.vect_z += params->eye.up_vect.vect_z * (params->eye.view_height / 2.0);
-	
+
 	/* camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))*/
-	
+
 	screen_center.vect_x -= params->eye.right_vect.vect_x * params->eye.view_width / 2.0;
 	screen_center.vect_x -= params->eye.right_vect.vect_y * params->eye.view_width / 2.0;
 	screen_center.vect_x -= params->eye.right_vect.vect_z * params->eye.view_width / 2.0;
@@ -81,14 +81,14 @@ void	create_plane(t_params *params)
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
 	/*Init position*/
-	params->plane->position.vect_x = 0;
-	params->plane->position.vect_y = 0;
+	params->plane->position.vect_x = 10;
+	params->plane->position.vect_y = 21;
 	params->plane->position.vect_z = 0;
 
 	/*Init Normale*/
 	params->plane->normale.vect_x = 0;
-	params->plane->normale.vect_y = 0;
-	params->plane->normale.vect_z = 1;
+	params->plane->normale.vect_y = -1;
+	params->plane->normale.vect_z = 0;
 }
 
 void	init_scene(t_params *params)

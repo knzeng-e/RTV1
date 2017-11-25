@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 00:10:43 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/18 01:59:11 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/11/25 04:05:47 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct	s_ray
 	t_vect		direction;
 	double		t;
 	void		(*normalize)(t_vect *);
-	void		(*ray_equation)(struct s_ray);
+	/*void		(*ray_equation)(struct s_ray);*/
 	/*ray = O + DIR * t*/;
 	/*equation of line: (y - y_1)(x_2 - x_1) = (x - x_1)(y_2 -y_1) */
 }				t_ray;

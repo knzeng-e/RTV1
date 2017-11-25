@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 22:08:16 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/22 10:45:11 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/11/25 02:58:53 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 	denom = dot_product(ray->direction, plane->normale);
 	if (fabs(denom) < pow(1,-6))
 	{
-		ft_putnbr(denom);
+//		ft_putnbr(denom);
 		return (0);
 	}
-	ft_putstr("\nYOUPI");
+	ft_putstr("\nINTERSECT");
 	delta.vect_x = plane->position.vect_x - ray->origin.vect_x;
 	delta.vect_y = plane->position.vect_y - ray->origin.vect_y;
 	delta.vect_z = plane->position.vect_z - ray->origin.vect_z;

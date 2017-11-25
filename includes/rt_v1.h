@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/23 02:45:19 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/11/25 04:04:02 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RT_V1_H
 # define WIDTH 800
 # define HEIGHT 640
+# define NB_LIGHTS 2
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -86,7 +87,7 @@ typedef struct	s_params
 	t_sphere	sphere2;
 	t_sphere	sphere3;
 	t_ray		*tab_rays[WIDTH][HEIGHT];
-	t_vect		light;
+	t_vect		light[NB_LIGHTS];
 	t_plane		*plane;
 	double		x_indent;
 	double		y_indent;
