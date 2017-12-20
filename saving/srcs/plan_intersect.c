@@ -29,7 +29,7 @@ int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 	t_vect	delta;
 
 	denom = dot_product(ray->direction, plane->normale);
-	if (fabs(denom) < pow(1,-6))
+	if (fabs(denom) < 1e-6)
 	{
 //		ft_putnbr(denom);
 		return (0);

@@ -138,4 +138,6 @@ int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
 double			dot_product(t_vect vect1, t_vect vect2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
+t_vect			vect_sub(t_vect vect1, t_vect vect2);
+t_vect			vect_add(t_vect vect1, t_vect vect2);
 #endif

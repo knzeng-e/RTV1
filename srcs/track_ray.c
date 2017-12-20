@@ -20,6 +20,8 @@ void	draw_pixel(t_params *params, int i, int j, int color)
 int	track_ray(t_params *params)
 {
 	t_ray	*ray;
+	t_vect	light_vector;
+	double	angle;
 	int		i;
 	int		j;
 
@@ -34,18 +36,39 @@ int	track_ray(t_params *params)
 				return (ft_free(params));
 			params->rays_to_free++;
 			set_origin(i, j, ray, params);
-			if (!plane_intersect(ray, (params->plane), params))
+			ray->ray_normalize(&ray->direction);
+			//ray_normalize(&ray->direction);
+			if (plane_intersect(ray, (params->plane), params))
 				draw_pixel(params, i, j, 0x004E1609);
 			if (sphere_intersect(ray, params->sphere2, params))
-				draw_pixel(params, i, j, 0x000000FF);
+			{
+			light_vector = substraction(ray->intersection, params->light[0].position);
+			ray_normalize(&light_vector);
+			angle = dot_product(params->current_normal, light_vector);
+			if (angle > 0)
+				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
+				else
+				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT);
+				}
 			else if (sphere_intersect(ray, params->sphere3, params))
-				draw_pixel(params, i, j, 0x0000FF00);
+			{
+			light_vector = substraction(ray->intersection, params->light[0].position);
+			ray_normalize(&light_vector);
+			angle = dot_product(params->current_normal, light_vector);
+			if (angle > 0)
+				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
+				else
+				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT);
+				}
+			/*	draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
 			else if (sphere_intersect(ray, params->sphere, params))
-				draw_pixel(params, i, j, 0x00FFFF00);
+				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);*/
 			/*else
 				draw_pixel(params, i, j, 0x00CECECE);*/
 			j++;
+		//	printf("\nRay Direction1:\n\tx = %f\ty = %f\tz = %f", ray->direction.vect_x, ray->direction.vect_y, ray->direction.vect_z);
 		}
+			//printf("\nRay Direction 2:\n\tx = %f\ty = %f\tz = %f", ray->direction.vect_x, ray->direction.vect_y, ray->direction.vect_z);
 		i++;
 	}
 	return (0);

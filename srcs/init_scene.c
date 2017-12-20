@@ -16,30 +16,18 @@ void	create_sphere(t_params *params, double radius, double x, double y)
 {
 	params->sphere.is_selected = 0;
 	params->sphere.rayon = radius;
-	params->sphere.center.vect_x = x;
-	params->sphere.center.vect_y = y;
-	params->sphere.center.vect_z = 50;
-	params->sphere.color.red = 255;
-	params->sphere.color.green = 0;
-	params->sphere.color.blue = 0;
+	set_vector(&params->sphere.center, x, y, 50);
+	set_color(&params->sphere.color, 255, 0, 0);
 
 	params->sphere2.is_selected = 0;
 	params->sphere2.rayon = radius - 30;
-	params->sphere2.center.vect_x = x;
-	params->sphere2.center.vect_y = y - 25;
-	params->sphere2.center.vect_z = 50;
-	params->sphere2.color.red = 255;
-	params->sphere2.color.green = 0;
-	params->sphere2.color.blue = 0;
+	set_vector(&params->sphere2.center, x, y - 25, 50);
+	set_color(&params->sphere2.color, 255, 0, 0);
 
 	params->sphere3.is_selected = 0;
 	params->sphere3.rayon = radius + 21;
-	params->sphere3.center.vect_x = x;
-	params->sphere3.center.vect_y = y + 47;
-	params->sphere3.center.vect_z = -10;
-	params->sphere3.color.red = 255;
-	params->sphere3.color.green = 0;
-	params->sphere3.color.blue = 0;
+	set_vector(&params->sphere3.center, x, y + 47, 50);
+	set_color(&params->sphere3.color, 255, 0, 0);
 }
 
 void	init_mlx(t_params *params)
@@ -81,41 +69,39 @@ void	create_plane(t_params *params)
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
 	/*Init position*/
-	params->plane->position.vect_x = 10;
-	params->plane->position.vect_y = 21;
+	params->plane->position.vect_x = 0;
+	params->plane->position.vect_y = -4;
 	params->plane->position.vect_z = 0;
 
 	/*Init Normale*/
 	params->plane->normale.vect_x = 0;
-	params->plane->normale.vect_y = -1;
+	params->plane->normale.vect_y = 1;
 	params->plane->normale.vect_z = 0;
+}
+
+void	put_light(t_params *params, int y_pos, int x_pos)
+{
+	t_light	*light;
+
+	if ((light = (t_light *)malloc(sizeof(t_light))) == NULL)
+		exit(0);
+	light->position.vect_x = x_pos;
+	light->position.vect_y = y_pos;
+	light->position.vect_z = 50;
+	params->light[0] = *light;
 }
 
 void	init_scene(t_params *params)
 {
-	params->eye.cam_pos.vect_x = 0;
-	params->eye.cam_pos.vect_y = 0;
-	params->eye.cam_pos.vect_z = -1;
-	params->eye.view_width = 0.5;
-	params->eye.view_height = 0.35;
-	params->eye.view_dist = 1.0;
-	params->eye.vect_dir.vect_x = 0;
-	params->eye.vect_dir.vect_y = 0;
-	params->eye.vect_dir.vect_z = 1;
 	params->eye.view_left_up = get_first_pixel(params);
 	params->rays_to_free = 0;
 	params->x_indent = params->eye.view_width / params->x_resolution;
 	params->y_indent = params->eye.view_height / params->y_resolution;
-	params->eye.up_vect.vect_x = 0;
-	params->eye.up_vect.vect_y = 1;
-	params->eye.up_vect.vect_z = 0;
-
-	params->eye.right_vect.vect_x = 1;
-	params->eye.right_vect.vect_y = 0;
-	params->eye.right_vect.vect_z = 0;
+	set_camera(&params->eye);
 	init_mlx(params);
 	//set_view(params);
 	create_sphere(params, 70, WIDTH / 2, HEIGHT / 2);
 	create_plane(params);
-	//create_sphere(params, 40, WIDTH / 4, HEIGHT / 2);
+	put_light(params, HEIGHT / 100, WIDTH / 2);
+	init_transform_matrices(params->transforms);
 }

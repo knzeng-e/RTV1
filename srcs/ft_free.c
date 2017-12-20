@@ -35,6 +35,7 @@ int	ft_free(t_params *params)
 		}
 		i++;
 	}
+	free(params->transforms);
 	free(params);
 	return (1);
 }

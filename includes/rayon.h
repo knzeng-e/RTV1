@@ -25,10 +25,8 @@ typedef struct	s_ray
 {
 	t_vect		origin;
 	t_vect		direction;
+	t_vect		intersection;
 	double		t;
-	void		(*normalize)(t_vect *);
-	/*void		(*ray_equation)(struct s_ray);*/
-	/*ray = O + DIR * t*/;
-	/*equation of line: (y - y_1)(x_2 - x_1) = (x - x_1)(y_2 -y_1) */
+	void		(*ray_normalize)(t_vect *);
 }				t_ray;
 #endif

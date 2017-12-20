@@ -22,6 +22,25 @@ double	plane_normal(t_vect origin, t_vect direction)
 	return (normal);
 }
 
+/*int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
+{
+	//double	k;
+	double	dot_prod;
+
+	dot_prod = dot_product(ray->direction, plane->normale);
+	if (!dot_prod)
+		return (0);
+	params->t = dot_product(substraction(plane->position, ray->origin), plane->normale) / dot_prod;
+	if (params->t >= MAX_DISTANCE || params->t <= 0)
+		return (0);
+	return (1);
+	if (ray->direction.vect_z == 0)
+		return (0);
+	k = - (ray->origin.vect_y / ray->direction.vect_z);
+	params->t = k * dot_product(ray->direction, plane->normale);
+	return (1);
+}*/
+
 int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 {
 	double	denom;
@@ -29,11 +48,8 @@ int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 	t_vect	delta;
 
 	denom = dot_product(ray->direction, plane->normale);
-	if (fabs(denom) < pow(1,-6))
-	{
-//		ft_putnbr(denom);
+	if (fabs(denom) < 1e-6)
 		return (0);
-	}
 	ft_putstr("\nINTERSECT");
 	delta.vect_x = plane->position.vect_x - ray->origin.vect_x;
 	delta.vect_y = plane->position.vect_y - ray->origin.vect_y;
@@ -71,9 +87,7 @@ int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 			p[3] = 1.0;
 
 			d = distance (p, pos2);
-
 			trans->doTransformation(i,p);
-
 			return d;
 		}
 		else

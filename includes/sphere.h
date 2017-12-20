@@ -25,6 +25,7 @@ typedef struct	s_sphere
 {
 	double		rayon;
 	t_vect		center;
+	t_vect		simple_center;
 	/*t_vect		location;*/
 	t_color		color;
 	int			is_selected;

@@ -51,8 +51,11 @@ int		main(void)
 	t_params	*params;
 
 	params = init_params();
-	printf("\nX_resolution => %f\nY_resolution => %f\n", params->x_resolution, params->y_resolution);
 	init_scene(params);
+	printf("\nplane_position : x = %f, y = %f, z = %f", params->plane->position.vect_x, params->plane->position.vect_y, params->plane->position.vect_z);
+	printf("\nSphere1_position: x = %f, y = %f, z = %f", params->sphere.center.vect_x, params->sphere.center.vect_y, params->sphere.center.vect_z);
+	printf("\n");
+	printf("\n");
 	track_ray(params);
 	mlx_draw(params);
 	quit(params);

@@ -15,6 +15,7 @@
 # define WIDTH 800
 # define HEIGHT 640
 # define NB_LIGHTS 2
+# define AMBIANT_LIGHT 1//0.2
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -28,6 +29,7 @@
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
 # define MALLOC_PARAMS_ERROR -1
+# define MALLOC_TRANSFORM_ERROR -2
 # include "../mlx/mlx.h"
 # include <libft.h>
 # include <stdlib.h>
@@ -66,19 +68,45 @@ typedef struct	s_camera
 	double		view_dist;
 	t_vect		view_left_up;
 	t_vect		cam_pos;
+	t_vect		cam_pos_simple;
 	t_vect		vect_dir;
 	t_vect		up_vect;
 	t_vect		right_vect;
 //	t_vect		viewpoint;
 }				t_camera;
 
+typedef struct	s_attenu
+{
+	double		c1;
+	double		c2;
+	double		c3;
+}				t_attenu;
+
+typedef struct	s_light
+{
+	t_vect		position;
+	t_vect		position_simple;
+	t_color		light_color;
+	t_attenu	attenuation;
+}				t_light;
+
 typedef struct	s_plane
 {
 	t_vect		position;
+	t_vect		position_simple;
 	t_vect		normale;
 	t_vect		distance;
 	t_color		color;
 }				t_plane;
+
+typedef struct	s_transform
+{
+	double		angle_rotation;
+	double		x_rotation[3][3];
+	double		y_rotation[3][3];
+	double		z_rotation[3][3];
+	double		translation[3][3];
+}				t_transform;
 
 typedef struct	s_params
 {
@@ -87,8 +115,10 @@ typedef struct	s_params
 	t_sphere	sphere2;
 	t_sphere	sphere3;
 	t_ray		*tab_rays[WIDTH][HEIGHT];
-	t_vect		light[NB_LIGHTS];
+	t_light		light[NB_LIGHTS];
 	t_plane		*plane;
+	t_vect		current_normal;
+	t_transform	*transforms;
 	double		x_indent;
 	double		y_indent;
 	double		x_resolution;
@@ -105,12 +135,6 @@ typedef struct	s_params
 	int			ray_depth;
 	int			t;
 }				t_params;
-
-typedef struct	s_light
-{
-	t_point		position;
-	double		bright;
-}				t_light;
 
 typedef struct	s_object
 {
@@ -132,10 +156,23 @@ int				ft_free(t_params *params);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_scene(t_params *params);
 void			set_view(t_params *params);
+void			set_camera(t_camera *eye);
+void			set_vector(t_vect *vect, double x, double y, double z);
+void			set_color(t_color *color, double red, double green, double blue);
 void			ray_equation(t_ray *ray);
+void			ray_normalize(t_vect *vect);
+void			init_transform_matrices(t_transform *transforms);
+void			set_x_rotation(t_transform *transforms, double angle);
+void			set_y_rotation(t_transform *transforms, double angle);
+void			set_z_rotation(t_transform *transforms, double angle);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
+double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
+t_vect			substraction(t_vect vect1, t_vect vect2);
+t_vect			addition(t_vect vect1, t_vect vect2);
+t_vect			multiply_vect(t_vect vect, double cste);
+t_vect			divide_vect(t_vect vect, double cste);
 #endif
