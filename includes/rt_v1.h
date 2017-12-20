@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 07:41:01 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/12/20 20:11:36 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ int				key_hook(int keycode, t_params *params);
 int				track_ray(t_params *params);
 int				throw_ray(t_ray *ray);
 int				ft_free(t_params *params);
+
+int				get_color(t_color color);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_scene(t_params *params);
 void			set_view(t_params *params);

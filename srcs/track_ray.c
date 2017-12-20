@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 03:44:33 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/12/20 20:35:19 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ int	track_ray(t_params *params)
 	t_ray	*ray;
 	t_vect	light_vector;
 	double	angle;
+	double	length;
 	int		i;
 	int		j;
 
+	length = 0;
 	i = 0;
 	while (i < WIDTH)
 	{
@@ -42,23 +44,26 @@ int	track_ray(t_params *params)
 				draw_pixel(params, i, j, 0x004E1609);
 			if (sphere_intersect(ray, params->sphere2, params))
 			{
-			light_vector = substraction(ray->intersection, params->light[0].position);
+				set_color(&params->sphere2.color, 0, 0, 0xFF); 
+		light_vector = substraction(ray->intersection, params->light[0].position);
+			//light_vector = substraction(params->light[0].position, ray->intersection);
 			ray_normalize(&light_vector);
-			angle = dot_product(params->current_normal, light_vector);
-			if (angle > 0)
-				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
+			ray_normalize(&params->current_normal);
+			angle = dot_product(multiply_vect(params->current_normal, -1), light_vector);
+			if (angle != 0)
+				draw_pixel(params, i, j, get_color(params->sphere2.color) * AMBIANT_LIGHT * (angle + length));
 				else
 				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT);
 				}
-			else if (sphere_intersect(ray, params->sphere3, params))
+		/*	else*/ if (sphere_intersect(ray, params->sphere3, params))
 			{
 			light_vector = substraction(ray->intersection, params->light[0].position);
 			ray_normalize(&light_vector);
-			angle = dot_product(params->current_normal, light_vector);
+			angle = dot_product(multiply_vect(params->current_normal, -1), light_vector);
 			if (angle > 0)
 				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
 				else
-				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT);
+				draw_pixel(params, i, j, 0x000000FF * 0.2);
 				}
 			/*	draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
 			else if (sphere_intersect(ray, params->sphere, params))

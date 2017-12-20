@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 03:05:31 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/12/20 20:41:09 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int		key_hook(int keycode, t_params *params)
 	if (keycode == LEFT_KEY)
 	{
 		if (params->sphere.is_selected)
+		{
 			params->sphere.center.vect_x -= 10;
+		params->light[0].position.vect_x -= 10;
+		}
 		if (params->sphere2.is_selected)
 			params->sphere2.center.vect_x -= 10;
 		if (params->sphere3.is_selected)
@@ -60,7 +63,10 @@ int		key_hook(int keycode, t_params *params)
 	if (keycode == RIGHT_KEY)
 	{
 		if (params->sphere.is_selected)
+		{
+			params->light[0].position.vect_x += 10;
 			params->sphere.center.vect_x += 10;
+		}
 		if (params->sphere2.is_selected)
 			params->sphere2.center.vect_x += 10;
 		if (params->sphere3.is_selected)
@@ -70,7 +76,10 @@ int		key_hook(int keycode, t_params *params)
 	if (keycode == UP_KEY)
 	{
 		if (params->sphere.is_selected)
+		{
 			params->sphere.center.vect_y -= 10;
+		params->light[0].position.vect_y -= 10;
+		}
 		if (params->sphere2.is_selected)
 			params->sphere2.center.vect_y -= 10;
 		if (params->sphere3.is_selected)
@@ -80,7 +89,10 @@ int		key_hook(int keycode, t_params *params)
 	if (keycode == DOWN_KEY)
 	{
 		if (params->sphere.is_selected)
+		{
 			params->sphere.center.vect_y += 10;
+		params->light[0].position.vect_y += 10;
+		}
 		if (params->sphere2.is_selected)
 			params->sphere2.center.vect_y += 10;
 		if (params->sphere3.is_selected)

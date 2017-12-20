@@ -32,3 +32,8 @@ void	set_color(t_color *color, double red, double green, double blue)
 	color->green = green;
 	color->blue = blue;
 }
+
+int		get_color(t_color color)
+{
+	return (((color.red & 0xFF) << 16) + ((color.green & 0xFF) << 8) + (color.blue & 0xFF)); 
+}
