@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/12/20 20:35:19 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/12/21 18:58:45 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ int	track_ray(t_params *params)
 			{
 				set_color(&params->sphere2.color, 0, 0, 0xFF); 
 		light_vector = substraction(ray->intersection, params->light[0].position);
-			//light_vector = substraction(params->light[0].position, ray->intersection);
+		length = get_length(&light_vector);
 			ray_normalize(&light_vector);
 			ray_normalize(&params->current_normal);
 			angle = dot_product(multiply_vect(params->current_normal, -1), light_vector);
-			if (angle != 0)
-				draw_pixel(params, i, j, get_color(params->sphere2.color) * AMBIANT_LIGHT * (angle + length));
+			if (angle > 0)
+				draw_pixel(params, i, j, get_color(params->sphere2.color) * angle);
 				else
 				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT);
 				}
@@ -61,9 +61,9 @@ int	track_ray(t_params *params)
 			ray_normalize(&light_vector);
 			angle = dot_product(multiply_vect(params->current_normal, -1), light_vector);
 			if (angle > 0)
-				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
+				draw_pixel(params, i, j, 0x000000FF  * angle);
 				else
-				draw_pixel(params, i, j, 0x000000FF * 0.2);
+				draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT);
 				}
 			/*	draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
 			else if (sphere_intersect(ray, params->sphere, params))

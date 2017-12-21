@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/12/20 20:11:36 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/12/21 18:59:45 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # define WIDTH 800
 # define HEIGHT 640
 # define NB_LIGHTS 2
-# define AMBIANT_LIGHT 1//0.2
+# define AMBIANT_LIGHT 0.08
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
