@@ -20,6 +20,7 @@
 # define RIGHT_KEY 124
 # define UP_KEY 126
 # define DOWN_KEY 125
+# define C_KEY 8
 # define V_KEY 9
 # define B_KEY 11
 # define J_KEY 38
@@ -63,6 +64,7 @@ typedef struct	s_view
 typedef struct	s_camera
 {
 //	t_view		view;
+	int			is_selected;
 	double		view_width;
 	double		view_height;
 	double		view_dist;
@@ -155,6 +157,7 @@ int				throw_ray(t_ray *ray);
 int				ft_free(t_params *params);
 
 int				get_color(t_color color);
+double			plane_normal(t_vect origin, t_vect direction);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_scene(t_params *params);
 void			set_view(t_params *params);
@@ -163,10 +166,12 @@ void			set_vector(t_vect *vect, double x, double y, double z);
 void			set_color(t_color *color, double red, double green, double blue);
 void			ray_equation(t_ray *ray);
 void			ray_normalize(t_vect *vect);
+void			save_intersection(t_ray *ray);
 void			init_transform_matrices(t_transform *transforms);
 void			set_x_rotation(t_transform *transforms, double angle);
 void			set_y_rotation(t_transform *transforms, double angle);
 void			set_z_rotation(t_transform *transforms, double angle);
+void			map_color(t_color *col);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);

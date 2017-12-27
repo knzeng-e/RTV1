@@ -81,13 +81,13 @@ void	create_plane(t_params *params)
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
 	/*Init position*/
-	params->plane->position.vect_x = 0;
-	params->plane->position.vect_y = -4;
-	params->plane->position.vect_z = 0;
+	params->plane->position.vect_x = 10;
+	params->plane->position.vect_y = 4;
+	params->plane->position.vect_z = 56;
 
 	/*Init Normale*/
 	params->plane->normale.vect_x = 0;
-	params->plane->normale.vect_y = -1;
+	params->plane->normale.vect_y = 1;
 	params->plane->normale.vect_z = 0;
 }
 
@@ -101,7 +101,7 @@ void	init_scene(t_params *params)
 	params->eye.view_dist = 1.0;
 	params->eye.vect_dir.vect_x = 0;
 	params->eye.vect_dir.vect_y = 0;
-	params->eye.vect_dir.vect_z = -1;
+	params->eye.vect_dir.vect_z = 1;
 	params->eye.view_left_up = get_first_pixel(params);
 	params->rays_to_free = 0;
 	params->x_indent = params->eye.view_width / params->x_resolution;

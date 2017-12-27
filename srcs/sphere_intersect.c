@@ -55,9 +55,14 @@ void	save_intersection(t_ray *ray)
     ray->t = (t0 < t1) ? t0 : t1;
 	params->ray_depth = ray->t;
 	save_intersection(ray);
+	depth = substraction(ray->intersection, sphere.center);
+	//depth = substraction(sphere.center, ray->intersection);
 	//tmpNormal = (intersect - mCenter) / mRadius;
 	//params->current_normal = multiply_vect(substraction(ray->intersection, sphere.center), 1 / sphere.rayon);
-	params->current_normal = divide_vect(substraction(ray->intersection, sphere.center), sphere.rayon);
+//	params->current_normal = divide_vect(depth, get_length(&depth));
+	params->current_normal = divide_vect(depth, sphere.rayon);
+	if (params->t > ray->t)
+		params->t = ray->t;
 	
 	/*get normal*/
     return (1);

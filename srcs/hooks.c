@@ -47,6 +47,8 @@ int		key_hook(int keycode, t_params *params)
 		params->sphere.is_selected = !(params->sphere.is_selected);
 	if (keycode == V_KEY)
 		params->sphere3.is_selected = !(params->sphere3.is_selected);
+	if (keycode == C_KEY)
+		params->eye.is_selected = !(params->eye.is_selected);
 	if (keycode == LEFT_KEY)
 	{
 		if (params->sphere.is_selected)
@@ -58,6 +60,8 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere2.center.vect_x -= 10;
 		if (params->sphere3.is_selected)
 			params->sphere3.center.vect_x -= 10;
+		if (params->eye.is_selected)
+			params->plane->normale.vect_x -= 0.5;
 		//params->eye.x_pos -= 10;
 	}
 	if (keycode == RIGHT_KEY)
@@ -71,6 +75,8 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere2.center.vect_x += 10;
 		if (params->sphere3.is_selected)
 			params->sphere3.center.vect_x += 10;
+		if (params->eye.is_selected)
+			params->plane->normale.vect_x += 0.3;
 		//params->eye.x_pos += 10;
 	}
 	if (keycode == UP_KEY)
@@ -99,6 +105,9 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere3.center.vect_y += 10;
 	//	params->eye.y_pos += 10;
 	}
+	ft_putstr("\nKey Pressed ==> ");
+	ft_putnbr(keycode);
+	ft_putstr("\n");
 
 	expose_hook(params);
 	return (keycode);

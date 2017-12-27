@@ -20,8 +20,9 @@ void	create_sphere(t_params *params, double radius, double x, double y)
 	set_color(&params->sphere.color, 255, 0, 0);
 
 	params->sphere2.is_selected = 0;
-	params->sphere2.rayon = radius - 30;
-	set_vector(&params->sphere2.center, x, y - 25, 50);
+	//params->sphere2.rayon = radius + 2442;
+	params->sphere2.rayon = radius + 42;
+	set_vector(&params->sphere2.center, x, y + -42, 50);
 	set_color(&params->sphere2.color, 255, 0, 0);
 
 	params->sphere3.is_selected = 0;
@@ -69,14 +70,14 @@ void	create_plane(t_params *params)
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
 	/*Init position*/
-	params->plane->position.vect_x = 0;
-	params->plane->position.vect_y = -4;
-	params->plane->position.vect_z = 0;
+	params->plane->position.vect_x = WIDTH;
+	params->plane->position.vect_y = HEIGHT / 2;
+	params->plane->position.vect_z = 1200;
 
 	/*Init Normale*/
 	params->plane->normale.vect_x = 0;
-	params->plane->normale.vect_y = 1;
-	params->plane->normale.vect_z = 0;
+	params->plane->normale.vect_y = -10;
+	params->plane->normale.vect_z = 1;
 }
 
 void	put_light(t_params *params, int y_pos, int x_pos)
@@ -93,6 +94,7 @@ void	put_light(t_params *params, int y_pos, int x_pos)
 
 void	init_scene(t_params *params)
 {
+	params->t = MAX_DISTANCE;
 	params->eye.view_left_up = get_first_pixel(params);
 	params->rays_to_free = 0;
 	params->x_indent = params->eye.view_width / params->x_resolution;

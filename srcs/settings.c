@@ -17,6 +17,7 @@ void	set_camera(t_camera *eye)
 	eye->right_vect.vect_x = 1;
 	eye->right_vect.vect_y = 0;
 	eye->right_vect.vect_z = 0;
+	eye->is_selected = 0;
 }
 
 void	set_vector(t_vect *vect, double x, double y, double z)
