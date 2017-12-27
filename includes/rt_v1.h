@@ -38,7 +38,7 @@
 # include <math.h>
 # include "rayon.h"
 # include "sphere.h"
-# define free(aa) {printf("[%s][ligne %d] Liberation bloc %s a %p\n",__FILE__,__LINE__,#aa,aa);free(aa);}
+//# define free(aa) {printf("[%s][ligne %d] Liberation bloc %s a %p\n",__FILE__,__LINE__,#aa,aa);free(aa);}
 
 
 typedef struct	s_point
@@ -119,6 +119,7 @@ typedef struct	s_params
 	t_ray		*tab_rays[WIDTH][HEIGHT];
 	t_light		light[NB_LIGHTS];
 	t_plane		*plane;
+	t_plane		*v_plane;
 	t_vect		current_normal;
 	t_transform	*transforms;
 	double		x_indent;

@@ -69,6 +69,8 @@ void	create_plane(t_params *params)
 {
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
+	if ((params->v_plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
+		exit(ft_free(params));
 	/*Init position*/
 	params->plane->position.vect_x = WIDTH;
 	params->plane->position.vect_y = HEIGHT / 2;
@@ -78,6 +80,16 @@ void	create_plane(t_params *params)
 	params->plane->normale.vect_x = 0;
 	params->plane->normale.vect_y = -10;
 	params->plane->normale.vect_z = 1;
+
+/* Vertical Plane */
+	params->v_plane->position.vect_x = WIDTH;
+	params->v_plane->position.vect_y = HEIGHT / 2;
+	params->v_plane->position.vect_z = 1200;
+
+	/*Init Normale*/
+	params->v_plane->normale.vect_x = 1;
+	params->v_plane->normale.vect_y = -1;
+	params->v_plane->normale.vect_z = 1200;
 }
 
 void	put_light(t_params *params, int y_pos, int x_pos)
