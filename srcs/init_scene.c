@@ -21,7 +21,7 @@ void	create_sphere(t_params *params, double radius, double x, double y)
 
 	params->sphere2.is_selected = 0;
 	//params->sphere2.rayon = radius + 2442;
-	params->sphere2.rayon = radius + 42;
+	params->sphere2.rayon = radius - 42;
 	set_vector(&params->sphere2.center, x, y + -42, 50);
 	set_color(&params->sphere2.color, 255, 0, 0);
 

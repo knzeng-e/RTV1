@@ -14,7 +14,10 @@
 
 void	draw_pixel(t_params *params, int i, int j, int color)
 {
-	params->img_data[j  * WIDTH + i] = color;
+	int	new_color;
+
+	new_color = mlx_get_color_value(params->mlx, color);
+	params->img_data[j  * WIDTH + i] = new_color;
 }
 
 int	track_ray(t_params *params)
@@ -76,14 +79,22 @@ int	track_ray(t_params *params)
 			/*	else*/ if (sphere_intersect(ray, params->sphere3, params))
 			{	
 
-				set_color(&params->sphere3.color, 0, 0, 0xFF); 
+				set_color(&params->sphere3.color, 0, 0, 0xFF);
 				light_vector = substraction(params->light[0].position, ray->intersection);
 				length = get_length(&light_vector);
 				normal = get_length(&params->current_normal);
 				ray_normalize(&light_vector);
 				ray_normalize(&params->current_normal);
-				angle = dot_product(params->current_normal, light_vector);
-				draw_pixel(params, i, j, (get_color(params->sphere3.color)  + 0x000000FF * angle) * 0.5);
+				if (is_shadowed(ray->intersection, params->light[0], params))
+					draw_pixel(params, i, j, (get_color(params->sphere3.color) * (AMBIANT_LIGHT)));
+				else 
+				{
+					angle = dot_product(params->current_normal, light_vector);
+					if (angle < 0)
+						angle = 0;
+					draw_pixel(params, i, j, (get_color(params->sphere3.color) * (AMBIANT_LIGHT + DIFFUSE_LIGHT * angle)));
+					//draw_pixel(params, i, j, (get_color(params->sphere3.color)  + 0x000000FF * angle) * 0.5);
+				}
 			}
 			/*	draw_pixel(params, i, j, 0x000000FF * AMBIANT_LIGHT * angle);
 				else if (sphere_intersect(ray, params->sphere, params))

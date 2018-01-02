@@ -15,7 +15,8 @@
 # define WIDTH 800
 # define HEIGHT 640
 # define NB_LIGHTS 2
-# define AMBIANT_LIGHT 0.08
+# define AMBIANT_LIGHT 0.2
+# define DIFFUSE_LIGHT 0.8
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -156,9 +157,11 @@ int				key_hook(int keycode, t_params *params);
 int				track_ray(t_params *params);
 int				throw_ray(t_ray *ray);
 int				ft_free(t_params *params);
-
 int				get_color(t_color color);
-double			plane_normal(t_vect origin, t_vect direction);
+int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
+int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
+int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
+int				is_shadowed(t_vect intersection, t_light light, t_params *params);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_scene(t_params *params);
 void			set_view(t_params *params);
@@ -173,9 +176,7 @@ void			set_x_rotation(t_transform *transforms, double angle);
 void			set_y_rotation(t_transform *transforms, double angle);
 void			set_z_rotation(t_transform *transforms, double angle);
 void			map_color(t_color *col);
-int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
-int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
-int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
+double			plane_normal(t_vect origin, t_vect direction);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
