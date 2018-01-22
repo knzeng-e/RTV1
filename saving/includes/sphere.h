@@ -26,7 +26,8 @@ typedef struct	s_sphere
 	double		rayon;
 	t_vect		center;
 	/*t_vect		location;*/
-	t_color		color;
+	//t_color		color;
+	int			color;
 	int			is_selected;
 	/*equation of sphere: (x - center.x)^2 + (y - center.y)^2 + (z - center.z)^2 = rayon^2 */
 }				t_sphere;

@@ -42,50 +42,50 @@ int		key_hook(int keycode, t_params *params)
 	if (keycode == 53)
 		exit (0);
 	if (keycode == B_KEY)
-		params->sphere2.is_selected = !(params->sphere2.is_selected);
+		params->sphere_list[1].is_selected = !(params->sphere_list[1].is_selected);
 	if (keycode == J_KEY)
-		params->sphere.is_selected = !(params->sphere.is_selected);
+		params->sphere_list[0].is_selected = !(params->sphere_list[0].is_selected);
 	if (keycode == V_KEY)
-		params->sphere3.is_selected = !(params->sphere3.is_selected);
+		params->sphere_list[2].is_selected = !(params->sphere_list[2].is_selected);
 	if (keycode == LEFT_KEY)
 	{
-		if (params->sphere.is_selected)
-			params->sphere.center.vect_x -= 10;
-		if (params->sphere2.is_selected)
-			params->sphere2.center.vect_x -= 10;
-		if (params->sphere3.is_selected)
-			params->sphere3.center.vect_x -= 10;
+		if (params->sphere_list[0].is_selected)
+			params->sphere_list[0].center.vect_x -= 10;
+		if (params->sphere_list[1].is_selected)
+			params->sphere_list[1].center.vect_x -= 10;
+		if (params->sphere_list[2].is_selected)
+			params->sphere_list[2].center.vect_x -= 10;
 		//params->eye.x_pos -= 10;
 	}
 	if (keycode == RIGHT_KEY)
 	{
-		if (params->sphere.is_selected)
-			params->sphere.center.vect_x += 10;
-		if (params->sphere2.is_selected)
-			params->sphere2.center.vect_x += 10;
-		if (params->sphere3.is_selected)
-			params->sphere3.center.vect_x += 10;
+		if (params->sphere_list[0].is_selected)
+			params->sphere_list[0].center.vect_x += 10;
+		if (params->sphere_list[1].is_selected)
+			params->sphere_list[1].center.vect_x += 10;
+		if (params->sphere_list[2].is_selected)
+			params->sphere_list[2].center.vect_x += 10;
 		//params->eye.x_pos += 10;
 	}
 	if (keycode == UP_KEY)
 	{
-		if (params->sphere.is_selected)
-			params->sphere.center.vect_y -= 10;
-		if (params->sphere2.is_selected)
-			params->sphere2.center.vect_y -= 10;
-		if (params->sphere3.is_selected)
-			params->sphere3.center.vect_y -= 10;
+		if (params->sphere_list[0].is_selected)
+			params->sphere_list[0].center.vect_y -= 10;
+		if (params->sphere_list[1].is_selected)
+			params->sphere_list[1].center.vect_y -= 10;
+		if (params->sphere_list[2].is_selected)
+			params->sphere_list[2].center.vect_y -= 10;
 		//params->eye.y_pos -= 10;
 	}
 	if (keycode == DOWN_KEY)
 	{
-		if (params->sphere.is_selected)
-			params->sphere.center.vect_y += 10;
-		if (params->sphere2.is_selected)
-			params->sphere2.center.vect_y += 10;
-		if (params->sphere3.is_selected)
-			params->sphere3.center.vect_y += 10;
-	//	params->eye.y_pos += 10;
+		if (params->sphere_list[0].is_selected)
+			params->sphere_list[0].center.vect_y += 10;
+		if (params->sphere_list[1].is_selected)
+			params->sphere_list[1].center.vect_y += 10;
+		if (params->sphere_list[2].is_selected)
+			params->sphere_list[2].center.vect_y += 10;
+		//	params->eye.y_pos += 10;
 	}
 
 	expose_hook(params);

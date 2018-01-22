@@ -14,37 +14,43 @@
 
 void	create_sphere(t_params *params, double radius, double x, double y)
 {
-	params->sphere.is_selected = 0;
-	params->sphere.rayon = radius;
-	params->sphere.center.vect_x = x;
-	params->sphere.center.vect_y = y;
-	params->sphere.center.vect_z = 50;
-	params->sphere.color.red = 255;
-	params->sphere.color.green = 0;
-	params->sphere.color.blue = 0;
+	int	cpt;
 
-	params->sphere2.is_selected = 0;
-	params->sphere2.rayon = radius - 30;
-	params->sphere2.center.vect_x = x;
-	params->sphere2.center.vect_y = y - 25;
-	params->sphere2.center.vect_z = 50;
-	params->sphere2.color.red = 255;
-	params->sphere2.color.green = 0;
-	params->sphere2.color.blue = 0;
+	x = x + 0;
+	y = y + 0;
+	cpt = -1;
+	while (++cpt < NB_SPHERES)
+		params->sphere_list[cpt].is_selected = 0;
+	params->sphere_list[0].rayon = radius;
+	params->sphere_list[0].center.vect_x = 0;
+	params->sphere_list[0].center.vect_y = 0;
+	params->sphere_list[0].center.vect_z = -20;
+	params->sphere_list[0].color = YELLOW;
 
-	params->sphere3.is_selected = 0;
-	params->sphere3.rayon = radius + 21;
-	params->sphere3.center.vect_x = x;
-	params->sphere3.center.vect_y = y + 47;
-	params->sphere3.center.vect_z = -10;
-	params->sphere3.color.red = 255;
-	params->sphere3.color.green = 0;
-	params->sphere3.color.blue = 0;
+	params->sphere_list[1].rayon = 12;
+	params->sphere_list[1].center.vect_x = 0;
+	params->sphere_list[1].center.vect_y = 0;
+	params->sphere_list[1].center.vect_z = -4;
+	params->sphere_list[1].color = GREEN;
+
+	params->sphere_list[2].rayon = radius + 40;
+	params->sphere_list[2].center.vect_x = 5;
+	params->sphere_list[2].center.vect_y = 0;
+	params->sphere_list[2].center.vect_z = -25;
+	params->sphere_list[2].color = BLUE;
+
+	params->sphere_list[3].rayon = radius;
+	params->sphere_list[3].center.vect_x = x - 210;
+	params->sphere_list[3].center.vect_y = y;
+	params->sphere_list[3].center.vect_z = -120;
+	params->sphere_list[3].color = RED;
 }
 
 void	init_mlx(t_params *params)
 {
 	params->mlx = mlx_init();
+	/*Penser à proteger le mlx_init*/
+	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
 	params->img_data = (int *)mlx_get_data_addr(params->ptr_img, &(params->bpp),  &(params->size_line), &(params->endian));
 }
@@ -115,7 +121,8 @@ void	init_scene(t_params *params)
 	params->eye.right_vect.vect_z = 0;
 	init_mlx(params);
 	//set_view(params);
-	create_sphere(params, 70, WIDTH / 2, HEIGHT / 2);
+	//create_sphere(params, 70, WIDTH / 2, HEIGHT / 2);
+	create_sphere(params, 32, WIDTH / 2, HEIGHT / 4);
 	create_plane(params);
 	//create_sphere(params, 40, WIDTH / 4, HEIGHT / 2);
 }

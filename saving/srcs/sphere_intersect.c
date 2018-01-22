@@ -20,39 +20,25 @@
 
  int	sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params)
 {
-    t_vect	p;
-	t_vect	d;
-	t_vect	oc;
-	double	b;
-	double	c;
+	t_vect	L;
+	double	tca;
+	double	thc;
+	double	s2;
+	double	s;
 	double	t0;
-	double	t1;
-	double	disc;
 
-	p = ray->origin;
-
-	/*const Vec3 d = ray.d;*/
-
-	d = ray->direction;
-
-	/*const Vec3 oc = o - c;*/
-
-	oc.vect_x = p.vect_x  - sphere.center.vect_x;
-	oc.vect_y = p.vect_y  - sphere.center.vect_y;
-	oc.vect_z = (p.vect_z - params->eye.view_dist) - sphere.center.vect_z;
-
-    b = 2 * dot_product(oc, d);
-    c = dot_product(oc, oc) - (sphere.rayon * sphere.rayon);
-    disc = b * b - 4 * c;
-    /*if (disc < 1e-4) */
-    if (disc < 0)
+	L = vect_sub(sphere.center, ray->origin);
+	tca = dot_product(L, ray->direction);
+	if (tca < 0)
 		return (0);
-    /*disc = sqrt(disc) / 2;*/
-    disc = sqrt(disc);
-    t0 = -b - disc;
-    t1 = -b + disc;
-    ray->t = (t0 < t1) ? t0 : t1;
+	s2 = dot_product(L, L) - (tca * tca);
+	s = sqrt(s2);
+	if (s > sphere.rayon)
+		return (0);
+	thc = sqrt((sphere.rayon * sphere.rayon) - s2);
+	t0 = tca - thc;
+	ray->t = t0;
 	params->ray_depth = ray->t;
+	return (1);
 	/*get normal*/
-    return (1);
 }

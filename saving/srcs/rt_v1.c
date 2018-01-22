@@ -19,8 +19,8 @@ void	mlx_draw(t_params *infos)
 
 	KeyPressMask = 1L<<0;
 	KeyPress = 2;
-	infos->win = mlx_new_window(infos->mlx, WIDTH, HEIGHT, "RT_V1");
-	mlx_put_image_to_window(infos->mlx, infos->win, infos->ptr_img, 0, 0);
+	//infos->win = mlx_new_window(infos->mlx, WIDTH, HEIGHT, "RTV1");
+	//mlx_put_image_to_window(infos->mlx, infos->win, infos->ptr_img, 0, 0);
 	//mlx_key_hook(infos->win, key_hook, infos);
 	mlx_mouse_hook(infos->win, mouse_hook, infos);
 	mlx_expose_hook(infos->win, expose_hook, infos);

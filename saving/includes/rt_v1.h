@@ -15,6 +15,7 @@
 # define WIDTH 800
 # define HEIGHT 640
 # define NB_LIGHTS 2
+# define NB_SPHERES 4
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -28,6 +29,10 @@
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
 # define MALLOC_PARAMS_ERROR -1
+# define RED 0x00FF0000
+# define GREEN 0x0000FF00
+# define BLUE 0x000000FF
+# define YELLOW 0x00FFFF00
 # include "../mlx/mlx.h"
 # include <libft.h>
 # include <stdlib.h>
@@ -80,12 +85,23 @@ typedef struct	s_plane
 	t_color		color;
 }				t_plane;
 
+typedef struct	s_object
+{
+	t_vect		position;
+	t_color		color;
+	enum		
+	{
+		SPHERE,
+		PLANE,
+		CYLINDER,
+		CONE
+	};
+}				t_object;
+
 typedef struct	s_params
 {
 	t_camera	eye;
-	t_sphere	sphere;
-	t_sphere	sphere2;
-	t_sphere	sphere3;
+	t_sphere	sphere_list[NB_SPHERES];
 	t_ray		*tab_rays[WIDTH][HEIGHT];
 	t_vect		light[NB_LIGHTS];
 	t_plane		*plane;
@@ -112,7 +128,7 @@ typedef struct	s_light
 	double		bright;
 }				t_light;
 
-typedef struct	s_object
+/*typedef struct	s_object
 {
 	int			id;
 	int			type;
@@ -121,7 +137,7 @@ typedef struct	s_object
 		t_sphere	*sphere;
 		t_plane		*plane;
 	} current_object;
-}				t_object;
+}				t_object;*/
 
 int				expose_hook(t_params *params);
 int				mouse_hook(int button, int x, int y, t_params *params);
@@ -133,11 +149,15 @@ void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_scene(t_params *params);
 void			set_view(t_params *params);
 void			ray_equation(t_ray *ray);
+void			ray_normalize(t_vect *vect);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
+double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
 t_vect			vect_sub(t_vect vect1, t_vect vect2);
 t_vect			vect_add(t_vect vect1, t_vect vect2);
+t_vect			set_vector(double x, double y, double z);
+t_color			set_color(double red, double green, double blue);
 #endif
