@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 03:17:28 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/01/23 18:26:57 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	create_sphere(t_params *params, double radius, double x, double y)
 
 void	init_mlx(t_params *params)
 {
+	read_line("test");
 	params->mlx = mlx_init();
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
 	params->img_data = (int *)mlx_get_data_addr(params->ptr_img, &(params->bpp),  &(params->size_line), &(params->endian));
