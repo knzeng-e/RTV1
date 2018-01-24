@@ -36,7 +36,8 @@ int		check_cylinder(char *line)
 
 int		check_object(char *line)
 {
-	return (check_sphere(line) || (check_plane(line)) || (check_cone(line)) || (check_cylinder(line)));
+	return (check_sphere(line) || (check_plane(line)) || (check_cone(line)) \
+	|| (check_cylinder(line)));
 }
 
 void	ft_parse_error(int num_line)
@@ -60,26 +61,27 @@ void	read_line(char *file)
 	num_line = 1;
 	while (get_next_line(fd, &line))
 	{
-		if (check_object(line) == 0)
+		if (check_object(line) == 0 && (ft_strlen(line) != 0))
 		{
 			ft_putstr(PARSE_ERROR_MESSAGE);
 			ft_putnbr(num_line);
 			exit (-2);
 		}
-		ft_putstr("\n +++ READING OBJECT N.");
-		ft_putnbr(cpt);	
-		ft_putstr(" +++\n");
 		while (ft_strcmp(line, "}"))
 		{
+			if (ft_strlen(line) == 0)
+			{
+				get_next_line(fd, &line);
+				if (ft_strlen(line) == 0)
+					ft_parse_error(num_line);
+			}
 			if (line[0] == '}')
 				ft_parse_error(num_line);
-			get_next_line(fd, &line); 
+			get_next_line(fd, &line);
 			num_line++;
 			ft_putstr(line);
 			ft_putchar('\n');
 		}
-		if (ft_strcmp(line, "}") != 0)
-			ft_parse_error(num_line);
 		cpt++;
 		num_line++;
 	}
