@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/01/22 19:15:41 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/01/24 14:49:59 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
+# define SPHERE 1
+# define PLANE 2
+# define CYLINDER 3
+# define CONE 4
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
