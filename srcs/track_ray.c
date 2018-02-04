@@ -42,8 +42,8 @@ int	track_ray(t_params *params)
 				return (ft_free(params));
 			params->rays_to_free++;
 			set_origin(i, j, ray, params);
-			ray->ray_normalize(&ray->direction);
-			if (plane_intersect(ray, (params->v_plane), params))
+			//ray->ray_normalize(&ray->direction);
+			/*if (plane_intersect(ray, (params->v_plane), params))
 			{
 
 				light_vector = substraction(params->light[0].position, ray->intersection);
@@ -53,8 +53,8 @@ int	track_ray(t_params *params)
 				ray_normalize(&params->current_normal);
 				angle = dot_product(params->v_plane->normale, light_vector);
 				draw_pixel(params, i, j, 0x00FF0000 + 0x0000FF00 * angle * 0.5);
-			}
-			if (plane_intersect(ray, (params->plane), params))
+			}*/
+			/*if (plane_intersect(ray, (params->plane), params))
 			{
 
 				light_vector = substraction(params->light[0].position, ray->intersection);
@@ -64,7 +64,7 @@ int	track_ray(t_params *params)
 				ray_normalize(&params->current_normal);
 				angle = dot_product(params->plane->normale, light_vector);
 				draw_pixel(params, i, j, 0x004E1609 + 0x000000FF * angle * 0.5);
-			}
+			}*/
 			if (sphere_intersect(ray, params->sphere2, params))
 			{
 				set_color(&params->sphere2.color, 0, 0, 0xFF);

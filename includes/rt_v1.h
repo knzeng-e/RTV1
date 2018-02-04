@@ -12,8 +12,8 @@
 
 #ifndef RT_V1_H
 # define RT_V1_H
-# define WIDTH 800
-# define HEIGHT 640
+# define WIDTH 950
+# define HEIGHT 740
 # define NB_LIGHTS 2
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8

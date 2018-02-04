@@ -53,62 +53,55 @@ int		key_hook(int keycode, t_params *params)
 	{
 		if (params->sphere.is_selected)
 		{
-			params->sphere.center.vect_x -= 10;
-		params->light[0].position.vect_x -= 10;
+			params->sphere.center.vect_x -= 0.2;
+		params->light[0].position.vect_x -= 0.2;
 		}
 		if (params->sphere2.is_selected)
-			params->sphere2.center.vect_x -= 10;
+			params->sphere2.center.vect_x -= 0.2;
 		if (params->sphere3.is_selected)
-			params->sphere3.center.vect_x -= 10;
+			params->sphere3.center.vect_x -= 0.2;
 		if (params->eye.is_selected)
 			params->plane->normale.vect_x -= 0.5;
-		//params->eye.x_pos -= 10;
 	}
 	if (keycode == RIGHT_KEY)
 	{
 		if (params->sphere.is_selected)
 		{
-			params->light[0].position.vect_x += 10;
-			params->sphere.center.vect_x += 10;
+			params->light[0].position.vect_x += 0.2;
+			params->sphere.center.vect_x += 0.2;
 		}
 		if (params->sphere2.is_selected)
-			params->sphere2.center.vect_x += 10;
+			params->sphere2.center.vect_x += 0.2;
 		if (params->sphere3.is_selected)
-			params->sphere3.center.vect_x += 10;
+			params->sphere3.center.vect_x += 0.2;
 		if (params->eye.is_selected)
 			params->plane->normale.vect_x += 0.3;
-		//params->eye.x_pos += 10;
 	}
 	if (keycode == UP_KEY)
 	{
 		if (params->sphere.is_selected)
 		{
-			params->sphere.center.vect_y -= 10;
-		params->light[0].position.vect_y -= 10;
+			params->sphere.center.vect_y += 0.2;
+		params->light[0].position.vect_z += 0.2;
 		}
 		if (params->sphere2.is_selected)
-			params->sphere2.center.vect_y -= 10;
+			params->sphere2.center.vect_y += 0.2;
+			//params->sphere2.center.vect_y += 0.2;
 		if (params->sphere3.is_selected)
-			params->sphere3.center.vect_y -= 10;
-		//params->eye.y_pos -= 10;
+			params->sphere3.center.vect_z += 0.2;
 	}
 	if (keycode == DOWN_KEY)
 	{
 		if (params->sphere.is_selected)
 		{
-			params->sphere.center.vect_y += 10;
-		params->light[0].position.vect_y += 10;
+			params->sphere.center.vect_y -= 0.2;
+		params->light[0].position.vect_z -= 0.2;
 		}
 		if (params->sphere2.is_selected)
-			params->sphere2.center.vect_y += 10;
+			params->sphere2.center.vect_y -= 0.2;
 		if (params->sphere3.is_selected)
-			params->sphere3.center.vect_y += 10;
-	//	params->eye.y_pos += 10;
+			params->sphere3.center.vect_z -= 0.2;
 	}
-	ft_putstr("\nKey Pressed ==> ");
-	ft_putnbr(keycode);
-	ft_putstr("\n");
-
 	expose_hook(params);
 	return (keycode);
 }

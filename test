@@ -9,11 +9,9 @@ plane
 	position: 1,0,0;
 	color: 0x00FFFFFF;
 }
+
 cylinder
 {
 	position: 1,0,0;
 	color: 0x00FFFFFF;
-}
-plane
-{
 }

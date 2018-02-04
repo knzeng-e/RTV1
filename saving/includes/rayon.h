@@ -25,6 +25,7 @@ typedef struct	s_ray
 {
 	t_vect		origin;
 	t_vect		direction;
+	t_vect		intersection;
 	double		t;
 	void		(*normalize)(t_vect *);
 	/*void		(*ray_equation)(struct s_ray);*/

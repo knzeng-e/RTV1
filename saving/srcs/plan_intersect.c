@@ -24,20 +24,19 @@ double	plane_normal(t_vect origin, t_vect direction)
 
 int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 {
-	double	denom;
+	double	angle;
 	double	result;
-	t_vect	delta;
+	//t_vect	delta;
 
-	denom = dot_product(ray->direction, plane->normale);
-	if (fabs(denom) < 1e-6)
-	{
-//		ft_putnbr(denom);
+	angle = dot_product(ray->direction, plane->normale);
+	if (fabs(angle) < 1e-6)
 		return (0);
-	}
-	delta.vect_x = plane->position.vect_x - ray->origin.vect_x;
+	plane->distance = vect_sub(plane->position, ray->origin);
+	/*delta.vect_x = plane->position.vect_x - ray->origin.vect_x;
 	delta.vect_y = plane->position.vect_y - ray->origin.vect_y;
 	delta.vect_z = plane->position.vect_z - ray->origin.vect_z;
-	result = dot_product(delta, plane->normale) / denom;
+	result = dot_product(delta, plane->normale) / angle;*/
+	result = dot_product(plane->distance, plane->normale) / angle;
 	params->t = result;
 	return (result >= 0);
 }
