@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 03:05:31 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/05 22:08:35 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[2].center.vect_x += MOVE_DIST;
 		//params->eye.x_pos += 10;
 	}
+	if (keycode == ZOOM_IN)
+		params->fov -= 0.5;
+	if (keycode == ZOOM_OUT && params->fov <= MAX_FOV)
+		params->fov += 0.5;
 	if (keycode == UP_KEY)
 	{
 		if (params->sphere_list[0].is_selected)

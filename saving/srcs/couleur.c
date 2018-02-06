@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.h                                           :+:      :+:    :+:   */
+/*   couleur.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/18 02:00:59 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/06 07:25:48 by knzeng-e         ###   ########.fr       */
+/*   Created: 2018/02/06 07:39:00 by knzeng-e          #+#    #+#             */
+/*   Updated: 2018/02/06 12:18:16 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SPHERE_H
+#include "rt_v1.h"
 
-# define SPHERE_H
-
-typedef struct	s_color
+int	couleur(double angle)
 {
-	int			red;
-	int			green;
-	int			blue;
-}				t_color;
-
-typedef struct	s_sphere
-{
-	double		rayon;
-	t_vect		center;
-	/*t_vect		location;*/
-	//t_color		color;
-	int			color;
-	int			is_selected;
-	/*equation of sphere: (x - center.x)^2 + (y - center.y)^2 + (z - center.z)^2 = rayon^2 */
-}				t_sphere;
-#endif
+	return ((RGB(127.5 * (cos(angle) + 1), 127.5 * (sin(angle) + 1), 127.5 * (1 - cos(angle)))));
+}

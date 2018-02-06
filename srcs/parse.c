@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 18:29:26 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/01/24 20:15:12 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/01/26 09:46:24 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,25 +81,19 @@ void	read_line(char *file)
 	if (fd == -1)
 		exit (-1);
 	cpt = 1;
-	num_line = 0;
+	num_line = 1;
 	while (get_next_line(fd, &line))
 	{
-		num_line++;
+		//num_line++;
 		object_id = check_object(line);
 		if (object_id == 0) /*Object not found*/
 		{
 			if (ft_strlen(line) != 0)
-			{
-				ft_putstr(PARSE_ERROR_MESSAGE);
-				ft_putnbr(num_line);
-				exit (-2);
-			}
+				ft_parse_error(num_line);
 			/*We've got a space*/
-			num_line++;
 			if (!get_next_line(fd, &line) || !ft_strlen(line) || !check_object(line))
 			{
-				if (!get_next_line(fd, &line))
-					num_line--;
+				num_line++;
 				ft_parse_error(num_line);
 			}
 			object_id = check_object(line);
@@ -118,21 +112,32 @@ void	read_line(char *file)
 			{
 				num_line++;
 				get_next_line(fd, &line);
-				if (ft_strlen(line) == 0)
+				if (ft_strlen(line) == 0) /*error: 2 sauts de ligne*/
 					ft_parse_error(num_line);
 			}
 			if (line[0] == '}')
 				ft_parse_error(num_line);
 			num_line++;
-			get_next_line(fd, &line);
 			ft_putstr(line);
+			get_next_line(fd, &line);
 			ft_putchar('\n');
 		}
-		get_next_line(fd, &line);
 		ft_putstr(line);
-		if (ft_strlen(line))
-			ft_parse_error(num_line);
+		ft_putchar('\n');
+		//get_next_line(fd, &line);
+		if (!ft_strlen(line) && !(get_next_line(fd, &line)))
+		{
+			ft_putstr(line);
+			ft_putstr("\nOOPS\n");
+			ft_parse_error(++num_line);
+		}
+		ft_putstr(line);
 		cpt++;
+		num_line++;
 	}
+	ft_putstr(line);
+	ft_putstr("\nContenu==>");
+	/*if (line[0] != '')
+		ft_parse_error(num_line);*/
 }
 

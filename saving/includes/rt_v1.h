@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 07:41:01 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/06 11:37:00 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@
 # define NB_LIGHTS 2
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
+# define SPECULAR 0.7
+# define SHININESS 128
 # define NB_SPHERES 4
+# define NB_PLANES 1
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -26,12 +29,16 @@
 # define V_KEY 9
 # define B_KEY 11
 # define J_KEY 38
+# define ZOOM_IN 69
+# define ZOOM_OUT 78
 # define RADIUS 20.0
 # define OK 0
 # define MAX_DISTANCE 20000
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
 # define MALLOC_PARAMS_ERROR -1
+# define FOV 30
+# define MAX_FOV 150
 # define RED 0x00FF0000
 # define GREEN 0x0000FF00
 # define BLUE 0x000000FF
@@ -46,6 +53,7 @@
 # include "rayon.h"
 # include "sphere.h"
 # define free(aa) {printf("[%s][ligne %d] Liberation bloc %s a %p\n",__FILE__,__LINE__,#aa,aa);free(aa);}
+# define RGB(r, g, b)(256 * 256 * (int)(r) + 256 * (int)(g) + (int)(b))
 
 typedef struct	s_cylindre
 {
@@ -78,7 +86,7 @@ typedef struct	s_plane
 	t_vect		position;
 	t_vect		normale;
 	t_vect		distance;
-	t_color		color;
+	int			color;
 }				t_plane;
 
 typedef struct	s_transform
@@ -107,6 +115,9 @@ typedef struct	s_light
 {
 	t_vect		position;
 	double		intensity;
+	double		diffuse_light;
+	double		specular_light;
+	int			shininess;
 	enum		e_type
 	{
 		POINT,
@@ -119,6 +130,7 @@ typedef struct	s_params
 {
 	//t_camera	eye;
 	t_sphere	sphere_list[NB_SPHERES];
+	t_plane		plane_list[NB_PLANES];
 	t_ray		*tab_rays[WIDTH][HEIGHT];
 	t_light		light[NB_LIGHTS];
 	t_plane		*plane;
@@ -127,6 +139,7 @@ typedef struct	s_params
 	double		y_indent;
 	double		x_resolution;
 	double		y_resolution;
+	double		fov;
 	/*MLX PARAMS*/
 	void		*mlx;
 	void		*win;
@@ -173,6 +186,7 @@ void			save_intersection(t_ray *ray);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
+int				couleur(double angle);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);

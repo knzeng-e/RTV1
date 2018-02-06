@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 03:44:33 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/06 11:59:44 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,41 +22,15 @@ double	radians(double angle)
 	return (angle * M_PI / 180);
 }
 
-void	lightning(t_params *params, t_ray *ray, int sphere_hit)
+double	max(double nbre1, double nbre2)
 {
-	t_vect	light_vector;
-	double	angle;
-	int		length;
-	int		normal;
-	int		cpt;
+	double	output;
 
-	cpt = -1;
-	while (++cpt < NB_SPHERES)
-	{
-		if (cpt != sphere_hit)
-		{
-			light_vector = vect_sub(params->light[0].position, ray->intersection);
-			length = get_length(&light_vector);
-			normal = get_length(&params->current_normal);
-			ray_normalize(&light_vector);
-			ray_normalize(&params->current_normal);
-
-			/*if (is_shadowed(ray->intersection, params, cpt))
-			  params->sphere_list[cpt].color *= AMBIANT_LIGHT;
-			  else 
-			  {*/
-			angle = dot_product(params->current_normal, light_vector);
-			if (angle < 0)
-				angle = 0;
-			params->sphere_list[cpt].color += (AMBIANT_LIGHT + DIFFUSE_LIGHT * angle);
-			//draw_pixel(params, i, j, (get_color(params->sphere3.color)  + 0x000000FF * angle) * 0.5);
-			//draw_pixel(params, i, j, params->sphere_list[cpt].color);
-			//}
-		}
-	}
+	output = (nbre1 > nbre2) ? nbre1 : nbre2;
+	return (output);
 }
 
-void	set_camera(t_ray *ray, int i, int j)
+void	set_camera(t_ray *ray, t_params *params, int i, int j)
 {
 	t_vect	p_camera_space;
 	double	pix_norm_x;
@@ -72,27 +46,58 @@ void	set_camera(t_ray *ray, int i, int j)
 	image_aspect_ratio = WIDTH/ HEIGHT;
 	pix_remap_x = (2 * pix_norm_x - 1) * image_aspect_ratio;
 	pix_remap_y = 1 - 2 * pix_norm_y;
-	pix_camera_x = pix_remap_x * tan(radians(30) / 2); // FOV 30 degrees
-	pix_camera_y = pix_remap_y * tan(radians(30) / 2);
+	pix_camera_x = pix_remap_x * tan(radians(params->fov) / 2); // FOV 30 degrees
+	pix_camera_y = pix_remap_y * tan(radians(params->fov) / 2);
 	p_camera_space = set_vector(pix_camera_x, pix_camera_y, -1);
 	ray->direction = vect_sub(p_camera_space, ray->origin);
 	ray_normalize(&ray->direction);
 }
 
+double	lightning(t_params *params, t_ray *ray, int sphere_hit)
+{
+	t_vect	light_vector;
+	double	diffuse;
+	//t_vect	specular;
+	double	angle;
+	double		length;
+	double		normal_length;
+
+	light_vector = vect_sub(params->light[0].position, ray->intersection);
+	length = get_length(&light_vector);
+	ray_normalize(&light_vector);
+	params->current_normal = vect_sub(ray->intersection, params->sphere_list[sphere_hit].center);
+	normal_length = get_length(&params->current_normal);
+	params->current_normal = vect_divide(params->current_normal, normal_length);
+	ray_normalize(&params->current_normal);
+	angle = dot_product(light_vector, params->current_normal);
+	if (angle > 0)
+		diffuse = params->light[0].intensity * angle / (length * normal_length);
+	else
+		diffuse = 0;
+	//if (angle < 0)
+	//	angle = 0;
+	//if (angle)
+	//printf("\n Color of sphere %d (diffuse == %f) ==> %f", sphere_hit, diffuse, params->sphere_list[sphere_hit].color * diffuse);
+	//params->sphere_list[sphere_hit].color = couleur(params->sphere_list[sphere_hit].color);
+	//	params->sphere_list[sphere_hit].color  += diffuse;
+	//draw_pixel(params, i, j, (get_color(params->sphere3.color)  + 0x000000FF * angle) * 0.5);
+	//draw_pixel(params, i, j, params->sphere_list[cpt].color);
+	//}
+	//}
+	return (diffuse);
+}
+
+
 int	track_ray(t_params *params)
 {
 	t_ray	*ray;
-	t_vect	light_vector;
-	double	normal;
 	double	t_min;
-	double	angle;
 	int		sphere_hit;
 	//int		color;
 	int		hit;
 	int		i;
 	int		j;
 	int		cpt;
-	double	length;
 
 	t_min = MAX_DISTANCE;
 	i = 0;
@@ -106,46 +111,30 @@ int	track_ray(t_params *params)
 				return (ft_free(params));
 			params->rays_to_free++;
 			set_origin(i, j, ray, params);
-			set_camera(ray, i, j);
+			set_camera(ray, params, i, j);
 			cpt = -1;
 			sphere_hit = -1;
 			t_min = MAX_DISTANCE;
 			while (++cpt < NB_SPHERES)
 			{
+				if (plane_intersect(ray, (params->plane), params))
+					draw_pixel(params, i, j, 0x004E1609);
 				hit = sphere_intersect(ray, params->sphere_list[cpt], params);
 				if (hit && ray->t < t_min)
 				{
-					light_vector = vect_sub(params->light[0].position, ray->intersection);
-					params->current_normal = get_normal(ray->intersection, params->sphere_list[cpt]);
-					length = get_length(&light_vector);
-					normal = get_length(&params->current_normal);
-					ray_normalize(&light_vector);
-					ray_normalize(&params->current_normal);
-				/*	if (is_shadowed(ray->intersection, params, cpt))
-						params->sphere_list[cpt].color *= (AMBIANT_LIGHT);
-					else 
-					{*/
-						angle = dot_product(params->current_normal, light_vector);
-						if (angle < 0)
-							angle = 0;
-					//	params->sphere_list[cpt].color = params->sphere_list[cpt].color * (AMBIANT_LIGHT + DIFFUSE_LIGHT * angle);
-						//draw_pixel(params, i, j, (get_color(params->sphere3.color)  + 0x000000FF * angle) * 0.5);
-					//}
 					t_min = ray->t;
 					sphere_hit = cpt;
-					//lightning(params, ray, sphere_hit);
-					params->color = params->sphere_list[cpt].color;
+					//params->color =  params->sphere_list[cpt].color;
 				}
 				if (sphere_hit != -1)
 				{
-					//lightning(params, ray, sphere_hit);
+					params->color =  params->sphere_list[sphere_hit].color;
+					params->color *= couleur(lightning(params, ray, sphere_hit) + AMBIANT_LIGHT);
 					draw_pixel(params, i, j, params->color);
 				}
-				//	else
-				//		draw_pixel(params, i, j, 0X00FFFFFF);
+				/*else
+				  draw_pixel(params, i, j, RGB(242, 242, 242));*/
 			}
-			/*if (plane_intersect(ray, (params->plane), params))
-			  draw_pixel(params, i, j, 0x004E1609);*/
 			/*else
 			  draw_pixel(params, i, j, 0x00CECECE);*/
 			j++;
