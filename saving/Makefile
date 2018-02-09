@@ -25,6 +25,7 @@ $(FT_LIB):
 	#clear
 	@echo "\033[31m >>> \033[32mCOMPILING \"$(FT_LIB)\"..\033[31m <<<\033[0m"
 	make -C libft
+	make -C mlx
 
 $(MLX_LIB):
 	@echo "\033[31m >>> \033[32mCOMPILING \"$(MLX_LIB)\"..\033[31m <<<\033[0m"

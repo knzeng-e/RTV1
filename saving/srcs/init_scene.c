@@ -23,13 +23,15 @@ void	create_sphere(t_params *params)
 	params->sphere_list[0].center.vect_x = 0.1;
 	params->sphere_list[0].center.vect_y = 0.1;
 	params->sphere_list[0].center.vect_z = -10.2;
-	params->sphere_list[0].color = YELLOW;
+	//params->sphere_list[0].color = YELLOW;
+	params->sphere_list[0].color = RGB(255, 255, 0);
 
 	params->sphere_list[1].rayon = 1;
 	params->sphere_list[1].center.vect_x = -0.8;
 	params->sphere_list[1].center.vect_y = 0;
 	params->sphere_list[1].center.vect_z = -10;
 	params->sphere_list[1].color = GREEN;
+	params->sphere_list[1].color = BLUE;
 	//params->sphere_list[1].color = RGB(0, 255, 0);
 
 	params->sphere_list[2].rayon = 0.8;
@@ -44,7 +46,7 @@ void	create_sphere(t_params *params)
 	params->sphere_list[3].center.vect_y = 1.3;
 	params->sphere_list[3].center.vect_z = -8;
 	params->sphere_list[3].color = RED;
-	//params->sphere_list[3].color = RGB(255, 0, 0);
+	//params->sphere_list[3].color = get_color(255, 0, 0);
 }
 
 void	init_mlx(t_params *params)
@@ -53,7 +55,7 @@ void	init_mlx(t_params *params)
 	/*Penser à proteger le mlx_init*/
 	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
-	params->img_data = (int *)mlx_get_data_addr(params->ptr_img, \
+	params->img_data = mlx_get_data_addr(params->ptr_img, \
 		&(params->bpp),  &(params->size_line), &(params->endian));
 	params->fov = FOV;
 }
@@ -64,17 +66,11 @@ void	create_plane(t_params *params)
 		exit(ft_free(params));
 	/*Init position*/
 	params->plane->position = set_vector(0, -4, 0);
-/*	params->plane->position.vect_x = 10;
-	params->plane->position.vect_y = 4;
-	params->plane->position.vect_z = 56;*/
 
 	/*Init Normale*/
 	params->plane->normale = set_vector(0, 1, 0);
 	params->plane->color = 0x00FFFFFF;
 	params->plane_list[0] = *params->plane;
-	/*params->plane->normale.vect_x = 0;
-	  params->plane->normale.vect_y = 1;
-	  params->plane->normale.vect_z = 0;*/
 }
 
 void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)

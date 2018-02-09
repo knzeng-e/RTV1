@@ -12,7 +12,54 @@
 
 #include "rt_v1.h"
 
-int	couleur(double angle)
+void	clamp(int *r, int *g, int *b)
 {
-	return ((RGB(127.5 * (cos(angle) + 1), 127.5 * (sin(angle) + 1), 127.5 * (1 - cos(angle)))));
+	*r = ( *r > 255) ? 255 : *r;
+	*g = ( *g > 255) ? 255 : *g;
+	*r = ( *b > 255) ? 255 : *b;
+}
+
+int	couleur(double intensity)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	r = 127.5 * cos(intensity) + 1;
+	g = 127.5 * sin(intensity) + 1;
+	b = 127.5 * (1 - cos(intensity));
+	//clamp(&r, &g, &b);
+	return (RGB(r, g, b));
+}
+
+int		calc_color(int color, double i)
+{
+	double	r;
+	double	g;
+	double	b;
+
+	b = (color % 256);
+	r = (color / (256 * 256));
+	g = (color / 256) - r * 256;
+	b =  b * i;
+	r =  r * i;
+	g =  g * i;
+	if (r > 255)
+		r = 255;
+	if (g > 255)
+		g = 255;
+	if (b > 255)
+		b = 255;
+	return (RGB(r, g, b));
+}
+
+int	get_color(int r, int g, int b)
+{
+	int	result;
+
+	result = 0;
+	result += r << 16;
+	result += g << 8;
+	result += b;
+	return (result);
 }

@@ -29,6 +29,7 @@
 # define V_KEY 9
 # define B_KEY 11
 # define J_KEY 38
+# define I_KEY 34
 # define ZOOM_IN 69
 # define ZOOM_OUT 78
 # define RADIUS 20.0
@@ -53,7 +54,7 @@
 # include "rayon.h"
 # include "sphere.h"
 # define free(aa) {printf("[%s][ligne %d] Liberation bloc %s a %p\n",__FILE__,__LINE__,#aa,aa);free(aa);}
-# define RGB(r, g, b)(256 * 256 * (int)(r) + 256 * (int)(g) + (int)(b))
+# define RGB(r, g, b)(256 * 256 * (unsigned int)(r) + 256 * (unsigned int)(g) + (unsigned int)(b))
 
 typedef struct	s_cylindre
 {
@@ -83,10 +84,10 @@ typedef struct	s_view
 
 typedef struct	s_plane
 {
-	t_vect		position;
-	t_vect		normale;
-	t_vect		distance;
-	int			color;
+	t_vect			position;
+	t_vect			normale;
+	t_vect			distance;
+	unsigned int	color;
 }				t_plane;
 
 typedef struct	s_transform
@@ -144,7 +145,8 @@ typedef struct	s_params
 	void		*mlx;
 	void		*win;
 	int			*ptr_img;
-	int			*img_data;
+	char		*img_data;
+	//int			*img_data;
 	int			bpp;
 	int			size_line;
 	int			endian;
@@ -183,10 +185,15 @@ void			set_y_rotation(t_transform *transforms, double angle);
 void			set_z_rotation(t_transform *transforms, double angle);
 
 void			save_intersection(t_ray *ray);
+//void			clamp(int *r, int *g, int *b);
+void			clamp(int *r, int *g, int *b);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
 int				couleur(double angle);
+int				get_color(int r, int g, int b);
+//unsigned int	calc_color(double i, unsigned int color);
+int				calc_color(int color, double intensity);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);

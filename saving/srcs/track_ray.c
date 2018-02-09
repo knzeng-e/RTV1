@@ -14,7 +14,18 @@
 
 void	draw_pixel(t_params *params, int i, int j, int color)
 {
-	params->img_data[j  * WIDTH + i] = color;
+	int				cpt;
+	unsigned int	p;
+
+	cpt = 0;
+	p = i * (params->bpp / 8) + j * (params->size_line);
+	while (cpt < (params->bpp / 8))
+	{
+		params->img_data[p + cpt] = color;
+		color >>= 8;
+		cpt++;
+	}
+	//	params->img_data[j * params->size_line + i * params->bpp] = color;
 }
 
 double	radians(double angle)
@@ -58,7 +69,7 @@ double	lightning(t_params *params, t_ray *ray, int sphere_hit)
 	t_vect	light_vector;
 	double	diffuse;
 	//t_vect	specular;
-	double	angle;
+	double		angle;
 	double		length;
 	double		normal_length;
 
@@ -71,27 +82,20 @@ double	lightning(t_params *params, t_ray *ray, int sphere_hit)
 	ray_normalize(&params->current_normal);
 	angle = dot_product(light_vector, params->current_normal);
 	if (angle > 0)
-		diffuse = params->light[0].intensity * angle / (length * normal_length);
+		diffuse = angle / (length * normal_length);
 	else
 		diffuse = 0;
-	//if (angle < 0)
-	//	angle = 0;
-	//if (angle)
-	//printf("\n Color of sphere %d (diffuse == %f) ==> %f", sphere_hit, diffuse, params->sphere_list[sphere_hit].color * diffuse);
-	//params->sphere_list[sphere_hit].color = couleur(params->sphere_list[sphere_hit].color);
-	//	params->sphere_list[sphere_hit].color  += diffuse;
-	//draw_pixel(params, i, j, (get_color(params->sphere3.color)  + 0x000000FF * angle) * 0.5);
-	//draw_pixel(params, i, j, params->sphere_list[cpt].color);
-	//}
-	//}
 	return (diffuse);
 }
-
 
 int	track_ray(t_params *params)
 {
 	t_ray	*ray;
+	t_vect	light_vector;
 	double	t_min;
+	double	angle;
+	double	normal;
+	double	length;
 	int		sphere_hit;
 	//int		color;
 	int		hit;
@@ -124,13 +128,23 @@ int	track_ray(t_params *params)
 				{
 					t_min = ray->t;
 					sphere_hit = cpt;
-					//params->color =  params->sphere_list[cpt].color;
 				}
 				if (sphere_hit != -1)
 				{
-					params->color =  params->sphere_list[sphere_hit].color;
-					params->color *= couleur(lightning(params, ray, sphere_hit) + AMBIANT_LIGHT);
+
+					light_vector = vect_sub(params->light[0].position, ray->intersection);
+					length = get_length(&light_vector);
+					normal = get_length(&params->current_normal);
+					ray_normalize(&light_vector);
+					ray_normalize(&params->current_normal);
+					angle = dot_product(params->current_normal, light_vector);
+					if (angle <= 0)
+						angle = 0;
+					//printf("\nANGLE ==> %d", couleur(angle));
+					params->color = params->sphere_list[sphere_hit].color * (AMBIANT_LIGHT +  DIFFUSE_LIGHT * angle);
+					params->color = calc_color(params->color, params->light[0].intensity);
 					draw_pixel(params, i, j, params->color);
+					//draw_pixel(params, i, j, calc_color(params->color));
 				}
 				/*else
 				  draw_pixel(params, i, j, RGB(242, 242, 242));*/

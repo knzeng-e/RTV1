@@ -38,7 +38,9 @@ int		mouse_hook(int button, int x, int y, t_params *infos)
 
 int		key_hook(int keycode, t_params *params)
 {
-
+	printf("\nKey pressed ==> %d", keycode);
+	if (keycode == I_KEY)
+		params->light[0].intensity += 0.5;
 	if (keycode == 53)
 		exit (0);
 	if (keycode == V_KEY)
