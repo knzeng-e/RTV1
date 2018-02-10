@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/06 11:50:44 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/10 09:47:39 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,64 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	params->light[0] = *light;
 }
 
+void	init_objects_list(t_params *params)
+{
+	t_list		head;
+	t_plane		check_plane;
+	t_sphere	check_sphere;
+	int			cpt;
+
+	cpt = -1;
+	params->objects = (t_object *)malloc(sizeof(t_object) * params->nb_objects);
+	if (params->objects == NULL)
+	{
+		ft_free(params);
+		exit(MALLOC_ERROR);
+	}
+	params->obj_list.content_size = 0;
+	params->obj_list.next = NULL;
+	head = params->obj_list;
+	while (++cpt < NB_SPHERES)
+	{
+		while (head.next != NULL)
+			head = *head.next;
+	//	head = *head.next;
+		head.content = &params->sphere_list[cpt];
+		params->objects[cpt].item = SPHERE;
+		head.next = NULL;
+		printf("\nCPT ==> %d", cpt);
+		//	params->obj_list = head;
+	}
+	head = params->obj_list;
+
+	while (head.next)
+	{
+		check_sphere = *(t_sphere *)head.content;
+		printf("\nSPEHRE RADIUS ==> %f", check_sphere.rayon);
+		head = *head.next;
+	}
+	head = params->obj_list;
+
+	cpt = -1;
+	while (++cpt < NB_PLANES)
+	{
+		head = params->obj_list;
+		while (head.next != NULL)
+			head = *head.next;
+		head.content = &params->plane_list[cpt];
+		params->objects[cpt].item = PLANE;
+		head.next = &params->obj_list;
+		check_plane = *(t_plane *)head.content;
+		printf("\nPLANE COLOR ==> %d", check_plane.color);
+	}
+}
+
 void	init_scene(t_params *params)
 {
 	init_mlx(params);
+	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
 	create_plane(params);
 	put_light(params, 1, 3, -8);
+	init_objects_list(params);
 }

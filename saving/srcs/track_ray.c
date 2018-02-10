@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/06 11:59:44 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/10 04:19:58 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,13 @@ int	track_ray(t_params *params)
 			set_origin(i, j, ray, params);
 			set_camera(ray, params, i, j);
 			cpt = -1;
-			sphere_hit = -1;
+			//sphere_hit = -1;
 			t_min = MAX_DISTANCE;
 			while (++cpt < NB_SPHERES)
 			{
-				if (plane_intersect(ray, (params->plane), params))
-					draw_pixel(params, i, j, 0x004E1609);
+				sphere_hit = -1;
+				/*if (plane_intersect(ray, (params->plane), params))
+					draw_pixel(params, i, j, 0x004E1609);*/
 				hit = sphere_intersect(ray, params->sphere_list[cpt], params);
 				if (hit && ray->t < t_min)
 				{
@@ -140,11 +141,9 @@ int	track_ray(t_params *params)
 					angle = dot_product(params->current_normal, light_vector);
 					if (angle <= 0)
 						angle = 0;
-					//printf("\nANGLE ==> %d", couleur(angle));
 					params->color = params->sphere_list[sphere_hit].color * (AMBIANT_LIGHT +  DIFFUSE_LIGHT * angle);
 					params->color = calc_color(params->color, params->light[0].intensity);
 					draw_pixel(params, i, j, params->color);
-					//draw_pixel(params, i, j, calc_color(params->color));
 				}
 				/*else
 				  draw_pixel(params, i, j, RGB(242, 242, 242));*/

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/06 11:37:00 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/10 06:16:29 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define SHININESS 128
 # define NB_SPHERES 4
 # define NB_PLANES 1
+# define NB_OBJECTS NB_PLANES + NB_SPHERES
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -38,6 +39,7 @@
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
 # define MALLOC_PARAMS_ERROR -1
+# define MALLOC_ERROR -3
 # define FOV 30
 # define MAX_FOV 150
 # define RED 0x00FF0000
@@ -99,7 +101,9 @@ typedef struct	s_transform
 	double		translation[3][3];
 }				t_transform;
 
-typedef struct	s_object
+typedef struct	s_object t_object;
+
+struct			s_object
 {
 	t_vect		position;
 	t_color		color;
@@ -109,8 +113,14 @@ typedef struct	s_object
 		PLANE,
 		CYLINDER,
 		CONE
-	};
-}				t_object;
+	} 			item;
+	union
+	{
+		t_sphere	*sphere;
+		t_plane		*plane;
+	}			type;
+	t_object	*next;
+};
 
 typedef struct	s_light
 {
@@ -135,6 +145,8 @@ typedef struct	s_params
 	t_ray		*tab_rays[WIDTH][HEIGHT];
 	t_light		light[NB_LIGHTS];
 	t_plane		*plane;
+	t_list		obj_list;
+	t_object	*objects;
 	t_vect		current_normal;
 	double		x_indent;
 	double		y_indent;
@@ -154,6 +166,7 @@ typedef struct	s_params
 	int			ray_depth;
 	int			t;
 	int			color;
+	int			nb_objects;
 }				t_params;
 
 /*typedef struct	s_object
@@ -194,6 +207,7 @@ int				couleur(double angle);
 int				get_color(int r, int g, int b);
 //unsigned int	calc_color(double i, unsigned int color);
 int				calc_color(int color, double intensity);
+int				get_nb_objects(t_params *params);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);

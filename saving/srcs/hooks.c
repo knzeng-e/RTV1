@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/05 22:08:35 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/10 02:16:33 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		mouse_hook(int button, int x, int y, t_params *infos)
 
 int		key_hook(int keycode, t_params *params)
 {
-	printf("\nKey pressed ==> %d", keycode);
+	//printf("\nKey pressed ==> %d", keycode);
 	if (keycode == I_KEY)
 		params->light[0].intensity += 0.5;
 	if (keycode == 53)
