@@ -19,6 +19,38 @@ void	clamp(int *r, int *g, int *b)
 	*r = ( *b > 255) ? 255 : *b;
 }
 
+int		rgb_to_int(int r, int g, int b)
+{
+	/*C = 256^2* R + 256* G + B  */
+	int	color;
+
+	//clamp(&r, &g, &b);
+	r = (r > 255) ? 255 : ((r < 0) ? 0 : r);
+	g = (g > 255) ? 255 : ((g < 0) ? 0 : g);
+	b = (b > 255) ? 255 : ((b < 0) ? 0 : b);
+	color = (256 * 256 * r) + (256 * g) + b;
+	return (color);
+}
+
+t_color	get_rgb(int color)
+{
+	t_color	rgb;
+	
+	/*
+	 *
+	 * R = C/256^2;
+	 *
+	 * G = C/256 % 256^2;
+	 *
+	 * B = C%256;
+	 *
+	 * */
+	rgb.red = color / (256 * 256);
+	rgb.green = color / 256 % 256 * 256;
+	rgb.blue = color % 256;
+	return (rgb);
+}
+
 int	couleur(double intensity)
 {
 	int	r;

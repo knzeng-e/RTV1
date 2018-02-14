@@ -92,10 +92,12 @@ int	track_ray(t_params *params)
 {
 	t_ray	*ray;
 	t_vect	light_vector;
+	t_color	rgb;
 	double	t_min;
 	double	angle;
 	double	normal;
 	double	length;
+	double	lightning;
 	int		sphere_hit;
 	//int		color;
 	int		hit;
@@ -122,8 +124,9 @@ int	track_ray(t_params *params)
 			while (++cpt < NB_SPHERES)
 			{
 				sphere_hit = -1;
-				/*if (plane_intersect(ray, (params->plane), params))
-					draw_pixel(params, i, j, 0x004E1609);*/
+				if (plane_intersect(ray, (params->plane), params))
+					draw_pixel(params, i, j, params->plane->color);
+					//draw_pixel(params, i, j, 0x004E1609);
 				hit = sphere_intersect(ray, params->sphere_list[cpt], params);
 				if (hit && ray->t < t_min)
 				{
@@ -132,7 +135,6 @@ int	track_ray(t_params *params)
 				}
 				if (sphere_hit != -1)
 				{
-
 					light_vector = vect_sub(params->light[0].position, ray->intersection);
 					length = get_length(&light_vector);
 					normal = get_length(&params->current_normal);
@@ -141,8 +143,13 @@ int	track_ray(t_params *params)
 					angle = dot_product(params->current_normal, light_vector);
 					if (angle <= 0)
 						angle = 0;
-					params->color = params->sphere_list[sphere_hit].color * (AMBIANT_LIGHT +  DIFFUSE_LIGHT * angle);
-					params->color = calc_color(params->color, params->light[0].intensity);
+					lightning = (AMBIANT_LIGHT + DIFFUSE_LIGHT * angle);
+					params->color = params->sphere_list[sphere_hit].color * lightning;
+					rgb = get_rgb(params->sphere_list[sphere_hit].color);
+					params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
+					//params->color = rgb_to_int(rgb.red, rgb.green, rgb.blue);
+					//params->color = calc_color(params->color, params->light[0].intensity);
+					//params->color *= lightning;
 					draw_pixel(params, i, j, params->color);
 				}
 				/*else

@@ -49,6 +49,10 @@ int		key_hook(int keycode, t_params *params)
 		params->sphere_list[0].is_selected = !(params->sphere_list[0].is_selected);
 	if (keycode == B_KEY)
 		params->sphere_list[2].is_selected = !(params->sphere_list[2].is_selected);
+	if (keycode == R_KEY)
+		params->sphere_list[3].is_selected = !(params->sphere_list[3].is_selected);
+	if (keycode == L_KEY)
+		params->light[0].is_selected = !(params->light[0].is_selected);
 	if (keycode == LEFT_KEY)
 	{
 		if (params->sphere_list[0].is_selected)
@@ -57,6 +61,10 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[1].center.vect_x -= MOVE_DIST;
 		if (params->sphere_list[2].is_selected)
 			params->sphere_list[2].center.vect_x -= MOVE_DIST;
+		if (params->sphere_list[3].is_selected)
+			params->sphere_list[3].center.vect_x -= MOVE_DIST;
+		if (params->light[0].is_selected)
+			params->light[0].position.vect_x -= MOVE_DIST;
 		//params->eye.x_pos -= 10;
 	}
 	if (keycode == RIGHT_KEY)
@@ -67,6 +75,10 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[1].center.vect_x += MOVE_DIST;
 		if (params->sphere_list[2].is_selected)
 			params->sphere_list[2].center.vect_x += MOVE_DIST;
+		if (params->sphere_list[3].is_selected)
+			params->sphere_list[3].center.vect_x += MOVE_DIST;
+		if (params->light[0].is_selected)
+			params->light[0].position.vect_x += MOVE_DIST;
 		//params->eye.x_pos += 10;
 	}
 	if (keycode == ZOOM_IN)
@@ -81,6 +93,10 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[1].center.vect_y += MOVE_DIST;
 		if (params->sphere_list[2].is_selected)
 			params->sphere_list[2].center.vect_y += MOVE_DIST;
+		if (params->sphere_list[3].is_selected)
+			params->sphere_list[3].center.vect_y += MOVE_DIST;
+		if (params->light[0].is_selected)
+			params->light[0].position.vect_y += MOVE_DIST;
 		//params->eye.y_pos -= 10;
 	}
 	if (keycode == DOWN_KEY)
@@ -91,6 +107,10 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[1].center.vect_y -= MOVE_DIST;
 		if (params->sphere_list[2].is_selected)
 			params->sphere_list[2].center.vect_y -= MOVE_DIST;
+		if (params->sphere_list[3].is_selected)
+			params->sphere_list[3].center.vect_y -= MOVE_DIST;
+		if (params->light[0].is_selected)
+			params->light[0].position.vect_y -= MOVE_DIST;
 		//	params->eye.y_pos += 10;
 	}
 

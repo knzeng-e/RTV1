@@ -29,10 +29,14 @@
 # define MOVE_DIST 0.3
 # define V_KEY 9
 # define B_KEY 11
+# define R_KEY 15
 # define J_KEY 38
 # define I_KEY 34
-# define ZOOM_IN 69
-# define ZOOM_OUT 78
+# define L_KEY 37
+//# define ZOOM_IN 69
+# define ZOOM_IN 44
+//# define ZOOM_OUT 78
+# define ZOOM_OUT 24
 # define RADIUS 20.0
 # define OK 0
 # define MAX_DISTANCE 20000
@@ -43,7 +47,8 @@
 # define FOV 30
 # define MAX_FOV 150
 # define RED 0x00FF0000
-# define GREEN 0x0000FF00
+//# define GREEN 0x0000FF00
+# define GREEN 0x00088e40
 # define BLUE 0x000000FF
 # define YELLOW 0x00FFFF00
 # define MALLOC_TRANSFORM_ERROR -2
@@ -53,6 +58,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
+# include <pthread.h>
 # include "rayon.h"
 # include "sphere.h"
 # define free(aa) {printf("[%s][ligne %d] Liberation bloc %s a %p\n",__FILE__,__LINE__,#aa,aa);free(aa);}
@@ -101,27 +107,6 @@ typedef struct	s_transform
 	double		translation[3][3];
 }				t_transform;
 
-typedef struct	s_object t_object;
-
-struct			s_object
-{
-	t_vect		position;
-	t_color		color;
-	enum		
-	{
-		SPHERE,
-		PLANE,
-		CYLINDER,
-		CONE
-	} 			item;
-	union
-	{
-		t_sphere	*sphere;
-		t_plane		*plane;
-	}			type;
-	t_object	*next;
-};
-
 typedef struct	s_light
 {
 	t_vect		position;
@@ -129,6 +114,7 @@ typedef struct	s_light
 	double		diffuse_light;
 	double		specular_light;
 	int			shininess;
+	int			is_selected;
 	enum		e_type
 	{
 		POINT,
@@ -136,6 +122,29 @@ typedef struct	s_light
 		AMBIANT
 	}			t_type;
 }				t_light;
+
+typedef struct	s_object t_object;
+
+struct			s_object
+{
+	t_vect		position;
+	t_color		color;
+	enum
+	{
+		SPHERE,
+		PLANE,
+		CYLINDER,
+		CONE,
+		LIGHT
+	} 			item;
+	union
+	{
+		t_sphere	*sphere;
+		t_plane		*plane;
+		t_light		*light;
+	}			type;
+	struct s_object	*next;
+};
 
 typedef struct	s_params
 {
@@ -145,8 +154,9 @@ typedef struct	s_params
 	t_ray		*tab_rays[WIDTH][HEIGHT];
 	t_light		light[NB_LIGHTS];
 	t_plane		*plane;
-	t_list		obj_list;
+	t_list		*obj_list;
 	t_object	*objects;
+	t_object	**objects_ptr;
 	t_vect		current_normal;
 	double		x_indent;
 	double		y_indent;
@@ -170,15 +180,15 @@ typedef struct	s_params
 }				t_params;
 
 /*typedef struct	s_object
-{
-	int			id;
-	int			type;
-	union
-	{
-		t_sphere	*sphere;
-		t_plane		*plane;
-	} current_object;
-}				t_object;*/
+  {
+  int			id;
+  int			type;
+  union
+  {
+  t_sphere	*sphere;
+  t_plane		*plane;
+  } current_object;
+  }				t_object;*/
 
 int				expose_hook(t_params *params);
 int				mouse_hook(int button, int x, int y, t_params *params);
@@ -189,6 +199,7 @@ int				ft_free(t_params *params);
 int				is_shadowed(t_vect intersection, t_params *params, int obj_id);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_scene(t_params *params);
+void			init_objects(t_params *params);
 void			init_transform_matrices(t_transform *transforms);
 void			set_view(t_params *params);
 void			ray_equation(t_ray *ray);
@@ -205,6 +216,7 @@ int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
 int				couleur(double angle);
 int				get_color(int r, int g, int b);
+int				rgb_to_int(int r, int g, int b);
 //unsigned int	calc_color(double i, unsigned int color);
 int				calc_color(int color, double intensity);
 int				get_nb_objects(t_params *params);
@@ -218,4 +230,5 @@ t_vect			vect_multiply(t_vect vect, double cste);
 t_vect			vect_add(t_vect vect1, t_vect vect2);
 t_vect			set_vector(double x, double y, double z);
 t_color			set_color(double red, double green, double blue);
+t_color			get_rgb(int color);
 #endif
