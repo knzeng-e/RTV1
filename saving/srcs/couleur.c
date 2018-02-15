@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 07:39:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/06 12:18:16 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 04:59:44 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,7 @@ int		calc_color(int color, double i)
 	return (RGB(r, g, b));
 }
 
-int	get_color(int r, int g, int b)
+int	get_color(t_color color)
 {
-	int	result;
-
-	result = 0;
-	result += r << 16;
-	result += g << 8;
-	result += b;
-	return (result);
+	return (rgb_to_int(color.red, color.green, color.blue));
 }

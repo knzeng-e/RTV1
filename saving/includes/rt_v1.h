@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 02:26:05 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 06:24:57 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define SHININESS 128
 # define NB_SPHERES 4
 # define NB_PLANES 1
-# define NB_LIGHTS 1
+# define NB_LIGHTS 2
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_LIGHTS
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
@@ -199,11 +199,12 @@ int				track_ray(t_params *params);
 int				throw_ray(t_ray *ray);
 int				ft_free(t_params *params);
 int				is_shadowed(t_vect intersection, t_params *params, int obj_id);
+int				intersect(t_ray *ray, t_object *obj, t_params *params);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
 int				couleur(double angle);
-int				get_color(int r, int g, int b);
+int				get_color(t_color color);
 int				rgb_to_int(int r, int g, int b);
 int				calc_color(int color, double intensity);
 int				get_nb_objects(t_params *params);

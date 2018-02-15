@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 02:09:33 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 06:36:46 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	create_plane(t_params *params)
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
 	/*Init position*/
-	params->plane->position = set_vector(0, -4, 0);
+	params->plane->position = set_vector(0, -4, -12);
 	/*Init Normale*/
 	params->plane->normale = set_vector(0, 1, 0);
 	params->plane->color = 0x00FFFFFF;
@@ -65,8 +65,12 @@ void	create_plane(t_params *params)
 void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 {
 	t_light	*light;
+	t_light	*light2;
 
 	if ((light = (t_light *)malloc(sizeof(t_light))) == NULL)
+		exit(0);
+
+	if ((light2 = (t_light *)malloc(sizeof(t_light))) == NULL)
 		exit(0);
 	light->position = set_vector(x_pos, y_pos, z_pos);
 	light->intensity = 1.5;
@@ -76,6 +80,15 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->is_selected = 0;
 	light->color = set_color(0xFF, 0xFF, 0xFF); 
 	params->light[0] = *light;
+
+	light2->position = set_vector(-x_pos, -10, -25);
+	light2->intensity = 1.5;
+	light2->diffuse_light = DIFFUSE_LIGHT;
+	light2->specular_light = SPECULAR;
+	light2->shininess = SHININESS;
+	light2->is_selected = 0;
+	light2->color = set_color(0xFF, 0xFF, 0xFF); 
+	params->light[1] = *light2;
 }
 
 void	init_scene(t_params *params)
@@ -84,6 +97,6 @@ void	init_scene(t_params *params)
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
 	create_plane(params);
-	put_light(params, 0, 5, -4.5);
+	put_light(params, -7, 12, -10);
 	init_objects(params);
 }

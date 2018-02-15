@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/10 04:19:58 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 06:31:33 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,20 +90,22 @@ double	lightning(t_params *params, t_ray *ray, int sphere_hit)
 
 int	track_ray(t_params *params)
 {
-	t_ray	*ray;
-	t_vect	light_vector;
-	t_color	rgb;
-	double	t_min;
-	double	angle;
-	double	normal;
-	double	length;
-	double	lightning;
-	int		sphere_hit;
-	//int		color;
-	int		hit;
-	int		i;
-	int		j;
-	int		cpt;
+	t_ray		*ray;
+	t_vect		light_vector;
+	t_color		rgb;
+	t_object	*obj;
+	t_object	*light;
+	double		t_min;
+	double		angle;
+	double		normal;
+	double		length;
+	double		lightning;
+	int			sphere_hit;
+	int			hit;
+	int			i;
+	int			j;
+	int			cpt;
+	int			cpt_light;
 
 	t_min = MAX_DISTANCE;
 	i = 0;
@@ -118,16 +120,18 @@ int	track_ray(t_params *params)
 			params->rays_to_free++;
 			set_origin(i, j, ray, params);
 			set_camera(ray, params, i, j);
-			cpt = -1;
-			//sphere_hit = -1;
+			cpt = 0;
 			t_min = MAX_DISTANCE;
-			while (++cpt < NB_SPHERES)
+			//while (++cpt < NB_OBJECTS)
+			obj = params->objects;
+			while (cpt < 5 && obj)
 			{
 				sphere_hit = -1;
-				if (plane_intersect(ray, (params->plane), params))
-					draw_pixel(params, i, j, params->plane->color);
-					//draw_pixel(params, i, j, 0x004E1609);
-				hit = sphere_intersect(ray, params->sphere_list[cpt], params);
+
+				/*if (plane_intersect(ray, (params->plane), params))
+				  draw_pixel(params, i, j, params->plane->color);*/
+				//hit = sphere_intersect(ray, params->sphere_list[cpt], params);
+				hit = intersect(ray, obj, params);
 				if (hit && ray->t < t_min)
 				{
 					t_min = ray->t;
@@ -135,25 +139,35 @@ int	track_ray(t_params *params)
 				}
 				if (sphere_hit != -1)
 				{
-					light_vector = vect_sub(params->light[0].position, ray->intersection);
-					length = get_length(&light_vector);
-					normal = get_length(&params->current_normal);
-					ray_normalize(&light_vector);
-					ray_normalize(&params->current_normal);
-					angle = dot_product(params->current_normal, light_vector);
-					if (angle <= 0)
-						angle = 0;
-					lightning = (AMBIANT_LIGHT + DIFFUSE_LIGHT * angle);
-					params->color = params->sphere_list[sphere_hit].color * lightning;
-					rgb = get_rgb(params->sphere_list[sphere_hit].color);
-					params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
-					//params->color = rgb_to_int(rgb.red, rgb.green, rgb.blue);
-					//params->color = calc_color(params->color, params->light[0].intensity);
-					//params->color *= lightning;
-					draw_pixel(params, i, j, params->color);
+					light = params->objects;
+					cpt_light = -1;
+					lightning = 0;
+					while (++cpt_light < NB_LIGHTS)
+					{
+						while (light->item != LIGHT)
+							light = light->next;
+						//light_vector = vect_sub(params->light[0].position, ray->intersection);
+						light_vector = vect_sub(light->position, ray->intersection);
+						length = get_length(&light_vector);
+						normal = get_length(&params->current_normal);
+						ray_normalize(&light_vector);
+						ray_normalize(&params->current_normal);
+						angle = dot_product(params->current_normal, light_vector);
+						if (angle <= 0)
+							angle = 0;
+						lightning += (AMBIANT_LIGHT + DIFFUSE_LIGHT * angle);
+						//params->color = params->sphere_list[sphere_hit].color * lightning;
+						params->color = get_color(obj->color) * lightning;
+						rgb = obj->color;
+						params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
+						draw_pixel(params, i, j, params->color);
+						light = light->next;
+					}
 				}
 				/*else
 				  draw_pixel(params, i, j, RGB(242, 242, 242));*/
+				obj = obj->next;
+				cpt++;
 			}
 			/*else
 			  draw_pixel(params, i, j, 0x00CECECE);*/
