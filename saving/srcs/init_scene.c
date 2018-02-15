@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 01:36:59 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 02:09:33 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->specular_light = SPECULAR;
 	light->shininess = SHININESS;
 	light->is_selected = 0;
+	light->color = set_color(0xFF, 0xFF, 0xFF); 
 	params->light[0] = *light;
 }
 

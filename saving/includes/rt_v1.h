@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 01:29:13 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 02:26:05 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define RT_V1_H
 # define WIDTH 800
 # define HEIGHT 640
-# define NB_LIGHTS 2
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
 # define SPECULAR 0.7
 # define SHININESS 128
 # define NB_SPHERES 4
 # define NB_PLANES 1
-# define NB_OBJECTS NB_PLANES + NB_SPHERES
+# define NB_LIGHTS 1
+# define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_LIGHTS
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -110,6 +110,7 @@ typedef struct	s_transform
 typedef struct	s_light
 {
 	t_vect		position;
+	t_color		color;
 	double		intensity;
 	double		diffuse_light;
 	double		specular_light;
@@ -217,8 +218,12 @@ void			set_x_rotation(t_transform *transforms, double angle);
 void			set_y_rotation(t_transform *transforms, double angle);
 void			set_z_rotation(t_transform *transforms, double angle);
 void			save_intersection(t_ray *ray);
+void			set_sphere(t_object *current_obj, t_params *params, int cpt_spheres);
 void			save_spheres(t_object *current_obj, t_params *params, int *cpt_objects);
+void			set_plane(t_object *current_obj, t_params *params, int cpt_planes);
 void			save_planes(t_object *current_obj, t_params *params, int *cpt_objects);
+void			set_light(t_object *current_obj, t_params *params, int cpt_lights);
+void			save_lights(t_object *current_obj, t_params *params, int *cpt_objects);
 void			show_object_type(t_object *current_obj);
 void			print_objects(t_object *objects);
 void			init_objects(t_params *params);
