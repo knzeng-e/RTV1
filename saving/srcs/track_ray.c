@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 06:31:33 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 09:12:23 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	track_ray(t_params *params)
 {
 	t_ray		*ray;
 	t_vect		light_vector;
+//	t_vect		reflection;
 	t_color		rgb;
 	t_object	*obj;
 	t_object	*light;
@@ -100,6 +101,7 @@ int	track_ray(t_params *params)
 	double		normal;
 	double		length;
 	double		lightning;
+//	double		specular;
 	int			sphere_hit;
 	int			hit;
 	int			i;
@@ -160,6 +162,10 @@ int	track_ray(t_params *params)
 						params->color = get_color(obj->color) * lightning;
 						rgb = obj->color;
 						params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
+						/* Reflection 
+
+						reflection = ray_normalize(vect_sub(2 * (dot_product(light_vector, normal)) * normal), light_vector);
+*/
 						draw_pixel(params, i, j, params->color);
 						light = light->next;
 					}

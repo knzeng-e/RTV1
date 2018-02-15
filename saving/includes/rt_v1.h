@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 06:24:57 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 11:41:41 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ typedef struct	s_view
 
 typedef struct	s_plane
 {
-	t_vect			position;
-	t_vect			normale;
-	t_vect			distance;
-	unsigned int	color;
+	t_vect		position;
+	t_vect		normale;
+	t_vect		distance;
+	t_color		color;
 }				t_plane;
 
 typedef struct	s_transform

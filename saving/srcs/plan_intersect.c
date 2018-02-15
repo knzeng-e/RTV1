@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 22:08:16 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 02:58:53 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 13:09:59 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,47 +38,52 @@ int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 	result = dot_product(delta, plane->normale) / angle;*/
 	result = dot_product(plane->distance, plane->normale) / angle;
 	params->t = result;
+	if (result >= 0)
+	{
+		ray->t = result;
+		save_intersection(ray);
+	}
 	return (result >= 0);
 }
 
 /*double	plane_intersect(t_vect origin, t_vect direction)
-{
-	double d;
-	t_vect	p;
-	t_vect	temp;
+  {
+  double d;
+  t_vect	p;
+  t_vect	temp;
 
-	t_vect	pos;
-	t_vect	dir;
-	t_vect	pos2;
-	t_vect	dir2;
-	r->getOrigin(pos);
-	r->getDirection(dir);
-	trans->doInvTransformation(pos2,pos);
-	trans->doInvTransformation(dir2,dir);
+  t_vect	pos;
+  t_vect	dir;
+  t_vect	pos2;
+  t_vect	dir2;
+  r->getOrigin(pos);
+  r->getDirection(dir);
+  trans->doInvTransformation(pos2,pos);
+  trans->doInvTransformation(dir2,dir);
 
-	double t;
+  double t;
 
-	if (direction.vect_x != 0)
-	{
-		t = -pos2[0] / dir2[0];
-		if (t > epsilon)
-		{
-			p[0] = 0.0;
-			p[1] = pos2[1] + dir2[1] * t;
-			p[2] = pos2[2] + dir2[2] * t;
-			p[3] = 1.0;
+  if (direction.vect_x != 0)
+  {
+  t = -pos2[0] / dir2[0];
+  if (t > epsilon)
+  {
+  p[0] = 0.0;
+  p[1] = pos2[1] + dir2[1] * t;
+  p[2] = pos2[2] + dir2[2] * t;
+  p[3] = 1.0;
 
-			d = distance (p, pos2);
+  d = distance (p, pos2);
 
-			trans->doTransformation(i,p);
+  trans->doTransformation(i,p);
 
-			return d;
-		}
-		else
-			return MAXDOUBLE;
-	}
-	else
-		return MAXDOUBLE;
-}
-}
-}*/
+  return d;
+  }
+  else
+  return MAXDOUBLE;
+  }
+  else
+  return MAXDOUBLE;
+  }
+  }
+  }*/

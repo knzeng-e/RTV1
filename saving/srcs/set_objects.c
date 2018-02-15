@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 02:57:19 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 02:58:23 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 11:42:42 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	set_plane(t_object *current_obj, t_params *params, int cpt_planes)
 	current_obj->type.plane = &params->plane_list[cpt_planes];
 	current_obj->item = PLANE;
 	current_obj->position = params->plane_list[cpt_planes].position;
-	current_obj->color = get_rgb(params->plane_list[cpt_planes].color);
+	current_obj->color = params->plane_list[cpt_planes].color;
 	current_obj->is_set = 1;
 	current_obj->next = NULL;
 }
