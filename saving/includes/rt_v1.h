@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/10 06:16:29 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/15 01:29:13 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ struct			s_object
 {
 	t_vect		position;
 	t_color		color;
+	int			is_set;
 	enum
 	{
 		SPHERE,
@@ -197,6 +198,14 @@ int				track_ray(t_params *params);
 int				throw_ray(t_ray *ray);
 int				ft_free(t_params *params);
 int				is_shadowed(t_vect intersection, t_params *params, int obj_id);
+int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
+int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
+int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
+int				couleur(double angle);
+int				get_color(int r, int g, int b);
+int				rgb_to_int(int r, int g, int b);
+int				calc_color(int color, double intensity);
+int				get_nb_objects(t_params *params);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_scene(t_params *params);
 void			init_objects(t_params *params);
@@ -207,19 +216,13 @@ void			ray_normalize(t_vect *vect);
 void			set_x_rotation(t_transform *transforms, double angle);
 void			set_y_rotation(t_transform *transforms, double angle);
 void			set_z_rotation(t_transform *transforms, double angle);
-
 void			save_intersection(t_ray *ray);
-//void			clamp(int *r, int *g, int *b);
+void			save_spheres(t_object *current_obj, t_params *params, int *cpt_objects);
+void			save_planes(t_object *current_obj, t_params *params, int *cpt_objects);
+void			show_object_type(t_object *current_obj);
+void			print_objects(t_object *objects);
+void			init_objects(t_params *params);
 void			clamp(int *r, int *g, int *b);
-int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
-int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
-int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
-int				couleur(double angle);
-int				get_color(int r, int g, int b);
-int				rgb_to_int(int r, int g, int b);
-//unsigned int	calc_color(double i, unsigned int color);
-int				calc_color(int color, double intensity);
-int				get_nb_objects(t_params *params);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
