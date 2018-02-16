@@ -6,12 +6,36 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/10 02:16:33 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 21:22:07 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
 
+int		ft_free_rays(t_params *params)
+{
+	int	i;
+	int	j;
+	int	cpt;
+
+	i = -1;
+	cpt = -1;
+	while (++i < WIDTH)
+	{
+		j = -1;
+		while (++j < HEIGHT)
+		{
+			if (++cpt <= params->rays_to_free)
+			{
+				free(params->tab_rays[j][i]);
+				params->rays_to_free--;
+			}
+			else
+				return (FREE_OK);
+		}
+	}
+	return (-1);
+}
 
 int		expose_hook(t_params *infos)
 {
@@ -113,7 +137,6 @@ int		key_hook(int keycode, t_params *params)
 			params->light[0].position.vect_y -= MOVE_DIST;
 		//	params->eye.y_pos += 10;
 	}
-
 	expose_hook(params);
 	return (keycode);
 }

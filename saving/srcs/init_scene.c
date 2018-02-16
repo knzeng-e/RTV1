@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 13:23:24 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 21:30:46 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	create_sphere(t_params *params)
 	params->sphere_list[2].center = set_vector(0.5, 1.7, -16);
 	params->sphere_list[2].color = BLUE;
 	params->sphere_list[3].rayon = 0.9;
-	params->sphere_list[3].center = set_vector(-1.3, 1.3, -12);
+	params->sphere_list[3].center = set_vector(-1.3, 1.3, -22);
 	params->sphere_list[3].color = RED;
 }
 
@@ -81,7 +81,7 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->color = set_color(0xFF, 0xFF, 0xFF); 
 	params->light[0] = *light;
 
-	light2->position = set_vector(-x_pos, 10, -25);
+	light2->position = set_vector(-x_pos, -12, -10);
 	light2->intensity = 1.5;
 	light2->diffuse_light = DIFFUSE_LIGHT;
 	light2->specular_light = SPECULAR;

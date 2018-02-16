@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 22:08:16 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 13:09:59 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 20:34:57 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 	if (fabs(angle) < 1e-6)
 		return (0);
 	plane->distance = vect_sub(plane->position, ray->origin);
-	/*delta.vect_x = plane->position.vect_x - ray->origin.vect_x;
-	delta.vect_y = plane->position.vect_y - ray->origin.vect_y;
-	delta.vect_z = plane->position.vect_z - ray->origin.vect_z;
-	result = dot_product(delta, plane->normale) / angle;*/
+	params->current_normal = plane->normale;
 	result = dot_product(plane->distance, plane->normale) / angle;
 	params->t = result;
 	if (result >= 0)

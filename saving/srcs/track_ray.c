@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 09:12:23 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 20:32:05 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int	track_ray(t_params *params)
 				{
 					light = params->objects;
 					cpt_light = -1;
-					lightning = 0;
+					lightning = AMBIANT_LIGHT;
 					while (++cpt_light < NB_LIGHTS)
 					{
 						while (light->item != LIGHT)
@@ -157,18 +157,18 @@ int	track_ray(t_params *params)
 						angle = dot_product(params->current_normal, light_vector);
 						if (angle <= 0)
 							angle = 0;
-						lightning += (AMBIANT_LIGHT + DIFFUSE_LIGHT * angle);
+						lightning += (DIFFUSE_LIGHT * angle);
 						//params->color = params->sphere_list[sphere_hit].color * lightning;
-						params->color = get_color(obj->color) * lightning;
-						rgb = obj->color;
-						params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
-						/* Reflection 
-
-						reflection = ray_normalize(vect_sub(2 * (dot_product(light_vector, normal)) * normal), light_vector);
-*/
-						draw_pixel(params, i, j, params->color);
 						light = light->next;
 					}
+					params->color = get_color(obj->color) * lightning;
+					rgb = obj->color;
+					params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
+					/* Reflection 
+
+					   reflection = ray_normalize(vect_sub(2 * (dot_product(light_vector, normal)) * normal), light_vector);
+					   */
+					draw_pixel(params, i, j, params->color);
 				}
 				/*else
 				  draw_pixel(params, i, j, RGB(242, 242, 242));*/

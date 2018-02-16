@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 11:41:41 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 21:29:57 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,18 @@
 # define J_KEY 38
 # define I_KEY 34
 # define L_KEY 37
-//# define ZOOM_IN 69
-# define ZOOM_IN 44
-//# define ZOOM_OUT 78
-# define ZOOM_OUT 24
+# define ZOOM_IN 69
+//# define ZOOM_IN 44
+# define ZOOM_OUT 78
+//# define ZOOM_OUT 24
 # define RADIUS 20.0
 # define OK 0
+# define FREE_OK 0
 # define MAX_DISTANCE 20000
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
 # define MALLOC_PARAMS_ERROR -1
+# define FREE_ERROR -4
 # define MALLOC_ERROR -3
 # define FOV 30
 # define MAX_FOV 150
