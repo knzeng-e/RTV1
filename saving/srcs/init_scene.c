@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/16 21:30:46 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 22:41:14 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void	create_sphere(t_params *params)
 	while (++cpt < NB_SPHERES)
 		params->sphere_list[cpt].is_selected = 0;
 	params->sphere_list[0].rayon = 0.5;
-	params->sphere_list[0].center = set_vector(0.1, 2.1, -10);
-	params->sphere_list[0].color = 0x00FF00FF;
+	params->sphere_list[0].center = set_vector(0.1, 2.1, -18);
+	//params->sphere_list[0].color = 0x00FF00FF;
+	params->sphere_list[0].color = rgb_to_int(0xff, 0xff, 66);
 	params->sphere_list[1].rayon = 0.6;
 	params->sphere_list[1].center = set_vector(-0.8, 0.5, -14);
-	params->sphere_list[1].color = rgb_to_int(42, 142, 242);
+	params->sphere_list[1].color = rgb_to_int(0, 1, 0);
 	params->sphere_list[2].rayon = 0.8;
 	params->sphere_list[2].center = set_vector(0.5, 1.7, -16);
 	params->sphere_list[2].color = BLUE;
@@ -54,12 +55,26 @@ void	create_plane(t_params *params)
 {
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
+	
+	if ((params->vertical_plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
+		exit(ft_free(params));
 	/*Init position*/
-	params->plane->position = set_vector(0, -4, 0);
+	params->plane->position = set_vector(0, -4, -445);
+	//params->plane->position = set_vector(0, 0, -42);
 	/*Init Normale*/
 	params->plane->normale = set_vector(0, 1, 0);
-	params->plane->color = set_color(0xFF, 0xFF, 0xFF);
+	//params->plane->normale = set_vector(0, 0, -1);
+	params->plane->color = set_color(21, 0xae, 0xFF);
+	//params->plane->color = set_color(0xFF, 0, 0);
 	params->plane_list[0] = *params->plane;
+
+	/*Init position*/
+	params->vertical_plane->position = set_vector(0, -4, -42);
+	/*Init Normale*/
+	params->vertical_plane->normale = set_vector(0, 0, -1);
+//	params->vertical_plane->color = set_color(0xFF, 0, 0);
+	params->vertical_plane->color = set_color(21, 0xae, 0xFF);
+	/*params->plane_list[1] = *params->vertical_plane;*/
 }
 
 void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
@@ -81,7 +96,7 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->color = set_color(0xFF, 0xFF, 0xFF); 
 	params->light[0] = *light;
 
-	light2->position = set_vector(-x_pos, -12, -10);
+	light2->position = set_vector(-x_pos, 8, -10);
 	light2->intensity = 1.5;
 	light2->diffuse_light = DIFFUSE_LIGHT;
 	light2->specular_light = SPECULAR;

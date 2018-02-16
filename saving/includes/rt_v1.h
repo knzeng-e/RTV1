@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/16 21:29:57 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 22:30:43 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ typedef struct	s_params
 	t_ray		*tab_rays[WIDTH][HEIGHT];
 	t_light		light[NB_LIGHTS];
 	t_plane		*plane;
+	t_plane		*vertical_plane;
 	t_list		*obj_list;
 	t_object	*objects;
 	t_object	**objects_ptr;
