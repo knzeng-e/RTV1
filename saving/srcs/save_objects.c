@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 02:52:46 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 02:55:35 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 23:56:25 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	save_spheres(t_object *obj, t_params *params, int *cpt_objects)
 			ft_free(params);
 			exit(MALLOC_ERROR);
 		}
+		params->current_index = *cpt_objects;
 		set_sphere(obj, params, cpt_spheres);
 		(*cpt_objects)++;
 	}
@@ -59,6 +60,7 @@ void	save_planes(t_object *obj, t_params *params, int *cpt_objects)
 			ft_free(params);
 			exit(MALLOC_ERROR);
 		}
+		params->current_index = *cpt_objects;
 		set_plane(obj, params, cpt_planes);
 		(*cpt_objects)++;
 	}
@@ -85,6 +87,7 @@ void	save_lights(t_object *obj, t_params *params, int *cpt_objects)
 			ft_free(params);
 			exit(MALLOC_ERROR);
 		}
+		params->current_index = *cpt_objects;
 		set_light(obj, params, cpt_lights);
 		(*cpt_objects)++;
 	}

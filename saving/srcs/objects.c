@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 23:42:39 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 02:58:28 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 00:18:02 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	print_objects(t_object *objects)
 	{
 		++cpt;
 		show_object_type(current_obj);
+		ft_putstr("\t id == ");
+		ft_putnbr(current_obj->id);
+		ft_putchar('\n');
 		current_obj = current_obj->next;
 	}
 	ft_putstr("\n NB_OBJECTS SAVED ==> ");
@@ -62,5 +65,5 @@ void	init_objects(t_params *params)
 		save_lights(current_obj, params, &cpt);
 	}
 	current_obj = NULL;
-	print_objects(params->objects);
+	//print_objects(params->objects);
 }

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 22:08:16 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/16 20:34:57 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 02:20:21 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		plane_intersect(t_ray *ray, t_plane *plane, t_params *params)
 	plane->distance = vect_sub(plane->position, ray->origin);
 	params->current_normal = plane->normale;
 	result = dot_product(plane->distance, plane->normale) / angle;
-	params->t = result;
+	params->ray_depth = result;
 	if (result >= 0)
 	{
 		ray->t = result;

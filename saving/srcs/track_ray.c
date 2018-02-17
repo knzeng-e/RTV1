@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/16 22:31:29 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 03:57:44 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	track_ray(t_params *params)
 {
 	t_ray		*ray;
 	t_vect		light_vector;
+	t_vect		saved_normal;
 //	t_vect		reflection;
 	t_color		rgb;
 	t_object	*obj;
@@ -111,6 +112,7 @@ int	track_ray(t_params *params)
 
 	t_min = MAX_DISTANCE;
 	i = 0;
+	print_objects(params->objects);
 	while (i < WIDTH)
 	{
 		j = 0;
@@ -124,15 +126,10 @@ int	track_ray(t_params *params)
 			set_camera(ray, params, i, j);
 			cpt = 0;
 			t_min = MAX_DISTANCE;
-			//while (++cpt < NB_OBJECTS)
 			obj = params->objects;
-			while (cpt < 5 && obj)
+			while (cpt < 6 && obj)
 			{
 				sphere_hit = -1;
-
-				/*if (plane_intersect(ray, (params->plane), params))
-				  draw_pixel(params, i, j, params->plane->color);*/
-				//hit = sphere_intersect(ray, params->sphere_list[cpt], params);
 				hit = intersect(ray, obj, params);
 				if (hit && ray->t < t_min)
 				{
@@ -144,39 +141,33 @@ int	track_ray(t_params *params)
 					light = params->objects;
 					cpt_light = -1;
 					lightning = AMBIANT_LIGHT;
-					while (++cpt_light < NB_LIGHTS)
+					saved_normal = params->current_normal;
+					if (!is_shadowed(ray->intersection, params, obj))
 					{
-						while (light->item != LIGHT)
+						while (++cpt_light < NB_LIGHTS)
+						{
+							while (light->item != LIGHT)
+								light = light->next;
+							light_vector = vect_sub(light->position, ray->intersection);
+							length = get_length(&light_vector);
+							normal = get_length(&params->current_normal);
+							ray_normalize(&light_vector);
+							ray_normalize(&params->current_normal);
+							angle = dot_product(saved_normal, light_vector);
+							if (angle <= 0)
+								angle = 0;
+							lightning += (DIFFUSE_LIGHT * angle);
 							light = light->next;
-						//light_vector = vect_sub(params->light[0].position, ray->intersection);
-						light_vector = vect_sub(light->position, ray->intersection);
-						length = get_length(&light_vector);
-						normal = get_length(&params->current_normal);
-						ray_normalize(&light_vector);
-						ray_normalize(&params->current_normal);
-						angle = dot_product(params->current_normal, light_vector);
-						if (angle <= 0)
-							angle = 0;
-						lightning += (DIFFUSE_LIGHT * angle);
-						//params->color = params->sphere_list[sphere_hit].color * lightning;
-						light = light->next;
+						}
 					}
 					params->color = get_color(obj->color) * lightning;
 					rgb = obj->color;
 					params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
-					/* Reflection 
-
-					   reflection = ray_normalize(vect_sub(2 * (dot_product(light_vector, normal)) * normal), light_vector);
-					   */
 					draw_pixel(params, i, j, params->color);
 				}
-				/*else
-				  draw_pixel(params, i, j, RGB(242, 242, 242));*/
 				obj = obj->next;
 				cpt++;
 			}
-			/*else
-			  draw_pixel(params, i, j, 0x00CECECE);*/
 			j++;
 		}
 		i++;

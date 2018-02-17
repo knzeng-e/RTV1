@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/16 22:30:43 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 03:33:07 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,14 @@ typedef struct	s_light
 	}			t_type;
 }				t_light;
 
-typedef struct	s_object t_object;
+typedef struct		s_object t_object;
 
-struct			s_object
+struct				s_object
 {
-	t_vect		position;
-	t_color		color;
-	int			is_set;
+	int				id;
+	int				is_set;
+	t_vect			position;
+	t_color			color;
 	enum
 	{
 		SPHERE,
@@ -140,49 +141,49 @@ struct			s_object
 		CYLINDER,
 		CONE,
 		LIGHT
-	} 			item;
+	}				item;
 	union
 	{
 		t_sphere	*sphere;
 		t_plane		*plane;
 		t_light		*light;
-	}			type;
+	}				type;
 	struct s_object	*next;
 };
 
-typedef struct	s_params
+typedef struct		s_params
 {
 	//t_camera	eye;
-	t_sphere	sphere_list[NB_SPHERES];
-	t_plane		plane_list[NB_PLANES];
-	t_ray		*tab_rays[WIDTH][HEIGHT];
-	t_light		light[NB_LIGHTS];
-	t_plane		*plane;
-	t_plane		*vertical_plane;
-	t_list		*obj_list;
-	t_object	*objects;
-	t_object	**objects_ptr;
-	t_vect		current_normal;
-	double		x_indent;
-	double		y_indent;
-	double		x_resolution;
-	double		y_resolution;
-	double		fov;
+	t_sphere		sphere_list[NB_SPHERES];
+	t_plane			plane_list[NB_PLANES];
+	t_ray			*tab_rays[WIDTH][HEIGHT];
+	t_light			light[NB_LIGHTS];
+	t_plane			*plane;
+	t_plane			*vertical_plane;
+	t_list			*obj_list;
+	t_object		*objects;
+	t_object		**objects_ptr;
+	t_vect			current_normal;
+	double			x_indent;
+	double			y_indent;
+	double			x_resolution;
+	double			y_resolution;
+	double			fov;
 	/*MLX PARAMS*/
-	void		*mlx;
-	void		*win;
-	int			*ptr_img;
-	char		*img_data;
-	//int			*img_data;
-	int			bpp;
-	int			size_line;
-	int			endian;
-	int			rays_to_free;
-	int			ray_depth;
-	int			t;
-	int			color;
-	int			nb_objects;
-}				t_params;
+	void			*mlx;
+	void			*win;
+	int				*ptr_img;
+	char			*img_data;
+	int				bpp;
+	int				size_line;
+	int				endian;
+	int				rays_to_free;
+	int				ray_depth;
+	int				t;
+	int				color;
+	int				nb_objects;
+	int				current_index;
+}					t_params;
 
 /*typedef struct	s_object
   {
@@ -201,7 +202,7 @@ int				key_hook(int keycode, t_params *params);
 int				track_ray(t_params *params);
 int				throw_ray(t_ray *ray);
 int				ft_free(t_params *params);
-int				is_shadowed(t_vect intersection, t_params *params, int obj_id);
+int				is_shadowed(t_vect intersection, t_params *params, t_object *obj);
 int				intersect(t_ray *ray, t_object *obj, t_params *params);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);

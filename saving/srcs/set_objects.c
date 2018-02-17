@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 02:57:19 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 11:42:42 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/16 23:57:18 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	set_sphere(t_object *current_obj, t_params *params, int cpt_spheres)
 	current_obj->color = get_rgb(params->sphere_list[cpt_spheres].color);
 	current_obj->is_set = 1;
 	current_obj->next = NULL;
+	current_obj->id = params->current_index;
 }
 
 void	set_plane(t_object *current_obj, t_params *params, int cpt_planes)
@@ -30,6 +31,7 @@ void	set_plane(t_object *current_obj, t_params *params, int cpt_planes)
 	current_obj->color = params->plane_list[cpt_planes].color;
 	current_obj->is_set = 1;
 	current_obj->next = NULL;
+	current_obj->id = params->current_index;
 }
 
 void	set_light(t_object *current_obj, t_params *params, int cpt_lights)
@@ -40,4 +42,5 @@ void	set_light(t_object *current_obj, t_params *params, int cpt_lights)
 	current_obj->color = params->light[cpt_lights].color;
 	current_obj->is_set = 1;
 	current_obj->next = NULL;
+	current_obj->id = params->current_index;
 }

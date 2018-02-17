@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/16 22:41:14 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 03:33:31 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	create_sphere(t_params *params)
 	while (++cpt < NB_SPHERES)
 		params->sphere_list[cpt].is_selected = 0;
 	params->sphere_list[0].rayon = 0.5;
-	params->sphere_list[0].center = set_vector(0.1, 2.1, -18);
+	params->sphere_list[0].center = set_vector(2.1, 3.1, -24);
 	//params->sphere_list[0].color = 0x00FF00FF;
 	params->sphere_list[0].color = rgb_to_int(0xff, 0xff, 66);
 	params->sphere_list[1].rayon = 0.6;
@@ -43,12 +43,13 @@ void	init_mlx(t_params *params)
 	params->img_data = mlx_get_data_addr(params->ptr_img, \
 		&(params->bpp),  &(params->size_line), &(params->endian));
 	params->fov = FOV;
+	params->current_index = 0;
 	params->objects = (t_object *)malloc(sizeof(t_object));
 	if (params->objects == NULL)
 		exit (MALLOC_ERROR);
 	params->objects->next = NULL;
 	params->objects->is_set = 0;
-	printf("\n\n[init_mlx] - Objects in adress ==> %p", params->objects);
+	params->objects->id = params->current_index;
 }
 
 void	create_plane(t_params *params)
@@ -58,21 +59,15 @@ void	create_plane(t_params *params)
 	
 	if ((params->vertical_plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
-	/*Init position*/
+	/* Horizontal plane*/
 	params->plane->position = set_vector(0, -4, -445);
-	//params->plane->position = set_vector(0, 0, -42);
-	/*Init Normale*/
 	params->plane->normale = set_vector(0, 1, 0);
-	//params->plane->normale = set_vector(0, 0, -1);
 	params->plane->color = set_color(21, 0xae, 0xFF);
-	//params->plane->color = set_color(0xFF, 0, 0);
 	params->plane_list[0] = *params->plane;
 
-	/*Init position*/
+	/* Vertical plane*/
 	params->vertical_plane->position = set_vector(0, -4, -42);
-	/*Init Normale*/
 	params->vertical_plane->normale = set_vector(0, 0, -1);
-//	params->vertical_plane->color = set_color(0xFF, 0, 0);
 	params->vertical_plane->color = set_color(21, 0xae, 0xFF);
 	/*params->plane_list[1] = *params->vertical_plane;*/
 }
