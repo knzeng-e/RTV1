@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 02:57:19 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/16 23:57:18 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 14:07:57 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	set_sphere(t_object *current_obj, t_params *params, int cpt_spheres)
 	current_obj->is_set = 1;
 	current_obj->next = NULL;
 	current_obj->id = params->current_index;
+	current_obj->specular = SPECULAR;
 }
 
 void	set_plane(t_object *current_obj, t_params *params, int cpt_planes)
@@ -32,6 +33,7 @@ void	set_plane(t_object *current_obj, t_params *params, int cpt_planes)
 	current_obj->is_set = 1;
 	current_obj->next = NULL;
 	current_obj->id = params->current_index;
+	current_obj->specular = SPECULAR;
 }
 
 void	set_light(t_object *current_obj, t_params *params, int cpt_lights)
@@ -43,4 +45,5 @@ void	set_light(t_object *current_obj, t_params *params, int cpt_lights)
 	current_obj->is_set = 1;
 	current_obj->next = NULL;
 	current_obj->id = params->current_index;
+	current_obj->specular = SPECULAR;
 }

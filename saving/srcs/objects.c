@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 23:42:39 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/17 00:18:02 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 14:07:05 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,4 @@ void	init_objects(t_params *params)
 		save_lights(current_obj, params, &cpt);
 	}
 	current_obj = NULL;
-	//print_objects(params->objects);
 }

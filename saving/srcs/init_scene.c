@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/17 03:33:31 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 19:27:28 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	create_sphere(t_params *params)
 	while (++cpt < NB_SPHERES)
 		params->sphere_list[cpt].is_selected = 0;
 	params->sphere_list[0].rayon = 0.5;
-	params->sphere_list[0].center = set_vector(2.1, 3.1, -24);
-	//params->sphere_list[0].color = 0x00FF00FF;
-	params->sphere_list[0].color = rgb_to_int(0xff, 0xff, 66);
+	params->sphere_list[0].center = set_vector(2.1, 3.1, -22);
+	params->sphere_list[0].color = 0x00FF00FF;
+	//params->sphere_list[0].color = rgb_to_int(0xff, 0xff, 66);
 	params->sphere_list[1].rayon = 0.6;
-	params->sphere_list[1].center = set_vector(-0.8, 0.5, -14);
+	params->sphere_list[1].center = set_vector(-0.8, 0.5, -22);
 	params->sphere_list[1].color = rgb_to_int(0, 1, 0);
 	params->sphere_list[2].rayon = 0.8;
-	params->sphere_list[2].center = set_vector(0.5, 1.7, -16);
+	params->sphere_list[2].center = set_vector(0.5, 1.7, -22);
 	params->sphere_list[2].color = BLUE;
 	params->sphere_list[3].rayon = 0.9;
 	params->sphere_list[3].center = set_vector(-1.3, 1.3, -22);
@@ -50,6 +50,7 @@ void	init_mlx(t_params *params)
 	params->objects->next = NULL;
 	params->objects->is_set = 0;
 	params->objects->id = params->current_index;
+	params->specularity = 400;
 }
 
 void	create_plane(t_params *params)
@@ -85,20 +86,16 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->position = set_vector(x_pos, y_pos, z_pos);
 	light->intensity = 1.5;
 	light->diffuse_light = DIFFUSE_LIGHT;
-	light->specular_light = SPECULAR;
-	light->shininess = SHININESS;
 	light->is_selected = 0;
 	light->color = set_color(0xFF, 0xFF, 0xFF); 
-	params->light[0] = *light;
+	//params->light[0] = *light;
 
 	light2->position = set_vector(-x_pos, 8, -10);
 	light2->intensity = 1.5;
 	light2->diffuse_light = DIFFUSE_LIGHT;
-	light2->specular_light = SPECULAR;
-	light2->shininess = SHININESS;
 	light2->is_selected = 0;
 	light2->color = set_color(0xFF, 0xFF, 0xFF); 
-	params->light[1] = *light2;
+	params->light[0] = *light2;
 }
 
 void	init_scene(t_params *params)
@@ -107,6 +104,6 @@ void	init_scene(t_params *params)
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
 	create_plane(params);
-	put_light(params, -7, 12, -10);
+	put_light(params, 7, 12, -10);
 	init_objects(params);
 }

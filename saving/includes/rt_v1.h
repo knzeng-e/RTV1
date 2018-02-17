@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/17 03:33:07 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/17 19:25:06 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 # define HEIGHT 640
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
-# define SPECULAR 0.7
+# define SPECULAR 10000
 # define SHININESS 128
 # define NB_SPHERES 4
 # define NB_PLANES 1
-# define NB_LIGHTS 2
+# define NB_LIGHTS 1
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_LIGHTS
+# define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -115,8 +116,6 @@ typedef struct	s_light
 	t_color		color;
 	double		intensity;
 	double		diffuse_light;
-	double		specular_light;
-	int			shininess;
 	int			is_selected;
 	enum		e_type
 	{
@@ -132,6 +131,7 @@ struct				s_object
 {
 	int				id;
 	int				is_set;
+	double			specular;
 	t_vect			position;
 	t_color			color;
 	enum
@@ -164,11 +164,13 @@ typedef struct		s_params
 	t_object		*objects;
 	t_object		**objects_ptr;
 	t_vect			current_normal;
+	t_vect			*light_vector;
 	double			x_indent;
 	double			y_indent;
 	double			x_resolution;
 	double			y_resolution;
 	double			fov;
+	double			specularity;
 	/*MLX PARAMS*/
 	void			*mlx;
 	void			*win;
@@ -183,6 +185,7 @@ typedef struct		s_params
 	int				color;
 	int				nb_objects;
 	int				current_index;
+	int				vector_lenght;
 }					t_params;
 
 /*typedef struct	s_object
@@ -235,6 +238,7 @@ void			init_objects(t_params *params);
 void			clamp(int *r, int *g, int *b);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
+double			get_specular(t_vect normal, t_ray *ray, t_params *params);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
 t_vect			get_normal(t_vect intersection, t_sphere sphere);
 t_vect			vect_sub(t_vect vect1, t_vect vect2);
