@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/18 05:57:53 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 12:05:14 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int	track_ray(t_params *params)
 				}
 				if (sphere_hit != -1)
 				{
+					params->current_obj = *obj;
 					light = params->objects;
 					cpt_light = -1;
 					lightning = AMBIANT_LIGHT;
@@ -139,6 +140,7 @@ int	track_ray(t_params *params)
 					if (!is_shadowed(ray->intersection, params, obj))
 					{						
 						params->current_normal = saved_normal;
+						ray_normalize(&params->current_normal);
 						lightning += shading(ray, params);
 					}
 					params->color = get_color(obj->color) * lightning;

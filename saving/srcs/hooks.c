@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/16 21:22:07 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 11:44:29 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[3].center.vect_x -= MOVE_DIST;
 		if (params->light[0].is_selected)
 			params->light[0].position.vect_x -= MOVE_DIST;
-		//params->eye.x_pos -= 10;
 	}
 	if (keycode == RIGHT_KEY)
 	{
@@ -103,7 +102,6 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[3].center.vect_x += MOVE_DIST;
 		if (params->light[0].is_selected)
 			params->light[0].position.vect_x += MOVE_DIST;
-		//params->eye.x_pos += 10;
 	}
 	if (keycode == ZOOM_IN)
 		params->fov -= 0.5;
@@ -121,7 +119,6 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[3].center.vect_y += MOVE_DIST;
 		if (params->light[0].is_selected)
 			params->light[0].position.vect_y += MOVE_DIST;
-		//params->eye.y_pos -= 10;
 	}
 	if (keycode == DOWN_KEY)
 	{
@@ -135,7 +132,6 @@ int		key_hook(int keycode, t_params *params)
 			params->sphere_list[3].center.vect_y -= MOVE_DIST;
 		if (params->light[0].is_selected)
 			params->light[0].position.vect_y -= MOVE_DIST;
-		//	params->eye.y_pos += 10;
 	}
 	expose_hook(params);
 	return (keycode);

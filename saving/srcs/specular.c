@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/17 08:01:56 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/18 00:25:51 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 12:09:49 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ double	get_specular(t_vect normal, t_ray *ray, t_params *params)
 	reflected_ray = vect_sub(vect_multiply(normal, (2 * dot_product(normal, params->light_vector))), params->light_vector);
 	angle = dot_product(reflected_ray, viewing_vector);
 	if (angle > 0)
-		specular = SPECULAR * pow(angle / get_length(&reflected_ray) * get_length(&viewing_vector), params->specularity);
+		specular = params->current_light.intensity * pow(angle / get_length(&reflected_ray) * get_length(&viewing_vector), params->current_obj.specular);
 	return (specular);
 }

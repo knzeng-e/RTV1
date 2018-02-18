@@ -6,27 +6,23 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 19:51:41 by knzeng-e          #+#    #+#             */
-/*   Updated: 2017/11/25 03:53:21 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 11:48:52 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-extern char	**environ;
 
 #include "rt_v1.h"
 
-void	mlx_draw(t_params *infos)
+void		mlx_draw(t_params *infos)
 {
-	int	KeyPressMask;
-	int	KeyPress;
+	int	key_press_mask;
+	int	key_press;
 
-	KeyPressMask = 1L<<0;
-	KeyPress = 2;
-	//infos->win = mlx_new_window(infos->mlx, WIDTH, HEIGHT, "RTV1");
-	//mlx_put_image_to_window(infos->mlx, infos->win, infos->ptr_img, 0, 0);
-	//mlx_key_hook(infos->win, key_hook, infos);
+	key_press_mask = 1L << 0;
+	key_press = 2;
+	init_scene(infos);
 	mlx_mouse_hook(infos->win, mouse_hook, infos);
 	mlx_expose_hook(infos->win, expose_hook, infos);
-	mlx_hook(infos->win, KeyPress, KeyPressMask, key_hook, infos);
-	//mlx_hook(infos->win, MOTION_NOTIFY, PTR_MOTION_MASK, pointer_motion, infos);
+	mlx_hook(infos->win, key_press, key_press_mask, key_hook, infos);
 	mlx_loop(infos->mlx);
 }
 
@@ -47,14 +43,12 @@ void		quit(t_params *params)
 	ft_free(params);
 }
 
-int		main(void)
+int			main(void)
 {
 	t_params	*params;
 
 	params = init_params();
-	printf("\nX_resolution => %f\nY_resolution => %f\n", params->x_resolution, params->y_resolution);
-	init_scene(params);
-	track_ray(params);
+	init_mlx(params);
 	mlx_draw(params);
 	quit(params);
 	return (OK);

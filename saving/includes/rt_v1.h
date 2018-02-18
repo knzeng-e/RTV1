@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/18 06:03:08 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 14:45:29 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct	s_plane
 	t_vect		normale;
 	t_vect		distance;
 	t_color		color;
+	double		specular;
 }				t_plane;
 
 typedef struct	s_transform
@@ -163,6 +164,8 @@ typedef struct		s_params
 	t_list			*obj_list;
 	t_object		*objects;
 	t_object		**objects_ptr;
+	t_object		current_obj;
+	t_light			current_light;
 	t_vect			current_normal;
 	t_vect			light_vector;
 	double			x_indent;
@@ -188,17 +191,6 @@ typedef struct		s_params
 	int				vector_lenght;
 }					t_params;
 
-/*typedef struct	s_object
-  {
-  int			id;
-  int			type;
-  union
-  {
-  t_sphere	*sphere;
-  t_plane		*plane;
-  } current_object;
-  }				t_object;*/
-
 int				expose_hook(t_params *params);
 int				mouse_hook(int button, int x, int y, t_params *params);
 int				key_hook(int keycode, t_params *params);
@@ -216,6 +208,7 @@ int				rgb_to_int(int r, int g, int b);
 int				calc_color(int color, double intensity);
 int				get_nb_objects(t_params *params);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
+void			init_mlx(t_params *params);
 void			init_scene(t_params *params);
 void			init_objects(t_params *params);
 void			init_transform_matrices(t_transform *transforms);
