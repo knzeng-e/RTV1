@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/17 19:25:06 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 06:03:08 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ typedef struct		s_params
 	t_object		*objects;
 	t_object		**objects_ptr;
 	t_vect			current_normal;
-	t_vect			*light_vector;
+	t_vect			light_vector;
 	double			x_indent;
 	double			y_indent;
 	double			x_resolution;
@@ -239,6 +239,7 @@ void			clamp(int *r, int *g, int *b);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 double			get_specular(t_vect normal, t_ray *ray, t_params *params);
+double			shading(t_ray *ray, t_params *params);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
 t_vect			get_normal(t_vect intersection, t_sphere sphere);
 t_vect			vect_sub(t_vect vect1, t_vect vect2);

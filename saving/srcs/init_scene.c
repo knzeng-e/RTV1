@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/17 19:27:28 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 06:03:28 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,14 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->diffuse_light = DIFFUSE_LIGHT;
 	light->is_selected = 0;
 	light->color = set_color(0xFF, 0xFF, 0xFF); 
-	//params->light[0] = *light;
+	params->light[0] = *light;
 
 	light2->position = set_vector(-x_pos, 8, -10);
 	light2->intensity = 1.5;
 	light2->diffuse_light = DIFFUSE_LIGHT;
 	light2->is_selected = 0;
 	light2->color = set_color(0xFF, 0xFF, 0xFF); 
-	params->light[0] = *light2;
+	//params->light[1] = *light2;
 }
 
 void	init_scene(t_params *params)

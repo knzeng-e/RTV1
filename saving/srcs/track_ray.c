@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/17 19:24:40 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 05:57:53 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,11 @@ double	lightning(t_params *params, t_ray *ray, int sphere_hit)
 int	track_ray(t_params *params)
 {
 	t_ray		*ray;
-	t_vect		light_vector;
 	t_vect		saved_normal;
-	//t_vect		reflection;
 	t_color		rgb;
 	t_object	*obj;
 	t_object	*light;
 	double		t_min;
-	double		angle;
-	double		normal;
-	double		length;
 	double		lightning;
 	int			sphere_hit;
 	int			hit;
@@ -126,7 +121,7 @@ int	track_ray(t_params *params)
 			cpt = 0;
 			t_min = MAX_DISTANCE;
 			obj = params->objects;
-			while (cpt < 5 && obj)
+			while (cpt < 6 && obj)
 			{
 				sphere_hit = -1;
 				hit = intersect(ray, obj, params);
@@ -142,24 +137,9 @@ int	track_ray(t_params *params)
 					lightning = AMBIANT_LIGHT;
 					saved_normal = params->current_normal;
 					if (!is_shadowed(ray->intersection, params, obj))
-					{
-						while (++cpt_light < NB_LIGHTS)
-						{
-							while (light->item != LIGHT)
-								light = light->next;
-							light_vector = vect_sub(light->position, ray->intersection);
-							params->light_vector = &light_vector;
-							length = get_length(&light_vector);
-							params->vector_lenght = length;
-							normal = get_length(&params->current_normal);
-							ray_normalize(&light_vector);
-							ray_normalize(&params->current_normal);
-							angle = dot_product(saved_normal, light_vector);
-							if (angle <= 0)
-								angle = 0;
-							lightning += (DIFFUSE_LIGHT * angle) + get_specular(saved_normal, ray, params);
-							light = light->next;
-						}
+					{						
+						params->current_normal = saved_normal;
+						lightning += shading(ray, params);
 					}
 					params->color = get_color(obj->color) * lightning;
 					rgb = obj->color;
