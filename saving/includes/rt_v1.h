@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/18 14:45:29 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/18 16:11:39 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,12 @@ typedef struct	s_view
 	t_vect		right_vect;
 //	t_vect		viewpoint;
 }				t_camera;*/
+
+typedef struct	s_cylinder
+{
+	double		radius;
+	double		hauteur;
+}				t_cylinder;
 
 typedef struct	s_plane
 {
