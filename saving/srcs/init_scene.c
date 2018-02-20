@@ -83,6 +83,14 @@ void	create_plane(t_params *params)
 	/*params->plane_list[1] = *params->vertical_plane;*/
 }
 
+void	create_cylinder(t_params *params)
+{
+	params->cylinder_list[0].center = set_vector(-6, -3, -50);
+	params->cylinder_list[0].radius = 1.2;
+	params->cylinder_list[0].specular = 500;
+	params->cylinder_list[0].color = set_color(0x8f, 0, 0x4f);
+}
+
 void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 {
 	t_light	*light;
@@ -114,6 +122,7 @@ void	init_scene(t_params *params)
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
 	create_plane(params);
+	create_cylinder(params);
 	put_light(params, 7, 12, -10);
 	init_objects(params);
 }

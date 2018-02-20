@@ -21,7 +21,7 @@ double	shading(t_ray *ray, t_params *params)
 
 	lightning = 0;
 	light = params->objects;
-	while (light->item != LIGHT)
+	while (light && light->item != LIGHT)
 		light = light->next;
 	while (light && light->item == LIGHT)
 	{

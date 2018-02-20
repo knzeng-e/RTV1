@@ -20,9 +20,10 @@
 # define SHININESS 128
 # define NB_SPHERES 4
 # define NB_PLANES 1
+# define NB_CYLINDERS 1
 # define NB_LIGHTS 1
-# define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_LIGHTS
-# define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES
+# define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_LIGHTS
+# define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -67,12 +68,6 @@
 # define free(aa) {printf("[%s][ligne %d] Liberation bloc %s a %p\n",__FILE__,__LINE__,#aa,aa);free(aa);}
 # define RGB(r, g, b)(256 * 256 * (unsigned int)(r) + 256 * (unsigned int)(g) + (unsigned int)(b))
 
-typedef struct	s_cylindre
-{
-	double		rayon;
-	double		hauteur;
-}				t_cylindre;
-
 typedef struct	s_view
 {
 	double		view_width;
@@ -97,6 +92,9 @@ typedef struct	s_cylinder
 {
 	double		radius;
 	double		hauteur;
+	double		specular;
+	t_vect		center;
+	t_color		color;
 }				t_cylinder;
 
 typedef struct	s_plane
@@ -154,6 +152,7 @@ struct				s_object
 		t_sphere	*sphere;
 		t_plane		*plane;
 		t_light		*light;
+		t_cylinder	*cylinder;
 	}				type;
 	struct s_object	*next;
 };
@@ -163,6 +162,7 @@ typedef struct		s_params
 	//t_camera	eye;
 	t_sphere		sphere_list[NB_SPHERES];
 	t_plane			plane_list[NB_PLANES];
+	t_cylinder		cylinder_list[NB_CYLINDERS];
 	t_ray			*tab_rays[WIDTH][HEIGHT];
 	t_light			light[NB_LIGHTS];
 	t_plane			*plane;
@@ -206,7 +206,7 @@ int				ft_free(t_params *params);
 int				is_shadowed(t_vect intersection, t_params *params, t_object *obj);
 int				intersect(t_ray *ray, t_object *obj, t_params *params);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
-int				cylindre_intersect(t_ray *ray, t_cylindre cyl, t_params *params);
+int				cylinder_intersect(t_ray *ray, t_cylinder *cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
 int				couleur(double angle);
 int				get_color(t_color color);
@@ -231,6 +231,9 @@ void			set_plane(t_object *current_obj, t_params *params, int cpt_planes);
 void			save_planes(t_object *current_obj, t_params *params, int *cpt_objects);
 void			set_light(t_object *current_obj, t_params *params, int cpt_lights);
 void			save_lights(t_object *current_obj, t_params *params, int *cpt_objects);
+
+void			set_cylinder(t_object *current_obj, t_params *params, int cpt_cylinders);
+void			save_cylinders(t_object *current_obj, t_params *params, int *cpt_objects);
 void			show_object_type(t_object *current_obj);
 void			print_objects(t_object *objects);
 void			init_objects(t_params *params);

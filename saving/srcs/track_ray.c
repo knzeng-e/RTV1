@@ -90,11 +90,12 @@ double	lightning(t_params *params, t_ray *ray, int sphere_hit)
 
 int	track_ray(t_params *params)
 {
-	t_ray		*ray;
+	//t_ray		*ray;
 	t_vect		saved_normal;
 	t_color		rgb;
 	t_object	*obj;
 	t_object	*light;
+	t_ray		ray;
 	double		t_min;
 	double		lightning;
 	int			sphere_hit;
@@ -112,22 +113,22 @@ int	track_ray(t_params *params)
 		j = 0;
 		while (j < HEIGHT)
 		{
-			ray = (t_ray *)malloc(sizeof(t_ray));
-			if (ray == NULL)
-				return (ft_free(params));
+			//ray = (t_ray *)malloc(sizeof(t_ray));
+			//if (ray == NULL)
+			//	return (ft_free(params));
 			params->rays_to_free++;
-			set_origin(i, j, ray, params);
-			set_camera(ray, params, i, j);
+			set_origin(i, j, &ray, params);
+			set_camera(&ray, params, i, j);
 			cpt = 0;
 			t_min = MAX_DISTANCE;
 			obj = params->objects;
-			while (cpt < 6 && obj)
+			while (cpt < NB_ACTIVE_OBJ && obj)
 			{
 				sphere_hit = -1;
-				hit = intersect(ray, obj, params);
-				if (hit && ray->t < t_min)
+				hit = intersect(&ray, obj, params);
+				if (hit && ray.t < t_min)
 				{
-					t_min = ray->t;
+					t_min = ray.t;
 					sphere_hit = cpt;
 				}
 				if (sphere_hit != -1)
@@ -137,11 +138,11 @@ int	track_ray(t_params *params)
 					cpt_light = -1;
 					lightning = AMBIANT_LIGHT;
 					saved_normal = params->current_normal;
-					if (!is_shadowed(ray->intersection, params, obj))
+					if (!is_shadowed(ray.intersection, params, obj))
 					{						
 						params->current_normal = saved_normal;
 						ray_normalize(&params->current_normal);
-						lightning += shading(ray, params);
+						lightning += shading(&ray, params);
 					}
 					params->color = get_color(obj->color) * lightning;
 					rgb = obj->color;

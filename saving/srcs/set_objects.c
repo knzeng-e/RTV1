@@ -47,3 +47,15 @@ void	set_light(t_object *current_obj, t_params *params, int cpt_lights)
 	current_obj->id = params->current_index;
 	current_obj->specular = params->light[cpt_lights].intensity;
 }
+
+void	set_cylinder(t_object *current_obj, t_params *params, int cpt_cylinders)
+{
+	current_obj->type.cylinder = &params->cylinder_list[cpt_cylinders];
+	current_obj->item = CYLINDER;
+	current_obj->position = params->cylinder_list[cpt_cylinders].center;
+	current_obj->color = params->cylinder_list[cpt_cylinders].color;
+	current_obj->is_set = 1;
+	current_obj->next = NULL;
+	current_obj->id = params->current_index;
+	current_obj->specular = params->cylinder_list[cpt_cylinders].specular;
+}

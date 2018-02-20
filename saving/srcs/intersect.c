@@ -21,5 +21,7 @@ int	intersect(t_ray *ray, t_object *obj, t_params *params)
 		output = (sphere_intersect(ray, *(obj->type.sphere), params));
 	if (obj->item == PLANE)
 		output = (plane_intersect(ray, obj->type.plane, params));
+	if (obj->item == CYLINDER)
+		output = (cylinder_intersect(ray, obj->type.cylinder, params));
 	return (output);
 }

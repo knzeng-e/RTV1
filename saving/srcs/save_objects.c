@@ -92,3 +92,30 @@ void	save_lights(t_object *obj, t_params *params, int *cpt_objects)
 		(*cpt_objects)++;
 	}
 }
+
+void	save_cylinders(t_object *obj, t_params *params, int *cpt_objects)
+{
+	int			cpt_cylinders;
+	t_object	*last;
+
+	cpt_cylinders = -1;
+	while (++cpt_cylinders < NB_CYLINDERS)
+	{
+		while (obj != NULL)
+		{
+			last = obj;
+			obj = obj->next;
+		}
+		obj = (last->is_set) ? (t_object *)malloc(sizeof(t_object)) : last;
+		if (last->is_set)
+			last->next = obj;
+		if (obj == NULL)
+		{
+			ft_free(params);
+			exit(MALLOC_ERROR);
+		}
+		params->current_index = *cpt_objects;
+		set_cylinder(obj, params, cpt_cylinders);
+		(*cpt_objects)++;
+	}
+}
