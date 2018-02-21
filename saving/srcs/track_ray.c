@@ -113,10 +113,6 @@ int	track_ray(t_params *params)
 		j = 0;
 		while (j < HEIGHT)
 		{
-			//ray = (t_ray *)malloc(sizeof(t_ray));
-			//if (ray == NULL)
-			//	return (ft_free(params));
-			params->rays_to_free++;
 			set_origin(i, j, &ray, params);
 			set_camera(&ray, params, i, j);
 			cpt = 0;

@@ -59,3 +59,15 @@ void	set_cylinder(t_object *current_obj, t_params *params, int cpt_cylinders)
 	current_obj->id = params->current_index;
 	current_obj->specular = params->cylinder_list[cpt_cylinders].specular;
 }
+
+void	set_cone(t_object *current_obj, t_params *params, int cpt_cones)
+{
+	current_obj->type.cone = &params->cone_list[cpt_cones];
+	current_obj->item = CONE;
+	current_obj->position = params->cone_list[cpt_cones].center;
+	current_obj->color = params->cone_list[cpt_cones].color;
+	current_obj->is_set = 1;
+	current_obj->next = NULL;
+	current_obj->id = params->current_index;
+	current_obj->specular = params->cone_list[cpt_cones].specular;
+}

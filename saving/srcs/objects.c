@@ -60,9 +60,10 @@ void	init_objects(t_params *params)
 	{
 		current_obj = params->objects;
 		head = &params->objects;
-		save_spheres(current_obj, params, &cpt);
-		save_planes(current_obj, params, &cpt);
+		save_cones(current_obj, params, &cpt);
 		save_cylinders(current_obj, params, &cpt);
+		save_planes(current_obj, params, &cpt);
+		save_spheres(current_obj, params, &cpt);
 		save_lights(current_obj, params, &cpt);
 	}
 	current_obj = NULL;

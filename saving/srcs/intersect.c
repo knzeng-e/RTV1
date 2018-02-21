@@ -23,5 +23,7 @@ int	intersect(t_ray *ray, t_object *obj, t_params *params)
 		output = (plane_intersect(ray, obj->type.plane, params));
 	if (obj->item == CYLINDER)
 		output = (cylinder_intersect(ray, obj->type.cylinder, params));
+	if (obj->item == CONE)
+		output = (cone_intersect(ray, obj->type.cone, params));
 	return (output);
 }

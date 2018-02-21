@@ -22,8 +22,9 @@
 # define NB_PLANES 1
 # define NB_CYLINDERS 1
 # define NB_LIGHTS 1
-# define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_LIGHTS
-# define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS
+# define NB_CONES 1
+# define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES + NB_LIGHTS
+# define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -37,8 +38,8 @@
 # define L_KEY 37
 # define ZOOM_IN 69
 //# define ZOOM_IN 44
-# define ZOOM_OUT 78
-//# define ZOOM_OUT 24
+//# define ZOOM_OUT 78
+# define ZOOM_OUT 24
 # define RADIUS 20.0
 # define OK 0
 # define FREE_OK 0
@@ -97,6 +98,16 @@ typedef struct	s_cylinder
 	t_color		color;
 }				t_cylinder;
 
+typedef struct	s_cone
+{
+	t_vect		center;
+	double		angle;
+	double		specular;
+	t_color		color;
+}				t_cone;
+
+
+
 typedef struct	s_plane
 {
 	t_vect		position;
@@ -149,10 +160,11 @@ struct				s_object
 	}				item;
 	union
 	{
-		t_sphere	*sphere;
-		t_plane		*plane;
-		t_light		*light;
+		t_cone		*cone;
 		t_cylinder	*cylinder;
+		t_light		*light;
+		t_plane		*plane;
+		t_sphere	*sphere;
 	}				type;
 	struct s_object	*next;
 };
@@ -163,6 +175,7 @@ typedef struct		s_params
 	t_sphere		sphere_list[NB_SPHERES];
 	t_plane			plane_list[NB_PLANES];
 	t_cylinder		cylinder_list[NB_CYLINDERS];
+	t_cone			cone_list[NB_CONES];
 	t_ray			*tab_rays[WIDTH][HEIGHT];
 	t_light			light[NB_LIGHTS];
 	t_plane			*plane;
@@ -208,6 +221,7 @@ int				intersect(t_ray *ray, t_object *obj, t_params *params);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylinder_intersect(t_ray *ray, t_cylinder *cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
+int				cone_intersect(t_ray *ray, t_cone *cone, t_params *params);
 int				couleur(double angle);
 int				get_color(t_color color);
 int				rgb_to_int(int r, int g, int b);
@@ -234,10 +248,13 @@ void			save_lights(t_object *current_obj, t_params *params, int *cpt_objects);
 
 void			set_cylinder(t_object *current_obj, t_params *params, int cpt_cylinders);
 void			save_cylinders(t_object *current_obj, t_params *params, int *cpt_objects);
+void			set_cone(t_object *current_obj, t_params *params, int cpt_cones);
+void			save_cones(t_object *obj, t_params *params, int *cpt_objects);
 void			show_object_type(t_object *current_obj);
 void			print_objects(t_object *objects);
 void			init_objects(t_params *params);
 void			clamp(int *r, int *g, int *b);
+double			radians(double angle);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 double			get_specular(t_vect normal, t_ray *ray, t_params *params);

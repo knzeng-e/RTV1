@@ -87,8 +87,16 @@ void	create_cylinder(t_params *params)
 {
 	params->cylinder_list[0].center = set_vector(-6, -3, -50);
 	params->cylinder_list[0].radius = 1.2;
-	params->cylinder_list[0].specular = 500;
+	params->cylinder_list[0].specular = 100;
 	params->cylinder_list[0].color = set_color(0x8f, 0, 0x4f);
+}
+
+void	create_cone(t_params *params)
+{
+	params->cone_list[0].center = set_vector(-13, 3, -30);
+	params->cone_list[0].angle = radians(20);
+	params->cone_list[0].specular = 300;
+	params->cone_list[0].color = set_color(42, 42, 42);
 }
 
 void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
@@ -108,11 +116,11 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->color = set_color(0xFF, 0xFF, 0xFF); 
 	params->light[0] = *light;
 
-	light2->position = set_vector(-x_pos, 8, -10);
+	/*light2->position = set_vector(-x_pos, 8, -10);
 	light2->intensity = 300;
 	light2->diffuse_light = DIFFUSE_LIGHT;
 	light2->is_selected = 0;
-	light2->color = set_color(0xFF, 0xFF, 0xFF); 
+	light2->color = set_color(0xFF, 0xFF, 0xFF); */
 	//params->light[1] = *light2;
 }
 
@@ -123,6 +131,7 @@ void	init_scene(t_params *params)
 	create_sphere(params);
 	create_plane(params);
 	create_cylinder(params);
+	create_cone(params);
 	put_light(params, 7, 12, -10);
 	init_objects(params);
 }

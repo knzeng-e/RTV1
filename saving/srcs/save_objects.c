@@ -119,3 +119,30 @@ void	save_cylinders(t_object *obj, t_params *params, int *cpt_objects)
 		(*cpt_objects)++;
 	}
 }
+
+void	save_cones(t_object *obj, t_params *params, int *cpt_objects)
+{
+	int			cpt_cones;
+	t_object	*last;
+
+	cpt_cones = -1;
+	while (++cpt_cones < NB_CONES)
+	{
+		while (obj != NULL)
+		{
+			last = obj;
+			obj = obj->next;
+		}
+		obj = (last->is_set) ? (t_object *)malloc(sizeof(t_object)) : last;
+		if (last->is_set)
+			last->next = obj;
+		if (obj == NULL)
+		{
+			ft_free(params);
+			exit(MALLOC_ERROR);
+		}
+		params->current_index = *cpt_objects;
+		set_cone(obj, params, cpt_cones);
+		(*cpt_objects)++;
+	}
+}
