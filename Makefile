@@ -13,7 +13,7 @@ SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 CC = gcc
 CFLAGS = -g -Wall -Werror -Wextra
-FFLAGS = -framework AppKit -framework OpenGL -L. -Llibft -lft -lmlx -Lmlx
+FFLAGS = -framework AppKit -framework OpenGL -L. -Llibft -lft -lmlx -Lmlx -lpthread
 
 all: $(OBJ) $(FT_LIB) $(NAME)
 
@@ -25,6 +25,7 @@ $(FT_LIB):
 	#clear
 	@echo "\033[31m >>> \033[32mCOMPILING \"$(FT_LIB)\"..\033[31m <<<\033[0m"
 	make -C libft
+	make -C mlx
 
 $(MLX_LIB):
 	@echo "\033[31m >>> \033[32mCOMPILING \"$(MLX_LIB)\"..\033[31m <<<\033[0m"

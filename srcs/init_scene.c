@@ -33,7 +33,7 @@ void	create_sphere(t_params *params)
 
 void	init_mlx(t_params *params)
 {
-	read_line("test");
+	parse_file("test");
 	params->mlx = mlx_init();
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
 	params->img_data = (int *)mlx_get_data_addr(params->ptr_img, &(params->bpp),  &(params->size_line), &(params->endian));

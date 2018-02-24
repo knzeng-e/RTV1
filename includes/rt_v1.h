@@ -35,10 +35,14 @@
 # define RADIUS 20.0
 # define OK 0
 # define MAX_DISTANCE 20000
+# define INVALID_OBJECT 0
+# define INVALID_DESCRIPTION 0
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
 # define MALLOC_PARAMS_ERROR -1
+# define ERROR_OPEN -1
 # define MALLOC_TRANSFORM_ERROR -2
+# define PARSE_OK 1
 # define PARSE_ERROR_MESSAGE "There is an Error in line "
 # include "../mlx/mlx.h"
 # include <libft.h>
@@ -189,7 +193,7 @@ void			init_transform_matrices(t_transform *transforms);
 void			set_x_rotation(t_transform *transforms, double angle);
 void			set_y_rotation(t_transform *transforms, double angle);
 void			set_z_rotation(t_transform *transforms, double angle);
-void			read_line(char *file);
+void			parse_file(char *file);
 void			map_color(t_color *col);
 double			plane_normal(t_vect origin, t_vect direction);
 double			get_length(t_vect *vect);

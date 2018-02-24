@@ -47,7 +47,7 @@ int		check_object(char *line)
 	int	object_id;
 
 	if ((object_id = check_sphere(line)) || (object_id = (check_plane(line))) || (object_id = (check_cone(line))) \
-	|| (object_id = (check_cylinder(line))))
+			|| (object_id = (check_cylinder(line))))
 		return (object_id);
 	return (0);
 }
@@ -62,82 +62,74 @@ void	show_object(int object_id)
 	ft_putchar('\n');
 }
 
-void	ft_parse_error(int num_line)
+void	ft_parse_error(int num_line, char *infos)
 {
 	ft_putstr(PARSE_ERROR_MESSAGE);
 	ft_putnbr(num_line);
+	ft_putstr(" : ");
+	ft_putstr(infos);
+	ft_putchar('\n');
 	exit (-2);
 }
 
-void	read_line(char *file)
+int		parse_object(int object_id, char *line, int fd, int *num_line)
+{
+	object_id += 0;
+	fd += 0;
+	if (check_object(line))
+		ft_parse_error(--(*num_line), "SHOULD HAVE A '}' HERE");
+	return (PARSE_OK);
+}
+
+int		read_block(int fd, char *line, int *num_line, int object_id)
+{
+	(*num_line)++;
+	if (!get_next_line(fd, &line) || ft_strcmp(line, "{"))
+		ft_parse_error(*num_line, "SHOULD HAVE A '{' AFTER OBJECT TYPE");
+	while (get_next_line(fd, &line) && ft_strcmp(line, "}"))
+	{
+		++(*num_line);
+		if (parse_object(object_id, line, fd, num_line) == 0)
+			ft_parse_error(*num_line, "ERROR IN OBJECT DESCRIPTION");
+	}
+	if (ft_strcmp(line, "}") != 0) /* The block ended without '}' character */	
+		ft_parse_error(++(*num_line), "MISSING '}'");
+	++(*num_line);
+	return (PARSE_OK);
+}
+
+void	parse_file(char *file)
 {
 	char	*line;
-	int		cpt;
 	int		num_line;
 	int		fd;
 	int		object_id;
+	int		nb_lus;
+	int		has_content;
 
 	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		exit (-1);
-	cpt = 1;
-	num_line = 1;
+	if (fd == ERROR_OPEN)
+		exit (ERROR_OPEN);
+	num_line = 0;
+	nb_lus = -1;
 	while (get_next_line(fd, &line))
 	{
-		//num_line++;
-		object_id = check_object(line);
-		if (object_id == 0) /*Object not found*/
-		{
-			if (ft_strlen(line) != 0)
-				ft_parse_error(num_line);
-			/*We've got a space*/
-			if (!get_next_line(fd, &line) || !ft_strlen(line) || !check_object(line))
-			{
-				num_line++;
-				ft_parse_error(num_line);
-			}
-			object_id = check_object(line);
-		}
-		else
-		{
-			get_next_line(fd, &line);
-			if (ft_strcmp(line, "{") != 0)
-				ft_parse_error(++num_line);
-		}
-
-		show_object(object_id);
-		while (ft_strcmp(line, "}"))
-		{
-			if (ft_strlen(line) == 0)
-			{
-				num_line++;
-				get_next_line(fd, &line);
-				if (ft_strlen(line) == 0) /*error: 2 sauts de ligne*/
-					ft_parse_error(num_line);
-			}
-			if (line[0] == '}')
-				ft_parse_error(num_line);
-			num_line++;
-			ft_putstr(line);
-			get_next_line(fd, &line);
-			ft_putchar('\n');
-		}
-		ft_putstr(line);
-		ft_putchar('\n');
-		//get_next_line(fd, &line);
-		if (!ft_strlen(line) && !(get_next_line(fd, &line)))
-		{
-			ft_putstr(line);
-			ft_putstr("\nOOPS\n");
-			ft_parse_error(++num_line);
-		}
-		ft_putstr(line);
-		cpt++;
+		has_content = 0;
 		num_line++;
+		object_id = check_object(line);
+		if (object_id == INVALID_OBJECT) /*Object not found*/
+			ft_parse_error(num_line, "SHOULD HAVE A VALID OBJECT TYPE");
+		if (read_block(fd, line, &num_line, object_id) == INVALID_DESCRIPTION)
+			ft_parse_error(num_line, "ERROR IN OBJECT DESCRIPTION");
+		num_line++;
+		if (get_next_line(fd, &line))
+		{
+			has_content = 1;
+			if (ft_strlen(line))
+				ft_parse_error(num_line, "SHOULD HAVE AN EMPTY LINE HERE");
+		}
 	}
-	ft_putstr(line);
-	ft_putstr("\nContenu==>");
-	/*if (line[0] != '')
-		ft_parse_error(num_line);*/
+	if (has_content)
+		ft_parse_error(num_line, "NEW LINE AT THE END");
+	close(fd);
 }
-
