@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 19:51:41 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/18 11:48:52 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/24 14:54:39 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_params	*init_params(void)
 		exit(MALLOC_PARAMS_ERROR);
 	params->x_resolution = WIDTH;
 	params->y_resolution = HEIGHT;
+	params->mlx = mlx_init();
+//	params->win = mlx_new_image(params->mlx, WIDTH, HEIGHT);;
 	return (params);
 }
 
@@ -48,7 +50,6 @@ int			main(void)
 	t_params	*params;
 
 	params = init_params();
-	init_mlx(params);
 	mlx_draw(params);
 	quit(params);
 	return (OK);

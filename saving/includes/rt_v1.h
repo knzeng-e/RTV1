@@ -6,14 +6,14 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/18 16:11:39 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/24 16:45:37 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
 //# define WIDTH 800
-# define WIDTH 1200
+# define WIDTH 400
 //# define HEIGHT 640
 # define HEIGHT 400
 # define AMBIANT_LIGHT 0.2
@@ -40,15 +40,20 @@
 # define L_KEY 37
 # define ZOOM_IN 69
 //# define ZOOM_IN 44
-//# define ZOOM_OUT 78
-# define ZOOM_OUT 24
+# define ZOOM_OUT 78
+//# define ZOOM_OUT 24
 # define RADIUS 20.0
 # define OK 0
 # define FREE_OK 0
 # define MAX_DISTANCE 20000
+# define INVALID_OBJECT 0
+# define INVALID_DESCRIPTION 0
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
+# define CORRECT_OBJECT_DESCRIPTION 1
+# define ERROR_OBJECT_DESCRIPTION 0
 # define MALLOC_PARAMS_ERROR -1
+# define ERROR_OPEN -1
 # define FREE_ERROR -4
 # define MALLOC_ERROR -3
 # define FOV 30
@@ -59,6 +64,7 @@
 # define BLUE 0x000000FF
 # define YELLOW 0x00FFFF00
 # define MALLOC_TRANSFORM_ERROR -2
+# define PARSE_OK 1
 # define PARSE_ERROR_MESSAGE "There is an Error in line "
 # include "../mlx/mlx.h"
 # include <libft.h>
@@ -154,7 +160,7 @@ struct				s_object
 	t_color			color;
 	enum
 	{
-		SPHERE,
+		SPHERE = 1,
 		PLANE,
 		CYLINDER,
 		CONE,
@@ -234,6 +240,7 @@ void			init_mlx(t_params *params);
 void			init_scene(t_params *params);
 void			init_objects(t_params *params);
 void			init_transform_matrices(t_transform *transforms);
+void			parse_file(char *file);
 void			set_view(t_params *params);
 void			ray_equation(t_ray *ray);
 void			ray_normalize(t_vect *vect);

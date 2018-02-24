@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/18 14:45:58 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/24 14:55:12 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	create_sphere(t_params *params)
 
 void	init_mlx(t_params *params)
 {
-	params->mlx = mlx_init();
+	parse_file("test");
 	/*Penser à proteger le mlx_init*/
 	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
 	params->img_data = mlx_get_data_addr(params->ptr_img, \
-		&(params->bpp),  &(params->size_line), &(params->endian));
+			&(params->bpp),  &(params->size_line), &(params->endian));
 	params->fov = FOV;
 	params->current_index = 0;
 	params->objects = (t_object *)malloc(sizeof(t_object));
@@ -64,7 +64,7 @@ void	create_plane(t_params *params)
 {
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
-	
+
 	if ((params->vertical_plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
 	/* Horizontal plane*/
@@ -117,10 +117,10 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	params->light[0] = *light;
 
 	/*light2->position = set_vector(-x_pos, 8, -10);
-	light2->intensity = 300;
-	light2->diffuse_light = DIFFUSE_LIGHT;
-	light2->is_selected = 0;
-	light2->color = set_color(0xFF, 0xFF, 0xFF); */
+	  light2->intensity = 300;
+	  light2->diffuse_light = DIFFUSE_LIGHT;
+	  light2->is_selected = 0;
+	  light2->color = set_color(0xFF, 0xFF, 0xFF); */
 	//params->light[1] = *light2;
 }
 
