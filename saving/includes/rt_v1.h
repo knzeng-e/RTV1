@@ -84,6 +84,13 @@ typedef struct	s_view
 	double		dist;
 }				t_view;
 
+typedef struct	s_color
+{
+	int			red;
+	int			green;
+	int			blue;
+}				t_color;
+
 /*typedef struct	s_camera
 {
 	double		view_width;
@@ -230,6 +237,11 @@ int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylinder_intersect(t_ray *ray, t_cylinder *cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
 int				cone_intersect(t_ray *ray, t_cone *cone, t_params *params);
+int				check_sphere_params(char **line_content);
+int				check_plane_params(char **line_content);
+int				check_cylinder_params(char **line_content);
+int				check_cone_params(char **line_content);
+int				check_light_params(char **line_content);
 int				couleur(double angle);
 int				get_color(t_color color);
 int				rgb_to_int(int r, int g, int b);

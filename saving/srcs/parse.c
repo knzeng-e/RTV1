@@ -88,39 +88,28 @@ int		check_object_params(int object_id, char **line_content)
 	ft_putstr("\nDescription ");
 	if (object_id == SPHERE)
 	{
+		return = check_sphere_params(line_content);
 		ft_putstr("d'une sphere");
-		while (*line_content)
-		{
-			ft_putstr("\n- ");
-			ft_putstr(*line_content);
-			(line_content)++;
-			ft_putchar('\n');
-		}
-		//show_line_content(line_content);
 		return (CORRECT_OBJECT_DESCRIPTION);
 	}
 	if (object_id == PLANE)
 	{
 		ft_putstr("d'un plan");
-		show_line_content(line_content);
 		return (CORRECT_OBJECT_DESCRIPTION);
 	}
 	if (object_id == CYLINDER)
 	{
 		ft_putstr("d'un cylindre");
-		show_line_content(line_content);
 		return (CORRECT_OBJECT_DESCRIPTION);
 	}
 	if (object_id == CONE)
 	{
 		ft_putstr("d'un cone");
-		show_line_content(line_content);
 		return (CORRECT_OBJECT_DESCRIPTION);
 	}
 	if (object_id == LIGHT)
 	{
 		ft_putstr("d'une lumiere");
-		show_line_content(line_content);
 		return (CORRECT_OBJECT_DESCRIPTION);
 	}
 	return (ERROR_OBJECT_DESCRIPTION);
@@ -135,12 +124,10 @@ int		parse_object(int object_id, char *line, int fd, int *num_line)
 	while (get_next_line(fd, &line) && ft_strcmp(line, "}"))
 	{
 		++(*num_line);
+		line_content = ft_strsplit(line, ' ');
+		if (check_object_params(object_id, line_content) == 0)
+			ft_parse_error(*num_line, "INCORRECT CONTENT DESCRIPTION");
 	}
-	line_content = ft_strsplit(line, ' ');
-	if (check_object_params(object_id, line_content) == 0)
-		ft_parse_error(*num_line, "INCORRECT CONTENT DESCRIPTION");
-	object_id += 0;
-	fd += 0;
 	if (check_object(line))
 		ft_parse_error(--(*num_line), "SHOULD HAVE A '}' HERE");
 	return (PARSE_OK);
@@ -151,7 +138,7 @@ int		read_block(int fd, char *line, int *num_line, int object_id)
 	(*num_line)++;
 	if (!get_next_line(fd, &line) || ft_strcmp(line, "{"))
 		ft_parse_error(*num_line, "SHOULD HAVE A '{' AFTER OBJECT TYPE");
-	
+
 	if (parse_object(object_id, line, fd, num_line) == 0)
 		ft_parse_error(*num_line, "ERROR IN OBJECT DESCRIPTION");
 	if (ft_strcmp(line, "}") != 0) /* The block ended without '}' character */	
