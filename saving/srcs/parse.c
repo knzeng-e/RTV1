@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 18:29:26 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/24 17:52:03 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/02/25 16:39:36 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,10 @@ int		check_object_params(int object_id, params)
 	ft_putstr("\nDescription ");
 	if (object_id == SPHERE)
 	{
-		return = check_sphere_params(params);
 		ft_putstr("d'une sphere");
-		return (CORRECT_OBJECT_DESCRIPTION);
+		if (check_sphere_params(params))
+			return (CORRECT_OBJECT_DESCRIPTION);
+		return (ERROR_OBJECT_DESCRIPTION);
 	}
 	if (object_id == PLANE)
 	{
@@ -120,12 +121,11 @@ int		parse_object(int object_id, char *line, t_params *params, int *num_line)
 	char	**line_content;
 	int		cpt_line;
 
-
 	while (get_next_line(params->fd, &line) && ft_strcmp(line, "}"))
 	{
 		++(*num_line);
 		params->line_content = ft_strsplit(line, ' ');
-		if (check_object_params(object_id, params) == 0)
+		if (check_object_params(object_id, params) == ERROR_OBJECT_DESCRIPTION)
 			ft_parse_error(*num_line, "INCORRECT CONTENT DESCRIPTION");
 	}
 	if (check_object(line))
@@ -138,7 +138,6 @@ int		read_block(t_params *params, char *line, int *num_line, int object_id)
 	(*num_line)++;
 	if (!get_next_line(params->fd, &line) || ft_strcmp(line, "{"))
 		ft_parse_error(*num_line, "SHOULD HAVE A '{' AFTER OBJECT TYPE");
-
 	if (parse_object(object_id, line, params, num_line) == 0)
 		ft_parse_error(*num_line, "ERROR IN OBJECT DESCRIPTION");
 	if (ft_strcmp(line, "}") != 0) /* The block ended without '}' character */	
@@ -156,7 +155,7 @@ void	parse_file(t_params *params)
 	int		has_content;
 
 	params->fd = open(params->file, O_RDONLY);
-	if (fd == ERROR_OPEN)
+	if (params->fd == ERROR_OPEN)
 		exit (ERROR_OPEN);
 	num_line = 0;
 	nb_lus = -1;
