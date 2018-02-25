@@ -83,12 +83,12 @@ void	show_line_content(char **line_content)
 		}
 }
 
-int		check_object_params(int object_id, char **line_content)
+int		check_object_params(int object_id, params)
 {
 	ft_putstr("\nDescription ");
 	if (object_id == SPHERE)
 	{
-		return = check_sphere_params(line_content);
+		return = check_sphere_params(params);
 		ft_putstr("d'une sphere");
 		return (CORRECT_OBJECT_DESCRIPTION);
 	}
@@ -115,17 +115,17 @@ int		check_object_params(int object_id, char **line_content)
 	return (ERROR_OBJECT_DESCRIPTION);
 }
 
-int		parse_object(int object_id, char *line, int fd, int *num_line)
+int		parse_object(int object_id, char *line, t_params *params, int *num_line)
 {
 	char	**line_content;
 	int		cpt_line;
 
 
-	while (get_next_line(fd, &line) && ft_strcmp(line, "}"))
+	while (get_next_line(params->fd, &line) && ft_strcmp(line, "}"))
 	{
 		++(*num_line);
-		line_content = ft_strsplit(line, ' ');
-		if (check_object_params(object_id, line_content) == 0)
+		params->line_content = ft_strsplit(line, ' ');
+		if (check_object_params(object_id, params) == 0)
 			ft_parse_error(*num_line, "INCORRECT CONTENT DESCRIPTION");
 	}
 	if (check_object(line))
@@ -133,13 +133,13 @@ int		parse_object(int object_id, char *line, int fd, int *num_line)
 	return (PARSE_OK);
 }
 
-int		read_block(int fd, char *line, int *num_line, int object_id)
+int		read_block(t_params *params, char *line, int *num_line, int object_id)
 {
 	(*num_line)++;
-	if (!get_next_line(fd, &line) || ft_strcmp(line, "{"))
+	if (!get_next_line(params->fd, &line) || ft_strcmp(line, "{"))
 		ft_parse_error(*num_line, "SHOULD HAVE A '{' AFTER OBJECT TYPE");
 
-	if (parse_object(object_id, line, fd, num_line) == 0)
+	if (parse_object(object_id, line, params, num_line) == 0)
 		ft_parse_error(*num_line, "ERROR IN OBJECT DESCRIPTION");
 	if (ft_strcmp(line, "}") != 0) /* The block ended without '}' character */	
 		ft_parse_error(++(*num_line), "MISSING '}'");
@@ -147,31 +147,30 @@ int		read_block(int fd, char *line, int *num_line, int object_id)
 	return (PARSE_OK);
 }
 
-void	parse_file(char *file)
+void	parse_file(t_params *params)
 {
 	char	*line;
 	int		num_line;
-	int		fd;
 	int		object_id;
 	int		nb_lus;
 	int		has_content;
 
-	fd = open(file, O_RDONLY);
+	params->fd = open(params->file, O_RDONLY);
 	if (fd == ERROR_OPEN)
 		exit (ERROR_OPEN);
 	num_line = 0;
 	nb_lus = -1;
-	while (get_next_line(fd, &line))
+	while (get_next_line(params->fd, &line))
 	{
 		has_content = 0;
 		num_line++;
 		object_id = check_object(line);
 		if (object_id == INVALID_OBJECT) /*Object not found*/
 			ft_parse_error(num_line, "SHOULD HAVE A VALID OBJECT TYPE");
-		if (read_block(fd, line, &num_line, object_id) == INVALID_DESCRIPTION)
+		if (read_block(params, line, &num_line, object_id) == INVALID_DESCRIPTION)
 			ft_parse_error(num_line, "ERROR IN OBJECT DESCRIPTION");
 		num_line++;
-		if (get_next_line(fd, &line))
+		if (get_next_line(params->fd, &line))
 		{
 			has_content = 1;
 			if (ft_strlen(line))
@@ -180,5 +179,5 @@ void	parse_file(char *file)
 	}
 	if (has_content)
 		ft_parse_error(num_line, "NEW LINE AT THE END");
-	close(fd);
+	close(params->fd);
 }

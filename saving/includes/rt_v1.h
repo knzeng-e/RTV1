@@ -52,6 +52,7 @@
 # define IS_INTERSECTION 1
 # define CORRECT_OBJECT_DESCRIPTION 1
 # define ERROR_OBJECT_DESCRIPTION 0
+# define ERROR_NB_PARAMS 0
 # define MALLOC_PARAMS_ERROR -1
 # define ERROR_OPEN -1
 # define FREE_ERROR -4
@@ -213,6 +214,8 @@ typedef struct		s_params
 	void			*win;
 	int				*ptr_img;
 	char			*img_data;
+	char			**line_content;
+	int				fd;
 	int				bpp;
 	int				size_line;
 	int				endian;
@@ -252,7 +255,7 @@ void			init_mlx(t_params *params);
 void			init_scene(t_params *params);
 void			init_objects(t_params *params);
 void			init_transform_matrices(t_transform *transforms);
-void			parse_file(char *file);
+void			parse_file(t_params *params);
 void			set_view(t_params *params);
 void			ray_equation(t_ray *ray);
 void			ray_normalize(t_vect *vect);
