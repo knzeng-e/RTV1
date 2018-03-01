@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/24 16:45:37 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:28:54 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@
 # define FOV 30
 # define MAX_FOV 150
 # define RED 0x00FF0000
+# define TRUE 1
+# define FALSE 0
 //# define GREEN 0x0000FF00
 # define GREEN 0x00088e40
 # define BLUE 0x000000FF
@@ -136,10 +138,10 @@ typedef struct	s_plane
 typedef struct	s_transform
 {
 	double		angle_rotation;
-	double		x_rotation[3][3];
-	double		y_rotation[3][3];
-	double		z_rotation[3][3];
-	double		translation[3][3];
+	double		x_rotation[4][4];
+	double		y_rotation[4][4];
+	double		z_rotation[4][4];
+	double		translation[4][4];
 }				t_transform;
 
 typedef struct	s_light

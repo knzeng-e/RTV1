@@ -6,11 +6,42 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/25 16:42:44 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/25 16:51:52 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/01 14:46:39 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
+
+int	ft_is_number(char *nbr)
+{
+	int	index;
+
+	index = 0;
+	while (nbr[index])
+	{
+		if (ft_isdigit(nbr[index]) == 0)
+			return (FALSE);
+		index++;
+	}
+	return (TRUE);
+}
+
+int	get_sphere_position(t_params *params, char **list_params)
+{
+	int	sphere_position[3];
+	int	index;
+
+	index = 0;
+	while (*list_params)
+	{
+		if (ft_is_number(*list_params) == FALSE)
+			return (ERROR_OBJECT_DESCRIPTION);
+		sphere_position[index] = ft_atoi(*list_params);
+		index++;
+		(*list_params)++;
+	}
+}
+
 
 int	check_sphere_params(t_params *params)
 {
