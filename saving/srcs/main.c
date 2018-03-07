@@ -36,6 +36,11 @@ t_params	*init_params(void)
 	params->x_resolution = WIDTH;
 	params->y_resolution = HEIGHT;
 	params->mlx = mlx_init();
+	params->current_sphere_index = -1;
+	params->current_plane_index = -1;
+	params->current_cylinder_index = -1;
+	params->current_cone_index = -1;
+	params->current_light_index = -1;
 //	params->win = mlx_new_image(params->mlx, WIDTH, HEIGHT);;
 	return (params);
 }

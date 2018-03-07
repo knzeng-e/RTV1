@@ -43,7 +43,7 @@ void	create_sphere(t_params *params)
 
 void	init_mlx(t_params *params)
 {
-	parse_file("test");
+	//parse_file("test");
 	/*Penser à proteger le mlx_init*/
 	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);

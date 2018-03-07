@@ -6,24 +6,17 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/24 13:58:34 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/12/21 18:59:45 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
-# define WIDTH 1250
-# define HEIGHT 740
+# define WIDTH 800
+# define HEIGHT 640
 # define NB_LIGHTS 2
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
-# define RED 0x00FF0000
-# define GREEN 0x0000FF00
-# define BLUE 0x000000FF
-# define SPHERE 1
-# define PLANE 2
-# define CYLINDER 3
-# define CONE 4
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -35,15 +28,10 @@
 # define RADIUS 20.0
 # define OK 0
 # define MAX_DISTANCE 20000
-# define INVALID_OBJECT 0
-# define INVALID_DESCRIPTION 0
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
 # define MALLOC_PARAMS_ERROR -1
-# define ERROR_OPEN -1
 # define MALLOC_TRANSFORM_ERROR -2
-# define PARSE_OK 1
-# define PARSE_ERROR_MESSAGE "There is an Error in line "
 # include "../mlx/mlx.h"
 # include <libft.h>
 # include <stdlib.h>
@@ -76,7 +64,7 @@ typedef struct	s_view
 
 typedef struct	s_camera
 {
-	//	t_view		view;
+//	t_view		view;
 	int			is_selected;
 	double		view_width;
 	double		view_height;
@@ -87,7 +75,7 @@ typedef struct	s_camera
 	t_vect		vect_dir;
 	t_vect		up_vect;
 	t_vect		right_vect;
-	//	t_vect		viewpoint;
+//	t_vect		viewpoint;
 }				t_camera;
 
 typedef struct	s_attenu
@@ -123,22 +111,6 @@ typedef struct	s_transform
 	double		translation[3][3];
 }				t_transform;
 
-typedef struct	s_object
-{
-	int			id;
-	int			indice_refraction;
-	int			indice_reflexion;
-	t_vect		position;
-	union
-	{
-		t_sphere	*sphere;
-		t_plane		*plane;
-		//CYLINDER,
-		//CONE
-	}				type;
-	t_color	color;
-}				t_object;
-
 typedef struct	s_params
 {
 	t_camera	eye;
@@ -168,6 +140,16 @@ typedef struct	s_params
 	int			t;
 }				t_params;
 
+typedef struct	s_object
+{
+	int			id;
+	int			type;
+	union
+	{
+		t_sphere	*sphere;
+		t_plane		*plane;
+	} current_object;
+}				t_object;
 
 int				expose_hook(t_params *params);
 int				mouse_hook(int button, int x, int y, t_params *params);
@@ -193,7 +175,6 @@ void			init_transform_matrices(t_transform *transforms);
 void			set_x_rotation(t_transform *transforms, double angle);
 void			set_y_rotation(t_transform *transforms, double angle);
 void			set_z_rotation(t_transform *transforms, double angle);
-void			parse_file(char *file);
 void			map_color(t_color *col);
 double			plane_normal(t_vect origin, t_vect direction);
 double			get_length(t_vect *vect);

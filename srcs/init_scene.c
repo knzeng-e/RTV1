@@ -6,39 +6,64 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/01/23 18:26:57 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/11/25 03:17:28 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
 
-void	create_sphere(t_params *params)
+void	create_sphere(t_params *params, double radius, double x, double y)
 {
 	params->sphere.is_selected = 0;
-	params->sphere.rayon = 1;
-	set_vector(&params->sphere.center, 0, -1, -13);
+	params->sphere.rayon = radius;
+	set_vector(&params->sphere.center, x, y, 50);
 	set_color(&params->sphere.color, 255, 0, 0);
 
 	params->sphere2.is_selected = 0;
 	//params->sphere2.rayon = radius + 2442;
-	params->sphere2.rayon = 1;
-	set_vector(&params->sphere2.center, -2, 1, -13);
+	params->sphere2.rayon = radius - 42;
+	set_vector(&params->sphere2.center, x, y + -42, 50);
 	set_color(&params->sphere2.color, 255, 0, 0);
 
 	params->sphere3.is_selected = 0;
-	params->sphere3.rayon = 1;
-	set_vector(&params->sphere3.center, 0, -1, -13);
+	params->sphere3.rayon = radius + 21;
+	set_vector(&params->sphere3.center, x, y + 47, 50);
 	set_color(&params->sphere3.color, 255, 0, 0);
 }
 
 void	init_mlx(t_params *params)
 {
-	parse_file("test");
 	params->mlx = mlx_init();
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
 	params->img_data = (int *)mlx_get_data_addr(params->ptr_img, &(params->bpp),  &(params->size_line), &(params->endian));
 }
 
+t_vect	get_first_pixel(t_params *params)
+{
+	t_vect		screen_center;
+	t_camera	camera;
+
+	/* Screen_center = cam_pos + (vect_dir * veiw_dist)*/
+	camera = params->eye;
+	screen_center.vect_x = camera.cam_pos.vect_x + (camera.vect_dir.vect_x * camera.view_dist);
+	screen_center.vect_y = camera.cam_pos.vect_y + (camera.vect_dir.vect_y * camera.view_dist);
+	screen_center.vect_z = camera.cam_pos.vect_z + (camera.vect_dir.vect_z * camera.view_dist);
+
+	/* camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) */
+
+	screen_center.vect_x += params->eye.up_vect.vect_x * (params->eye.view_height / 2.0);
+	screen_center.vect_y += params->eye.up_vect.vect_y * (params->eye.view_height / 2.0);
+	screen_center.vect_z += params->eye.up_vect.vect_z * (params->eye.view_height / 2.0);
+
+	/* camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))*/
+
+	screen_center.vect_x -= params->eye.right_vect.vect_x * params->eye.view_width / 2.0;
+	screen_center.vect_x -= params->eye.right_vect.vect_y * params->eye.view_width / 2.0;
+	screen_center.vect_x -= params->eye.right_vect.vect_z * params->eye.view_width / 2.0;
+
+	// viewPlaneUpLeft = camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))
+	return (screen_center);
+}
 
 void	create_plane(t_params *params)
 {
@@ -47,9 +72,9 @@ void	create_plane(t_params *params)
 	if ((params->v_plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
 	/*Init position*/
-	params->plane->position.vect_x = 0;
-	params->plane->position.vect_y = 0;
-	params->plane->position.vect_z = 1;
+	params->plane->position.vect_x = WIDTH;
+	params->plane->position.vect_y = HEIGHT / 2;
+	params->plane->position.vect_z = 1200;
 
 	/*Init Normale*/
 	params->plane->normale.vect_x = 0;
@@ -75,30 +100,8 @@ void	put_light(t_params *params, int y_pos, int x_pos)
 		exit(0);
 	light->position.vect_x = x_pos;
 	light->position.vect_y = y_pos;
-	light->position.vect_z = -7;
+	light->position.vect_z = 50;
 	params->light[0] = *light;
-}
-
-t_vect	get_first_pixel(t_params *params)
-{
-	t_vect		screen_center;
-	t_camera	camera;
-
-	/* Screen_center = cam_pos + (vect_dir * veiw_dist)*/
-	camera = params->eye;
-	screen_center.vect_x = camera.cam_pos.vect_x + (camera.vect_dir.vect_x * camera.view_dist);
-	screen_center.vect_y = camera.cam_pos.vect_y + (camera.vect_dir.vect_y * camera.view_dist);
-	screen_center.vect_z = camera.cam_pos.vect_z + (camera.vect_dir.vect_z * camera.view_dist);
-	/* camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) */
-	screen_center.vect_x += params->eye.up_vect.vect_x * (params->eye.view_height / 2.0);
-	screen_center.vect_y += params->eye.up_vect.vect_y * (params->eye.view_height / 2.0);
-	screen_center.vect_z += params->eye.up_vect.vect_z * (params->eye.view_height / 2.0);
-	/* camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))*/
-	screen_center.vect_x -= params->eye.right_vect.vect_x * params->eye.view_width / 2.0;
-	screen_center.vect_x -= params->eye.right_vect.vect_y * params->eye.view_width / 2.0;
-	screen_center.vect_x -= params->eye.right_vect.vect_z * params->eye.view_width / 2.0;
-	// viewPlaneUpLeft = camPos + ((vecDir*viewplaneDist)+(upVec*(viewplaneHeight/2.0f))) - (rightVec*(viewplaneWidth/2.0f))
-	return (screen_center);
 }
 
 void	init_scene(t_params *params)
@@ -111,8 +114,8 @@ void	init_scene(t_params *params)
 	set_camera(&params->eye);
 	init_mlx(params);
 	//set_view(params);
-	create_sphere(params);
+	create_sphere(params, 70, WIDTH / 2, HEIGHT / 2);
 	create_plane(params);
-	put_light(params, 0, 2);
+	put_light(params, HEIGHT / 100, WIDTH / 2);
 	init_transform_matrices(params->transforms);
 }

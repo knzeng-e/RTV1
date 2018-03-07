@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/06 10:46:14 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2017/12/21 18:58:45 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	track_ray(t_params *params)
 				return (ft_free(params));
 			params->rays_to_free++;
 			set_origin(i, j, ray, params);
-			//ray->ray_normalize(&ray->direction);
+			ray->ray_normalize(&ray->direction);
 			if (plane_intersect(ray, (params->v_plane), params))
 			{
 

@@ -14,7 +14,7 @@
 
 t_vect	get_normal_cylinder(t_vect intersection, t_cylinder *cyl)
 {
-	t_vect normal;
+	t_vect	normal;
 	t_vect	vect1;
 	t_vect	vect2;
 

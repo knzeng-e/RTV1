@@ -89,6 +89,7 @@ int		check_object_params(int object_id, params)
 	if (object_id == SPHERE)
 	{
 		ft_putstr("d'une sphere");
+		params->current_sphere_index++;
 		if (check_sphere_params(params))
 			return (CORRECT_OBJECT_DESCRIPTION);
 		return (ERROR_OBJECT_DESCRIPTION);

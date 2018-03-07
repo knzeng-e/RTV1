@@ -17,7 +17,7 @@ void	set_x_rotation(t_transform *transforms, double angle)
 	transforms->x_rotation[3][0] = 0;
 	transforms->x_rotation[3][1] = 0;
 	transforms->x_rotation[3][2] = 0;
-	transforms->x_rotation[3][3] = 0;
+	transforms->x_rotation[3][3] = 1;
 }
 
 void	set_y_rotation(t_transform *transforms, double angle)
@@ -37,7 +37,7 @@ void	set_y_rotation(t_transform *transforms, double angle)
 	transforms->y_rotation[3][0] = 0;
 	transforms->y_rotation[3][1] = 0;
 	transforms->y_rotation[3][2] = 0;
-	transforms->y_rotation[3][3] = 0;
+	transforms->y_rotation[3][3] = 1;
 }
 
 void	set_z_rotation(t_transform *transforms, double angle)
@@ -57,5 +57,5 @@ void	set_z_rotation(t_transform *transforms, double angle)
 	transforms->z_rotation[3][0] = 0;
 	transforms->z_rotation[3][1] = 0;
 	transforms->z_rotation[3][2] = 0;
-	transforms->z_rotation[3][3] = 0;
+	transforms->z_rotation[3][3] = 1;
 }

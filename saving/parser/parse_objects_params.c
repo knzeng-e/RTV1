@@ -14,12 +14,9 @@
 
 int	get_sphere_position(t_params *params, char **infos)
 {
-	int	partie_entiere;
-	int	fraction;
-	int	cpt;
-	int	index;
+	int	i;
+	int	i;
 	int	has_dot;
-	double	coord[3];
 
 	nb_coord = 0;
 	has_dot = 0;
@@ -28,27 +25,27 @@ int	get_sphere_position(t_params *params, char **infos)
 		has_dot = 0;
 		if (*infos)
 		{
-			cpt = 0;
+			i = 0;
 			while ((*infos)[i])
 			{
 				if ((*infos)[i] == '.' || (*infos)[i] == ',')
 				{
 					if (has_dot)	/* Error If there is double dot/comma */
-						return (0);
+						return (ERROR_OBJECT_DESCRIPTION);
 					has_dot = 1;
 				}
-				if (!ft_isdigit((*infos)[i]) && (*infos)[i] != '.' && (*infos)[i] != ',')
-					return (0);
+				if (!ft_isnumber((*infos)[i]) && (*infos)[i] != '.' && (*infos)[i] != ',')
+					return (ERROR_OBJECT_DESCRIPTION);
 				i++;
 			}
-			vect_x = ft_atoi(*infos);
+			save_sphere_coord(params, *infos, nb_coord);
 		}
 		else
-			return (0);
+			return (ERROR_OBJECT_DESCRIPTION);
 		infos++;
 		nb_coord++;
 	}
 	if (nb_coord != 2)
-		return (0);
-	return (1);
+		return (ERROR_OBJECT_DESCRIPTION);
+	return (CORRECT_OBJECT_DESCRIPTION);
 }

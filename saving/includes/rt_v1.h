@@ -13,9 +13,9 @@
 #ifndef RT_V1_H
 # define RT_V1_H
 //# define WIDTH 800
-# define WIDTH 400
+# define WIDTH 800
 //# define HEIGHT 640
-# define HEIGHT 400
+# define HEIGHT 600
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
 # define SPECULAR 10000
@@ -27,6 +27,7 @@
 # define NB_CONES 1
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES + NB_LIGHTS
 # define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES
+# define NB_SPHERES_PARAMS 4
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -135,6 +136,14 @@ typedef struct	s_plane
 	double		specular;
 }				t_plane;
 
+typedef struct	s_matrix
+{
+	double		row1[4];
+	double		row2[4];
+	double		row3[4];
+	double		row4[4];
+}				t_matrix;
+
 typedef struct	s_transform
 {
 	double		angle_rotation;
@@ -227,6 +236,11 @@ typedef struct		s_params
 	int				color;
 	int				nb_objects;
 	int				current_index;
+	int				current_sphere_index;
+	int				current_plane_index;
+	int				current_cylinder_index;
+	int				current_cone_index;
+	int				current_light_index;
 	int				vector_lenght;
 }					t_params;
 
@@ -242,16 +256,20 @@ int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylinder_intersect(t_ray *ray, t_cylinder *cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
 int				cone_intersect(t_ray *ray, t_cone *cone, t_params *params);
-int				check_sphere_params(char **line_content);
-int				check_plane_params(char **line_content);
-int				check_cylinder_params(char **line_content);
-int				check_cone_params(char **line_content);
-int				check_light_params(char **line_content);
+int				check_sphere_params(t_params *params);
+int				check_plane_params(t_params *params);
+int				check_cylinder_params(t_params *params);
+int				check_cone_params(t_params *params);
+int				check_light_params(t_params *params);
 int				couleur(double angle);
 int				get_color(t_color color);
 int				rgb_to_int(int r, int g, int b);
 int				calc_color(int color, double intensity);
 int				get_nb_objects(t_params *params);
+int				get_sphere_position(t_params *params, char **infos);
+int				get_obj_color(t_params *params, char **infos, int object_id);
+
+int				ft_isnumber(char *number);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_mlx(t_params *params);
 void			init_scene(t_params *params);
@@ -271,11 +289,11 @@ void			set_plane(t_object *current_obj, t_params *params, int cpt_planes);
 void			save_planes(t_object *current_obj, t_params *params, int *cpt_objects);
 void			set_light(t_object *current_obj, t_params *params, int cpt_lights);
 void			save_lights(t_object *current_obj, t_params *params, int *cpt_objects);
-
 void			set_cylinder(t_object *current_obj, t_params *params, int cpt_cylinders);
 void			save_cylinders(t_object *current_obj, t_params *params, int *cpt_objects);
 void			set_cone(t_object *current_obj, t_params *params, int cpt_cones);
 void			save_cones(t_object *obj, t_params *params, int *cpt_objects);
+void			save_sphere_coord(t_params *params, char *infos, int nb_coord);
 void			show_object_type(t_object *current_obj);
 void			print_objects(t_object *objects);
 void			init_objects(t_params *params);
@@ -292,6 +310,7 @@ t_vect			vect_divide(t_vect vect, double cste);
 t_vect			vect_multiply(t_vect vect, double cste);
 t_vect			vect_add(t_vect vect1, t_vect vect2);
 t_vect			set_vector(double x, double y, double z);
+t_matrix		matrix_multiply(t_matrix *mat1, t_matrix *mat2);
 t_color			set_color(double red, double green, double blue);
 t_color			get_rgb(int color);
 #endif

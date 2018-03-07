@@ -12,40 +12,9 @@
 
 #include "rt_v1.h"
 
-int	ft_is_number(char *nbr)
-{
-	int	index;
-
-	index = 0;
-	while (nbr[index])
-	{
-		if (ft_isdigit(nbr[index]) == 0)
-			return (FALSE);
-		index++;
-	}
-	return (TRUE);
-}
-
-int	get_sphere_position(t_params *params, char **list_params)
-{
-	int	sphere_position[3];
-	int	index;
-
-	index = 0;
-	while (*list_params)
-	{
-		if (ft_is_number(*list_params) == FALSE)
-			return (ERROR_OBJECT_DESCRIPTION);
-		sphere_position[index] = ft_atoi(*list_params);
-		index++;
-		(*list_params)++;
-	}
-}
-
-
 int	check_sphere_params(t_params *params)
 {
-	static int	cpt_params = 4; /* position, color, rayon, specular  */
+	static int	cpt_params = NB_SPHERES_PARAMS; /* position, color, radius, specular  */
 
 		if (cpt_params <= 0)
 			return (ERROR_NB_PARAMS);
@@ -56,31 +25,66 @@ int	check_sphere_params(t_params *params)
 				cpt_params--;
 				(params->line_content)++;
 				if (get_sphere_position(params, ft_strsplit(*(params->line_content), ',')) == 0)
-					return (0);
+					return (ERROR_OBJECT_DESCRIPTION);
 			}
+			else if (ft_strcmp(*(params->line_content), "color:"))
+			{
+				cpt_params--;
+				(params->line_content)++;
+				if (get_obj_color(params, ft_strsplit(*(params->line_content), ','), SPHERE)  == 0)
+					return (ERROR_OBJECT_DESCRIPTION);
+			}
+			else if (ft_strcmp(*(params->line_content), "radius:"))
+			{
+				cpt_params--;
+				(params->line_content)++;
+				/*Risque de pb ici: ++(params->line_content)*/
+				if ((ft_isnumber(*(params->line_content)) == 0) || (++(params->line_content)))
+					return (ERROR_OBJECT_DESCRIPTION);
+					params->sphere_list[params->current_sphere_index].rayon = (double)ft_atoi(*(params->line_content));
+			}
+			else if (ft_strcmp(*(params->line_content), "specular:"))
+			{
+				cpt_params--;
+				(params->line_content)++;
+				/* get_specular */
+				/*Risque de pb ici: ++(params->line_content)*/
+				if ((ft_isnumber(*(params->line_content)) == 0) || (++(params->line_content)))
+					return (ERROR_OBJECT_DESCRIPTION);
+				params->sphere_list[params->current_sphere_index].specular = (double)ft_atoi(*(params->line_content));
+			}
+
+
+
+
 			ft_putstr("\n- ");
 			ft_putstr(*(params->line_content));
 			(params->line_content)++;
 			ft_putchar('\n');
 		}
+		return (1);
 }
 
 int	check_plane_params(t_params *params)
 {
 	static int	cpt_params = 4; /* position, normal, color, specular */
+	return (1);
 }
 
 int	check_cylinder_params(t_params *params)
 {
 	static int	cpt_params = 4; /* radius, specular, cposition, color */
+	return (1);
 }
 
 int	check_cone_params(t_params *params)
 {
 	static int	cpt_params = 4; /* position, angle, specular, color */
+	return (1);
 }
 
 int	check_light_params(t_params *params)
 {
 	static int	cpt_params = 3; /* position, intensity, type */
+	return (1);
 }
