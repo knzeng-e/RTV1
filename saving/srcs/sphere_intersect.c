@@ -21,7 +21,7 @@ t_vect	get_normal(t_vect intersection, t_sphere sphere)
 	return (vect_divide(depth, sphere.rayon));
 }
 
- int	sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params)
+int	sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params)
 {
 	t_vect	L;
 	t_vect	depth;
@@ -47,5 +47,32 @@ t_vect	get_normal(t_vect intersection, t_sphere sphere)
 	depth = vect_sub(ray->intersection, sphere.center);
 	params->current_normal = vect_divide(depth, sphere.rayon);
 	return (1);
-	/*get normal*/
 }
+
+
+/*int		sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params)
+{
+	t_vect	depth;
+	double	b;
+	double	c;
+	double	t0;
+	double	t1;
+	double	disc;
+
+	depth = vect_sub(ray->origin, sphere.center);
+    b = 2 * dot_product(depth, ray->direction);
+    c = dot_product(depth, depth) - (sphere.rayon * sphere.rayon);
+    disc = b * b - 4 * c;
+    if (disc < 0)
+		return (0);
+    disc = sqrt(disc) / 2;
+    //disc = sqrt(disc);
+    t0 = -b - disc;
+    t1 = -b + disc;
+    ray->t = (t0 < t1) ? t0 : t1;
+	params->ray_depth = ray->t;
+	save_intersection(ray);
+	depth = vect_sub(ray->intersection, sphere.center);
+	params->current_normal = vect_divide(depth, sphere.rayon);
+    return (1);
+}*/

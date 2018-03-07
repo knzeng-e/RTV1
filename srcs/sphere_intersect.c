@@ -31,7 +31,7 @@ void	save_intersection(t_ray *ray)
 	set_vector(&ray->intersection, x_intersect, y_intersect, z_intersect);
 }
 
- int	sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params)
+int	sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params)
 {
 	t_vect	depth;
 	double	b;

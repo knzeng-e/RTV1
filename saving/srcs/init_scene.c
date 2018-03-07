@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/24 14:55:12 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/07 23:51:30 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 void	init_scene(t_params *params)
 {
 	init_mlx(params);
+	//params->transforms = 
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
 	create_plane(params);

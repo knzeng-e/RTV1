@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/01 14:28:54 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/07 23:50:58 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define J_KEY 38
 # define I_KEY 34
 # define L_KEY 37
+# define SPACE_KEY 49
 # define ZOOM_IN 69
 //# define ZOOM_IN 44
 # define ZOOM_OUT 78
@@ -95,6 +96,14 @@ typedef struct	s_color
 	int			blue;
 }				t_color;
 
+typedef struct	s_vect4
+{
+	double		vect_x;
+	double		vect_y;
+	double		vect_z;
+	double		vect_w;
+}				t_vect4;
+
 /*typedef struct	s_camera
 {
 	double		view_width;
@@ -138,19 +147,16 @@ typedef struct	s_plane
 
 typedef struct	s_matrix
 {
-	double		row1[4];
-	double		row2[4];
-	double		row3[4];
-	double		row4[4];
+	double		mat[4][4];
 }				t_matrix;
 
 typedef struct	s_transform
 {
 	double		angle_rotation;
-	double		x_rotation[4][4];
-	double		y_rotation[4][4];
-	double		z_rotation[4][4];
-	double		translation[4][4];
+	t_matrix	x_rotation;
+	t_matrix	y_rotation;
+	t_matrix	z_rotation;
+	t_matrix	translation;
 }				t_transform;
 
 typedef struct	s_light
@@ -214,6 +220,7 @@ typedef struct		s_params
 	t_light			current_light;
 	t_vect			current_normal;
 	t_vect			light_vector;
+	t_transform		transforms;
 	double			x_indent;
 	double			y_indent;
 	double			x_resolution;
@@ -268,20 +275,22 @@ int				calc_color(int color, double intensity);
 int				get_nb_objects(t_params *params);
 int				get_sphere_position(t_params *params, char **infos);
 int				get_obj_color(t_params *params, char **infos, int object_id);
-
 int				ft_isnumber(char *number);
+
+void			draw_pixel(t_params *params, int i, int j, int color);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			init_mlx(t_params *params);
 void			init_scene(t_params *params);
 void			init_objects(t_params *params);
+void			set_camera(t_ray *ray, t_params *params, int i, int j);
 void			init_transform_matrices(t_transform *transforms);
 void			parse_file(t_params *params);
 void			set_view(t_params *params);
 void			ray_equation(t_ray *ray);
 void			ray_normalize(t_vect *vect);
-void			set_x_rotation(t_transform *transforms, double angle);
-void			set_y_rotation(t_transform *transforms, double angle);
-void			set_z_rotation(t_transform *transforms, double angle);
+void			set_x_rotation(t_transform *transforms);
+void			set_y_rotation(t_transform *transforms);
+void			set_z_rotation(t_transform *transforms);
 void			save_intersection(t_ray *ray);
 void			set_sphere(t_object *current_obj, t_params *params, int cpt_spheres);
 void			save_spheres(t_object *current_obj, t_params *params, int *cpt_objects);
@@ -297,12 +306,16 @@ void			save_sphere_coord(t_params *params, char *infos, int nb_coord);
 void			show_object_type(t_object *current_obj);
 void			print_objects(t_object *objects);
 void			init_objects(t_params *params);
+void			rotate_x_axis(t_vect *vect, double angle, t_transform *transform);
+void			rotate_y_axis(t_vect *vect, double angle, t_transform *transform);
+void			rotate_z_axis(t_vect *vect, double angle, t_transform *transform);
 void			clamp(int *r, int *g, int *b);
 double			radians(double angle);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
 double			get_specular(t_vect normal, t_ray *ray, t_params *params);
 double			shading(t_ray *ray, t_params *params);
+double			max(double nbre1, double nbre2);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
 t_vect			get_normal(t_vect intersection, t_sphere sphere);
 t_vect			vect_sub(t_vect vect1, t_vect vect2);
@@ -310,6 +323,8 @@ t_vect			vect_divide(t_vect vect, double cste);
 t_vect			vect_multiply(t_vect vect, double cste);
 t_vect			vect_add(t_vect vect1, t_vect vect2);
 t_vect			set_vector(double x, double y, double z);
+t_vect4			set_homogen(t_vect *vect);
+t_vect4			vect_matrx_multiply(t_vect4 *vect, t_matrix *mat);
 t_matrix		matrix_multiply(t_matrix *mat1, t_matrix *mat2);
 t_color			set_color(double red, double green, double blue);
 t_color			get_rgb(int color);

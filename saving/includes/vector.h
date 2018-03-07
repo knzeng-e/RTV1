@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rayon.h                                            :+:      :+:    :+:   */
+/*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/18 00:10:43 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/07 23:17:54 by knzeng-e         ###   ########.fr       */
+/*   Created: 2018/03/07 23:13:59 by knzeng-e          #+#    #+#             */
+/*   Updated: 2018/03/07 23:17:12 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAYON_H
+#ifndef VECTOR_H
 
-# define RAYON_H
-# include "vector.h"
+# define VECTOR_H
 
-typedef struct	s_ray
+typedef struct	s_vect
 {
-	t_vect		origin;
-	t_vect		direction;
-	t_vect		intersection;
-	double		t;
-	void		(*normalize)(t_vect *);
-	/*void		(*ray_equation)(struct s_ray);*/
-	/*ray = O + DIR * t*/;
-	/*equation of line: (y - y_1)(x_2 - x_1) = (x - x_1)(y_2 -y_1) */
-}				t_ray;
+	double		vect_x;
+	double		vect_y;
+	double		vect_z;
+}				t_vect;
+
 #endif

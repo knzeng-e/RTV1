@@ -48,8 +48,8 @@ void	init_transform_matrices(t_transform *transforms)
 	if (transforms == NULL)
 		exit (MALLOC_TRANSFORM_ERROR);
 	angle = 30;
-	set_x_rotation(transforms, angle);
-	set_y_rotation(transforms, angle);
-	set_z_rotation(transforms, angle);
+	set_x_rotation(transforms);
+	set_y_rotation(transforms);
+	set_z_rotation(transforms);
 	//angle = transforms->angle_rotation;
 }
