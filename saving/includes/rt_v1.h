@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/07 23:50:58 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/09 17:45:40 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@
 # define I_KEY 34
 # define L_KEY 37
 # define SPACE_KEY 49
-//# define ZOOM_IN 69
-# define ZOOM_IN 44
-//# define ZOOM_OUT 78
-# define ZOOM_OUT 24
+# define ZOOM_IN 69
+//# define ZOOM_IN 44
+# define ZOOM_OUT 78
+//# define ZOOM_OUT 24
 # define RADIUS 20.0
 # define OK 0
 # define FREE_OK 0
@@ -284,6 +284,7 @@ void			init_mlx(t_params *params);
 void			init_scene(t_params *params);
 void			init_objects(t_params *params);
 void			set_camera(t_ray *ray, t_params *params, int i, int j);
+void			set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to)
 void			init_transform_matrices(t_transform *transforms);
 void			parse_file(t_params *params);
 void			set_view(t_params *params);
