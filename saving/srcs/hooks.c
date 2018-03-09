@@ -80,7 +80,10 @@ int		key_hook(int keycode, t_params *params)
 	if (keycode == SPACE_KEY)
 	{
 		//rotate_x_axis(&(params->cylinder_list[0].center), 30, &params->transforms);
-		rotate_y_axis(&(params->sphere_list[0].center), 15, &params->transforms);
+	//	rotate_x_axis(&(params->sphere_list[0].center), 1.3, &params->transforms);
+		//rotate_z_axis(&(params->cylinder_list[0].center), 1.3, &params->transforms);
+		//rotate_x_axis(&(params->cylinder_list[0].center), 1.2, &params->transforms);
+		rotate_y_axis(&(params->cylinder_list[0].center), 1.1, &params->transforms);
 	}
 	if (keycode == LEFT_KEY)
 	{

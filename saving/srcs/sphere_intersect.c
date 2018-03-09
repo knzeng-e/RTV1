@@ -49,7 +49,6 @@ int	sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params)
 	return (1);
 }
 
-
 /*int		sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params)
 {
 	t_vect	depth;

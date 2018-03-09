@@ -13,9 +13,9 @@
 #ifndef RT_V1_H
 # define RT_V1_H
 //# define WIDTH 800
-# define WIDTH 800
+# define WIDTH 300
 //# define HEIGHT 640
-# define HEIGHT 600
+# define HEIGHT 300
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
 # define SPECULAR 10000
@@ -40,10 +40,10 @@
 # define I_KEY 34
 # define L_KEY 37
 # define SPACE_KEY 49
-# define ZOOM_IN 69
-//# define ZOOM_IN 44
-# define ZOOM_OUT 78
-//# define ZOOM_OUT 24
+//# define ZOOM_IN 69
+# define ZOOM_IN 44
+//# define ZOOM_OUT 78
+# define ZOOM_OUT 24
 # define RADIUS 20.0
 # define OK 0
 # define FREE_OK 0
@@ -104,18 +104,23 @@ typedef struct	s_vect4
 	double		vect_w;
 }				t_vect4;
 
-/*typedef struct	s_camera
+typedef struct	s_matrix
 {
-	double		view_width;
-	double		view_height;
-	double		view_dist;
+	double		mat[4][4];
+}				t_matrix;
+
+typedef struct	s_camera
+{
+	t_view		viewpoint;
 	t_vect		view_left_up;
 	t_vect		cam_pos;
 	t_vect		vect_dir;
 	t_vect		up_vect;
 	t_vect		right_vect;
+	t_vect		forward_vect;
+	t_matrix	cam_to_world;
 //	t_vect		viewpoint;
-}				t_camera;*/
+}				t_camera;
 
 typedef struct	s_cylinder
 {
@@ -145,10 +150,6 @@ typedef struct	s_plane
 	double		specular;
 }				t_plane;
 
-typedef struct	s_matrix
-{
-	double		mat[4][4];
-}				t_matrix;
 
 typedef struct	s_transform
 {
@@ -204,7 +205,7 @@ struct				s_object
 
 typedef struct		s_params
 {
-	//t_camera	eye;
+	t_camera		eye;
 	t_sphere		sphere_list[NB_SPHERES];
 	t_plane			plane_list[NB_PLANES];
 	t_cylinder		cylinder_list[NB_CYLINDERS];
