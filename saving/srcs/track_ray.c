@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/07 23:10:01 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/09 23:03:36 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	track_ray(t_params *params)
 {
 	//t_ray		*ray;
 	t_vect		saved_normal;
+//	t_vect		from;
+//	t_vect		to;
 	t_color		rgb;
 	t_object	*obj;
 	t_object	*light;
@@ -55,6 +57,7 @@ int	track_ray(t_params *params)
 
 	t_min = MAX_DISTANCE;
 	i = 0;
+//	from = set_vector(0, 0, 0);
 	print_objects(params->objects);
 	while (i < WIDTH)
 	{
@@ -62,6 +65,7 @@ int	track_ray(t_params *params)
 		while (j < HEIGHT)
 		{
 			set_origin(i, j, &ray, params);
+			//set_camera_look_at(ray, params, &from, &to);
 			set_camera(&ray, params, i, j);
 			cpt = 0;
 			t_min = MAX_DISTANCE;

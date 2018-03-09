@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 18:11:09 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/07 23:24:11 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/09 23:11:11 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_vect4	set_homogen(t_vect *vect)
 	return (result);
 }
 
-void	rotate_x_axis(t_vect *vect, double angle, t_transform *transform)
+t_vect	rotate_x_axis(t_vect *vect, double angle, t_transform *transform)
 {
 	t_vect4	result;
 	t_vect4	homogen_vect;
@@ -46,9 +46,10 @@ void	rotate_x_axis(t_vect *vect, double angle, t_transform *transform)
 	homogen_vect = set_homogen(vect);
 	result = vect_matrx_multiply(&homogen_vect, &transform->x_rotation);
 	*vect = set_reverse_homogen(&result);
+	return (*vect);
 }
 
-void	rotate_y_axis(t_vect *vect, double angle, t_transform *transform)
+t_vect	rotate_y_axis(t_vect *vect, double angle, t_transform *transform)
 {
 	t_vect4	result;
 	t_vect4	homogen_vect;
@@ -58,9 +59,10 @@ void	rotate_y_axis(t_vect *vect, double angle, t_transform *transform)
 	homogen_vect = set_homogen(vect);
 	result = vect_matrx_multiply(&homogen_vect, &transform->y_rotation);
 	*vect = set_reverse_homogen(&result);
+	return (*vect);
 }
 
-void	rotate_z_axis(t_vect *vect, double angle, t_transform *transform)
+t_vect	rotate_z_axis(t_vect *vect, double angle, t_transform *transform)
 {
 	t_vect4	result;
 	t_vect4	homogen_vect;
@@ -70,4 +72,5 @@ void	rotate_z_axis(t_vect *vect, double angle, t_transform *transform)
 	homogen_vect = set_homogen(vect);
 	result = vect_matrx_multiply(&homogen_vect, &transform->z_rotation);
 	*vect = set_reverse_homogen(&result);
+	return (*vect);
 }

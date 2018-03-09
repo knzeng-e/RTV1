@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/09 17:45:40 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/09 23:11:54 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ typedef struct		s_params
 	t_vect			current_normal;
 	t_vect			light_vector;
 	t_transform		transforms;
+	t_matrix		transform_matrx;
 	double			x_indent;
 	double			y_indent;
 	double			x_resolution;
@@ -284,7 +285,7 @@ void			init_mlx(t_params *params);
 void			init_scene(t_params *params);
 void			init_objects(t_params *params);
 void			set_camera(t_ray *ray, t_params *params, int i, int j);
-void			set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to)
+void			set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to);
 void			init_transform_matrices(t_transform *transforms);
 void			parse_file(t_params *params);
 void			set_view(t_params *params);
@@ -308,9 +309,6 @@ void			save_sphere_coord(t_params *params, char *infos, int nb_coord);
 void			show_object_type(t_object *current_obj);
 void			print_objects(t_object *objects);
 void			init_objects(t_params *params);
-void			rotate_x_axis(t_vect *vect, double angle, t_transform *transform);
-void			rotate_y_axis(t_vect *vect, double angle, t_transform *transform);
-void			rotate_z_axis(t_vect *vect, double angle, t_transform *transform);
 void			clamp(int *r, int *g, int *b);
 double			radians(double angle);
 double			get_length(t_vect *vect);
@@ -318,6 +316,9 @@ double			dot_product(t_vect vect1, t_vect vect2);
 double			get_specular(t_vect normal, t_ray *ray, t_params *params);
 double			shading(t_ray *ray, t_params *params);
 double			max(double nbre1, double nbre2);
+t_vect			rotate_x_axis(t_vect *vect, double angle, t_transform *transform);
+t_vect			rotate_y_axis(t_vect *vect, double angle, t_transform *transform);
+t_vect			rotate_z_axis(t_vect *vect, double angle, t_transform *transform);
 t_vect			cross_product(t_vect vect1, t_vect vect2);
 t_vect			get_normal(t_vect intersection, t_sphere sphere);
 t_vect			vect_sub(t_vect vect1, t_vect vect2);

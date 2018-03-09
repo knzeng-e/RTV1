@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/07 23:56:28 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/09 23:33:50 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		mouse_hook(int button, int x, int y, t_params *infos)
 
 int		key_hook(int keycode, t_params *params)
 {
+
 	//printf("\nKey pressed ==> %d", keycode);
 	if (keycode == I_KEY)
 		params->light[0].intensity += 0.5;
@@ -79,11 +80,10 @@ int		key_hook(int keycode, t_params *params)
 		params->light[0].is_selected = !(params->light[0].is_selected);
 	if (keycode == SPACE_KEY)
 	{
-		//rotate_x_axis(&(params->cylinder_list[0].center), 30, &params->transforms);
-	//	rotate_x_axis(&(params->sphere_list[0].center), 1.3, &params->transforms);
-		//rotate_z_axis(&(params->cylinder_list[0].center), 1.3, &params->transforms);
+		rotate_x_axis(&(params->cylinder_list[0].center), 30, &params->transforms);
+		rotate_x_axis(&(params->sphere_list[0].center), 1.3, &params->transforms);
+		rotate_z_axis(&(params->cylinder_list[0].center), 1.3, &params->transforms);
 		//rotate_x_axis(&(params->cylinder_list[0].center), 1.2, &params->transforms);
-		rotate_y_axis(&(params->cylinder_list[0].center), 1.1, &params->transforms);
 	}
 	if (keycode == LEFT_KEY)
 	{
