@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/09 23:11:54 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/22 09:41:41 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define WIDTH 300
 //# define HEIGHT 640
 # define HEIGHT 300
+# define ACC 0.001
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
 # define SPECULAR 10000
@@ -240,7 +241,8 @@ typedef struct		s_params
 	int				size_line;
 	int				endian;
 	int				rays_to_free;
-	int				ray_depth;
+	//int				ray_depth;
+	double			ray_depth;
 	int				t;
 	int				color;
 	int				nb_objects;

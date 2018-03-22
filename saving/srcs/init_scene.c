@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/07 23:51:30 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/22 12:02:39 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,16 @@ void	create_cylinder(t_params *params)
 	params->cylinder_list[0].center = set_vector(-6, -3, -50);
 	params->cylinder_list[0].radius = 1.2;
 	params->cylinder_list[0].specular = 100;
-	params->cylinder_list[0].color = set_color(0x8f, 0, 0x4f);
+	params->cylinder_list[0].color = set_color(0x4a, 0x2a, 0x9f);
 }
 
 void	create_cone(t_params *params)
 {
-	params->cone_list[0].center = set_vector(-13, 3, -30);
-	params->cone_list[0].angle = radians(20);
+	params->cone_list[0].center = set_vector(-4, 0, -50);
+	params->cone_list[0].angle = radians(7);
 	params->cone_list[0].specular = 300;
-	params->cone_list[0].color = set_color(42, 42, 42);
+	params->cone_list[0].color = set_color(0, 0x8f, 42);
+	//params->cone_list[0].color = set_color(42, 42, 42);
 }
 
 void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
@@ -133,6 +134,6 @@ void	init_scene(t_params *params)
 	create_plane(params);
 	create_cylinder(params);
 	create_cone(params);
-	put_light(params, 7, 12, -10);
+	put_light(params, 17, 12, -4);
 	init_objects(params);
 }

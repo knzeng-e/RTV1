@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/09 23:03:36 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/22 11:02:16 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	track_ray(t_params *params)
 {
 	//t_ray		*ray;
 	t_vect		saved_normal;
-//	t_vect		from;
-//	t_vect		to;
+	t_vect		from;
+	t_vect		to;
 	t_color		rgb;
 	t_object	*obj;
 	t_object	*light;
@@ -57,15 +57,17 @@ int	track_ray(t_params *params)
 
 	t_min = MAX_DISTANCE;
 	i = 0;
-//	from = set_vector(0, 0, 0);
+	from = set_vector(0, 0, 0);
 	print_objects(params->objects);
 	while (i < WIDTH)
 	{
 		j = 0;
 		while (j < HEIGHT)
 		{
+			to = set_vector(i, j, -1);
 			set_origin(i, j, &ray, params);
-			//set_camera_look_at(ray, params, &from, &to);
+			from = ray.origin;
+			//set_camera_look_at(&ray, params, &from, &to);
 			set_camera(&ray, params, i, j);
 			cpt = 0;
 			t_min = MAX_DISTANCE;
@@ -88,8 +90,8 @@ int	track_ray(t_params *params)
 					saved_normal = params->current_normal;
 					if (!is_shadowed(ray.intersection, params, obj))
 					{						
-						params->current_normal = saved_normal;
-						ray_normalize(&params->current_normal);
+				//	params->current_normal = saved_normal;
+					//	ray_normalize(&params->current_normal);
 						lightning += shading(&ray, params);
 					}
 					params->color = get_color(obj->color) * lightning;

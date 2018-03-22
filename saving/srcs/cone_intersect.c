@@ -31,9 +31,11 @@ int		cone_intersect(t_ray *ray, t_cone *cone, t_params *params)
 	d = b * b - 4 * a * c;
 	if (d > 0)
 	{
-		rslt = ((-b - sqrt(d)) / (2 * a)) - 0.000001 > 0 ?
-			(-b - sqrt(d)) / (2 * a) - 0.000001 :
-			(-b + sqrt(d)) / (2 * a) - 0.000001;
+		rslt = (-b - sqrt(d)) / (a);
+		if (rslt > 0)
+			ray->t = rslt;
+		else
+			ray->t = (-b + sqrt(d)) / (a);
 		ray->t = rslt;
 		save_intersection(ray);
 		params->current_normal = get_normal_cone(ray->intersection, cone);
