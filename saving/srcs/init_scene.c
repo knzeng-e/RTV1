@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/24 09:58:34 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/24 19:20:44 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,23 +118,24 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->color = set_color(0xFF, 0xFF, 0xFF); 
 	params->light[0] = *light;
 
-	/*light2->position = set_vector(-x_pos, 8, -10);
+	/*light2->position = set_vector(-x_pos, 5, -4);
 	  light2->intensity = 300;
 	  light2->diffuse_light = DIFFUSE_LIGHT;
 	  light2->is_selected = 0;
-	  light2->color = set_color(0xFF, 0xFF, 0xFF); */
-	//params->light[1] = *light2;
+	  light2->color = set_color(0xFF, 0xFF, 0xFF); 
+	params->light[1] = *light2;*/
 }
 
 void	init_scene(t_params *params)
 {
 	init_mlx(params);
 	//params->transforms = 
+	params->other_intersect = 0;
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
 	create_plane(params);
 	create_cylinder(params);
 	//create_cone(params);
-	put_light(params, 0, 10, 0);
+	put_light(params, 4, 13, -22);
 	init_objects(params);
 }

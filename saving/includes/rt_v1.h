@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/24 09:14:14 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/24 15:35:07 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ typedef struct		s_params
 	int				current_cone_index;
 	int				current_light_index;
 	int				vector_lenght;
+	int				other_intersect;
 }					t_params;
 
 int				expose_hook(t_params *params);

@@ -20,14 +20,17 @@ char	*get_item(int obj_item)
 
 int	is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 {
+	int			output;
+	int			index_light;
+	double		length;
+	double		t_min;
 	t_ray		shadow_ray;
 	t_object	*current_obj;
 	t_vect		saved_normal;
-	int			output;
-	int			index_light;
 
 	current_obj = params->objects;
 	output = 0;
+	t_min = MAX_DISTANCE;
 	while (current_obj)
 	{
 		if (current_obj->id != obj->id && current_obj->item != LIGHT)
@@ -37,13 +40,22 @@ int	is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 			index_light = -1;
 			while (++index_light < NB_LIGHTS)
 			{
+				params->other_intersect = 0;
 				shadow_ray.origin = intersection;
 				shadow_ray.direction = vect_sub(params->light[index_light].position, intersection);
+				length = get_length(&shadow_ray.direction);
 				ray_normalize(&shadow_ray.direction);
 				saved_normal = params->current_normal;
 				if (intersect(&shadow_ray, current_obj, params))
 				{
+					if (t_min > shadow_ray.t)
+						t_min = shadow_ray.t;
 					params->current_normal = saved_normal;
+					if (shadow_ray.t > length && params->other_intersect == 0)
+						return (0);
+					params->other_intersect = 0;
+					////if (shadow_ray.t <= length)
+						params->other_intersect = 1;
 					return (1);
 				}
 				params->current_normal = saved_normal;
