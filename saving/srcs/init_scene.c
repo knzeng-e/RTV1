@@ -87,17 +87,19 @@ void	create_cylinder(t_params *params)
 {
 	params->cylinder_list[0].center = set_vector(-6, -3, -50);
 	params->cylinder_list[0].axis = set_vector(0, 1, 0);
-	params->cylinder_list[0].radius = 1.2;
+	params->cylinder_list[0].radius = 2;
 	params->cylinder_list[0].specular = 100;
 	params->cylinder_list[0].color = set_color(0x4a, 0x2a, 0x9f);
 }
 
 void	create_cone(t_params *params)
 {
-	params->cone_list[0].center = set_vector(-4, 0, -50);
-	params->cone_list[0].angle = radians(7);
+	params->cone_list[0].center = set_vector(2, 4, -50);
+	params->cone_list[0].axe = set_vector(0, 1, 0);
+	params->cone_list[0].size = 10;
+	params->cone_list[0].angle = radians(10);
 	params->cone_list[0].specular = 300;
-	params->cone_list[0].color = set_color(0, 0x8f, 42);
+	params->cone_list[0].color = set_color(0xff, 0x8f, 42);
 	//params->cone_list[0].color = set_color(42, 42, 42);
 }
 
@@ -135,7 +137,7 @@ void	init_scene(t_params *params)
 	create_sphere(params);
 	create_plane(params);
 	create_cylinder(params);
-	//create_cone(params);
-	put_light(params, 4, 13, -22);
+	create_cone(params);
+	put_light(params, -4, 13, -30);
 	init_objects(params);
 }

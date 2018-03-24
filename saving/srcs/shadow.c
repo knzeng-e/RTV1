@@ -51,9 +51,9 @@ int	is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 					if (t_min > shadow_ray.t)
 						t_min = shadow_ray.t;
 					params->current_normal = saved_normal;
-					if (shadow_ray.t > length && params->other_intersect == 0)
-						return (0);
-					params->other_intersect = 0;
+				//	if (shadow_ray.t > length && params->other_intersect == 0)
+				//		return (0);
+				//	params->other_intersect = 0;
 					////if (shadow_ray.t <= length)
 						params->other_intersect = 1;
 					return (1);

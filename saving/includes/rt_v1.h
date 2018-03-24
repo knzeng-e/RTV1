@@ -6,15 +6,15 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/24 15:35:07 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/24 09:14:14 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
-# define WIDTH 800
+# define WIDTH 400
 //# define WIDTH 300
-# define HEIGHT 640
+# define HEIGHT 340
 //# define HEIGHT 300
 # define ACC 0.001
 # define AMBIANT_LIGHT 0.2
@@ -25,7 +25,7 @@
 # define NB_PLANES 1
 # define NB_CYLINDERS 1
 # define NB_LIGHTS 1
-# define NB_CONES 0
+# define NB_CONES 1
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES + NB_LIGHTS
 # define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES
 # define NB_SPHERES_PARAMS 4
@@ -41,10 +41,10 @@
 # define I_KEY 34
 # define L_KEY 37
 # define SPACE_KEY 49
-# define ZOOM_IN 69
-//# define ZOOM_IN 44
-# define ZOOM_OUT 78
-//# define ZOOM_OUT 24
+//# define ZOOM_IN 69
+# define ZOOM_IN 44
+//# define ZOOM_OUT 78
+# define ZOOM_OUT 24
 # define RADIUS 20.0
 # define OK 0
 # define FREE_OK 0
@@ -138,7 +138,9 @@ typedef struct	s_cylinder
 typedef struct	s_cone
 {
 	t_vect		center;
+	t_vect		axe;
 	double		angle;
+	double		size;
 	double		specular;
 	t_color		color;
 }				t_cone;

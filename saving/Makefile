@@ -15,8 +15,7 @@ CC = gcc
 CFLAGS = -g -Wall -Werror -Wextra
 FFLAGS = -framework AppKit -framework OpenGL -L. -Llibft -lft -lmlx -Lmlx -lpthread
 ASAN := -O1 -g -fsanitize=address   \
-	-fno-omit-frame-pointer \
-	-fsanitize-address-use-after-scope \
+	-fno-omit-frame-pointer
 
 all: $(OBJ) $(FT_LIB) $(NAME)
 
