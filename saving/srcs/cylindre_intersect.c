@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 05:22:46 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/22 11:00:13 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/24 09:57:38 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	cylinder_intersect(t_ray *ray, t_cylinder *cylinder, t_params *params)
 	double	delta;
 	double	root;
 
+	ray_normalize(&ray->direction);
 	a = ray->direction.vect_x * ray->direction.vect_x + ray->direction.vect_z * ray->direction.vect_z;
 	b = ray->direction.vect_x * (ray->origin.vect_x - cylinder->center.vect_x) +
 		ray->direction.vect_z * (ray->origin.vect_z - cylinder->center.vect_z);

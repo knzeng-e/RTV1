@@ -6,16 +6,16 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/22 09:41:41 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/24 09:14:14 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
-//# define WIDTH 800
-# define WIDTH 300
-//# define HEIGHT 640
-# define HEIGHT 300
+# define WIDTH 800
+//# define WIDTH 300
+# define HEIGHT 640
+//# define HEIGHT 300
 # define ACC 0.001
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
@@ -25,7 +25,7 @@
 # define NB_PLANES 1
 # define NB_CYLINDERS 1
 # define NB_LIGHTS 1
-# define NB_CONES 1
+# define NB_CONES 0
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES + NB_LIGHTS
 # define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES
 # define NB_SPHERES_PARAMS 4
@@ -129,6 +129,9 @@ typedef struct	s_cylinder
 	double		hauteur;
 	double		specular;
 	t_vect		center;
+	t_vect		axis;
+	t_vect		top;
+	t_vect		bottom;
 	t_color		color;
 }				t_cylinder;
 

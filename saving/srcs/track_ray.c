@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/22 11:02:16 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/24 07:53:15 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ double	lightning(t_params *params, t_ray *ray, int sphere_hit)
 
 int	track_ray(t_params *params)
 {
-	//t_ray		*ray;
 	t_vect		saved_normal;
 	t_vect		from;
 	t_vect		to;
 	t_color		rgb;
 	t_object	*obj;
-	t_object	*light;
 	t_ray		ray;
 	double		t_min;
 	double		lightning;
@@ -84,16 +82,11 @@ int	track_ray(t_params *params)
 				if (sphere_hit != -1)
 				{
 					params->current_obj = *obj;
-					light = params->objects;
 					cpt_light = -1;
 					lightning = AMBIANT_LIGHT;
 					saved_normal = params->current_normal;
 					if (!is_shadowed(ray.intersection, params, obj))
-					{						
-				//	params->current_normal = saved_normal;
-					//	ray_normalize(&params->current_normal);
 						lightning += shading(&ray, params);
-					}
 					params->color = get_color(obj->color) * lightning;
 					rgb = obj->color;
 					params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
