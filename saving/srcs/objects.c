@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 23:42:39 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/17 14:07:05 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/25 06:19:12 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,16 @@ void	init_objects(t_params *params)
 {
 	int			cpt;
 	t_object	*current_obj;
-	t_object	**head;
 
-	cpt = -1;
-	while (++cpt < NB_OBJECTS)
-	{
+	cpt = 0;
+//	while (++cpt < NB_OBJECTS)
+//	{
 		current_obj = params->objects;
-		head = &params->objects;
-		save_cones(current_obj, params, &cpt);
+		//save_cones(current_obj, params, &cpt);
 		save_cylinders(current_obj, params, &cpt);
 		save_planes(current_obj, params, &cpt);
-		save_spheres(current_obj, params, &cpt);
+		//save_spheres(current_obj, params, &cpt);
 		save_lights(current_obj, params, &cpt);
-	}
-	current_obj = NULL;
+//	}
+//	current_obj = NULL;
 }

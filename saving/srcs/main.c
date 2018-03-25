@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 19:51:41 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/24 14:54:39 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/25 05:07:04 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,6 @@ t_params	*init_params(void)
 	params->x_resolution = WIDTH;
 	params->y_resolution = HEIGHT;
 	params->mlx = mlx_init();
-	params->current_sphere_index = -1;
-	params->current_plane_index = -1;
-	params->current_cylinder_index = -1;
-	params->current_cone_index = -1;
-	params->current_light_index = -1;
-//	params->win = mlx_new_image(params->mlx, WIDTH, HEIGHT);;
 	return (params);
 }
 

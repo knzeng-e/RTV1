@@ -35,8 +35,8 @@ int	is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 	{
 		if (current_obj->id != obj->id && current_obj->item != LIGHT)
 		{
-		/*	if (obj->item == PLANE)
-				printf("\n\t%s and %s", get_item(current_obj->item), get_item(obj->item));*/
+		//	if (obj->item == PLANE)
+				//printf("\t%s and %s", get_item(current_obj->item), get_item(obj->item));
 			index_light = -1;
 			while (++index_light < NB_LIGHTS)
 			{
@@ -44,15 +44,15 @@ int	is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 				shadow_ray.origin = intersection;
 				shadow_ray.direction = vect_sub(params->light[index_light].position, intersection);
 				length = get_length(&shadow_ray.direction);
-				ray_normalize(&shadow_ray.direction);
+				//ray_normalize(&shadow_ray.direction);
 				saved_normal = params->current_normal;
 				if (intersect(&shadow_ray, current_obj, params))
 				{
 					if (t_min > shadow_ray.t)
 						t_min = shadow_ray.t;
 					params->current_normal = saved_normal;
-				//	if (shadow_ray.t > length && params->other_intersect == 0)
-				//		return (0);
+					if (shadow_ray.t > length && params->other_intersect == 0)
+						return (0);
 				//	params->other_intersect = 0;
 					////if (shadow_ray.t <= length)
 						params->other_intersect = 1;
