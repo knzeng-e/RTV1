@@ -6,11 +6,30 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/25 06:41:35 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 03:01:40 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
+
+void	init_mlx(t_params *params)
+{
+	//parse_file("test");
+	/*Penser à proteger le mlx_init*/
+	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
+	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
+	params->img_data = mlx_get_data_addr(params->ptr_img, \
+			&(params->bpp),  &(params->size_line), &(params->endian));
+	params->fov = FOV;
+	params->current_index = 0;
+	params->objects = (t_object *)malloc(sizeof(t_object));
+	if (params->objects == NULL)
+		exit (MALLOC_ERROR);
+	params->objects->next = NULL;
+	params->objects->is_set = 0;
+	params->objects->id = params->current_index;
+	params->specularity = 400;
+}
 
 void	create_sphere(t_params *params)
 {
@@ -41,25 +60,6 @@ void	create_sphere(t_params *params)
 	params->sphere_list[3].specular = 242;
 }
 
-void	init_mlx(t_params *params)
-{
-	//parse_file("test");
-	/*Penser à proteger le mlx_init*/
-	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
-	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
-	params->img_data = mlx_get_data_addr(params->ptr_img, \
-			&(params->bpp),  &(params->size_line), &(params->endian));
-	params->fov = FOV;
-	params->current_index = 0;
-	params->objects = (t_object *)malloc(sizeof(t_object));
-	if (params->objects == NULL)
-		exit (MALLOC_ERROR);
-	params->objects->next = NULL;
-	params->objects->is_set = 0;
-	params->objects->id = params->current_index;
-	params->specularity = 400;
-}
-
 void	create_plane(t_params *params)
 {
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
@@ -86,16 +86,17 @@ void	create_plane(t_params *params)
 void	create_cylinder(t_params *params)
 {
 	//params->cylinder_list[0].center = set_vector(-6, -3, -50);
-	params->cylinder_list[0].center = set_vector(0, 0, -50);
-	params->cylinder_list[0].axis = set_vector(0, 1, 0);
+	params->cylinder_list[0].center = set_vector(-3, 0, -41);
+	params->cylinder_list[0].axe = set_vector(0, 1, 0);
 	params->cylinder_list[0].radius = 2;
+	params->cylinder_list[0].size = 1;
 	params->cylinder_list[0].specular = 100;
 	params->cylinder_list[0].color = set_color(0x4a, 0x2a, 0x9f);
 }
 
 void	create_cone(t_params *params)
 {
-	params->cone_list[0].center = set_vector(2, 4, -50);
+	params->cone_list[0].center = set_vector(5, 2, -52);
 	params->cone_list[0].axe = set_vector(0, 1, 0);
 	params->cone_list[0].size = 10;
 	params->cone_list[0].angle = radians(10);
@@ -135,10 +136,12 @@ void	init_scene(t_params *params)
 	//params->transforms = 
 	params->other_intersect = 0;
 	params->nb_objects = get_nb_objects(params);
-	//create_sphere(params);
+	create_sphere(params);
 	create_plane(params);
 	create_cylinder(params);
-	//create_cone(params);
-	put_light(params, -4, 16, -8);
+	create_cone(params);
+	put_light(params, 4, 16, -1);
+	//put_light(params, -3.3, -3, -19);
+	//params->sphere_list[3].center = set_vector(-3.3, -3, -19);
 	init_objects(params);
 }

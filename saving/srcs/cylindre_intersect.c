@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 05:22:46 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/25 06:39:56 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 01:47:05 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,28 @@ t_vect	get_normal_cylinder(t_vect intersection, t_cylinder *cylinder)
 	return (normal);
 }
 
-int	cylinder_intersect(t_ray *ray, t_cylinder *cylinder, t_params *params)
+int		cylinder_intersect(t_ray *ray, t_cylinder *cylinder, t_params *params)
 {
 	double	a;
 	double	b;
 	double	c;
-	double	delta;
+	double	discr;
 	double	root;
+	t_vect	dist;
+
+	dist = vect_sub(ray->origin, cylinder->center);
+	ray_normalize(&cylinder->axe);
+	a = dot_product(ray->direction, ray->direction) - pow(dot_product(ray->direction, cylinder->axe), 2);
+	b = 2 * (dot_product(ray->direction, dist) - (dot_product(ray->direction, cylinder->axe) * dot_product(dist, cylinder->axe)));
+	c = dot_product(dist, dist) - pow(dot_product(dist, cylinder->axe), 2) - pow(cylinder->size, 2);
+	discr = b * b - 4 * a * c;
 
 	//ray_normalize(&ray->direction);
-	a = ray->direction.vect_x * ray->direction.vect_x + ray->direction.vect_z * ray->direction.vect_z;
-	b = ray->direction.vect_x * (ray->origin.vect_x - cylinder->center.vect_x) +
-		ray->direction.vect_z * (ray->origin.vect_z - cylinder->center.vect_z);
-	c = (ray->origin.vect_x - cylinder->center.vect_x) * (ray->origin.vect_x - cylinder->center.vect_x) +
-		(ray->origin.vect_z - cylinder->center.vect_z) * (ray->origin.vect_z - cylinder->center.vect_z) -
-		cylinder->radius * cylinder->radius;
-	delta = b * b - a * c;
-	if (delta > 0)
+	if (discr > 0)
 	{
-		root = (-b - sqrt(delta)) / a;
+		root = (-b - sqrt(discr)) / (2 * a);
 		if (root <= 0)
-			root = (-b + sqrt(delta)) / a;
+			root = (-b + sqrt(discr)) / (2 * a);
 		ray->t = root;
 		save_intersection(ray);
 		params->current_normal = get_normal_cylinder(ray->intersection, cylinder);
@@ -54,4 +55,3 @@ int	cylinder_intersect(t_ray *ray, t_cylinder *cylinder, t_params *params)
 	}
 	return (NO_INTERSECTION);
 }
-

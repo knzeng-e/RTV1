@@ -64,11 +64,11 @@ int		cone_intersect(t_ray *ray, t_cone *cone, t_params *params)
 	disc = b * b - 4 * a * c;
 	if (disc > 0)
 	{
-		rslt = (-b - sqrt(disc)) / (a);
+		rslt = (-b - sqrt(disc)) / (2 * a);
 		if (rslt > 0)
 			ray->t = rslt;
 		else
-			ray->t = (-b + sqrt(disc)) / (a);
+			ray->t = (-b + sqrt(disc)) / (2 * a);
 		ray->t = rslt;
 		save_intersection(ray);
 		params->current_normal = get_normal_cone(ray->intersection, cone);

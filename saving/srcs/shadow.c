@@ -40,22 +40,14 @@ int	is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 			index_light = -1;
 			while (++index_light < NB_LIGHTS)
 			{
-				params->other_intersect = 0;
 				shadow_ray.origin = intersection;
 				shadow_ray.direction = vect_sub(params->light[index_light].position, intersection);
 				length = get_length(&shadow_ray.direction);
-				//ray_normalize(&shadow_ray.direction);
+				ray_normalize(&shadow_ray.direction);
 				saved_normal = params->current_normal;
-				if (intersect(&shadow_ray, current_obj, params))
+				if (intersect(&shadow_ray, current_obj, params) && shadow_ray.t >= 0)
 				{
-					if (t_min > shadow_ray.t)
-						t_min = shadow_ray.t;
 					params->current_normal = saved_normal;
-					if (shadow_ray.t > length && params->other_intersect == 0)
-						return (0);
-				//	params->other_intersect = 0;
-					////if (shadow_ray.t <= length)
-						params->other_intersect = 1;
 					return (1);
 				}
 				params->current_normal = saved_normal;

@@ -6,26 +6,26 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/25 04:25:18 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 00:37:08 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
-# define WIDTH 1800
+# define WIDTH 1000
 //# define WIDTH 300
-# define HEIGHT 800
+# define HEIGHT 600
 //# define HEIGHT 300
 # define ACC 0.001
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
 # define SPECULAR 10000
 # define SHININESS 128
-# define NB_SPHERES 0//4
+# define NB_SPHERES 4
 # define NB_PLANES 1
 # define NB_CYLINDERS 1
 # define NB_LIGHTS 1
-# define NB_CONES 0
+# define NB_CONES 1
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES + NB_LIGHTS
 # define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES
 # define NB_SPHERES_PARAMS 4
@@ -125,11 +125,12 @@ typedef struct	s_camera
 
 typedef struct	s_cylinder
 {
+	int			size;
 	double		radius;
 	double		hauteur;
 	double		specular;
 	t_vect		center;
-	t_vect		axis;
+	t_vect		axe;
 	t_vect		top;
 	t_vect		bottom;
 	t_color		color;
@@ -269,6 +270,7 @@ int				throw_ray(t_ray *ray);
 int				ft_free(t_params *params);
 int				is_shadowed(t_vect intersection, t_params *params, t_object *obj);
 int				intersect(t_ray *ray, t_object *obj, t_params *params);
+int				shadow_intersect(t_ray *ray, t_object *obj, t_params *params);
 int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
 int				cylinder_intersect(t_ray *ray, t_cylinder *cyl, t_params *params);
 int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
