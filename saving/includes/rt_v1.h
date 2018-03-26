@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 00:37:08 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 05:34:53 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ typedef struct		s_params
 	double			y_resolution;
 	double			fov;
 	double			specularity;
+	double			distance_to_light;
 	/*MLX PARAMS*/
 	void			*mlx;
 	void			*win;

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/24 07:53:15 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 05:43:27 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	track_ray(t_params *params)
 					saved_normal = params->current_normal;
 					if (!is_shadowed(ray.intersection, params, obj))
 						lightning += shading(&ray, params);
-					params->color = get_color(obj->color) * lightning;
+					//lightning /= (params->distance_to_light * params->distance_to_light);
 					rgb = obj->color;
 					params->color = rgb_to_int(rgb.red * lightning, rgb.green * lightning, rgb.blue * lightning);
 					draw_pixel(params, i, j, params->color);
