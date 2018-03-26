@@ -6,41 +6,33 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 05:43:27 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 21:43:37 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
 
-double	lightning(t_params *params, t_ray *ray, int sphere_hit)
+void	 apply_transform(t_vect *vect, t_params *params)
 {
-	t_vect	light_vector;
-	double	diffuse;
-	//t_vect	specular;
-	double		angle;
-	double		length;
-	double		normal_length;
+	t_vect4	homogen;
 
-	light_vector = vect_sub(params->light[0].position, ray->intersection);
-	length = get_length(&light_vector);
-	ray_normalize(&light_vector);
-	params->current_normal = vect_sub(ray->intersection, params->sphere_list[sphere_hit].center);
-	normal_length = get_length(&params->current_normal);
-	params->current_normal = vect_divide(params->current_normal, normal_length);
-	ray_normalize(&params->current_normal);
-	angle = dot_product(light_vector, params->current_normal);
-	if (angle > 0)
-		diffuse = angle / (length * normal_length);
-	else
-		diffuse = 0;
-	return (diffuse);
+	homogen = set_homogen(vect);
+	//vect_matrx_multiply(&homogen, &params->eye.cam_to_world);
+	*vect = set_reverse_homogen(&homogen);
+	rotate_x_axis(&(params->current_ray.direction), params->rotation_val, &params->transforms);
+	rotate_y_axis(&(params->current_ray.direction), params->rotation_val, &params->transforms);
+	rotate_z_axis(&(params->current_ray.direction), params->rotation_val, &params->transforms);
+
+
+	rotate_x_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
+	rotate_y_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
+	rotate_z_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
 }
 
-int	track_ray(t_params *params)
+
+int		track_ray(t_params *params)
 {
 	t_vect		saved_normal;
-	t_vect		from;
-	t_vect		to;
 	t_color		rgb;
 	t_object	*obj;
 	t_ray		ray;
@@ -55,18 +47,38 @@ int	track_ray(t_params *params)
 
 	t_min = MAX_DISTANCE;
 	i = 0;
-	from = set_vector(0, 0, 0);
+	//to = set_vector(0, 0, -100);
+//	set_camera_look_at(&ray, params, &from, &to);
+	//params->eye.from = set_vector(0, 10, 0);
 	print_objects(params->objects);
+	//params->eye.to = set_vector(0, 0, -10);
 	while (i < WIDTH)
 	{
 		j = 0;
 		while (j < HEIGHT)
 		{
-			to = set_vector(i, j, -1);
 			set_origin(i, j, &ray, params);
-			from = ray.origin;
-			//set_camera_look_at(&ray, params, &from, &to);
 			set_camera(&ray, params, i, j);
+			params->current_ray = ray;
+
+		//	rotate_x_axis(&(params->current_ray.direction), params->rotation_val, &params->transforms);
+			rotate_y_axis(&(params->current_ray.direction), params->rotation_val, &params->transforms);
+		//	rotate_z_axis(&(params->current_ray.direction), params->rotation_val, &params->transforms);
+
+
+		//	rotate_x_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
+			rotate_y_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
+		//	rotate_z_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
+
+
+
+
+
+
+			//	set_camera_look_at(&ray, params, &params->eye.from, &params->eye.to);
+			/*apply_transform(&ray.origin, params);
+			  apply_transform(&ray.direction, params);*/
+			//from = set_vector(0, 0, -1);
 			cpt = 0;
 			t_min = MAX_DISTANCE;
 			obj = params->objects;

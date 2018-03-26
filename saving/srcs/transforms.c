@@ -6,12 +6,11 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 18:11:09 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/09 23:11:11 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 14:55:23 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
-
 
 t_vect	set_reverse_homogen(t_vect4 *vect)
 {
@@ -20,7 +19,6 @@ t_vect	set_reverse_homogen(t_vect4 *vect)
 	result.vect_x = vect->vect_x / vect->vect_w;
 	result.vect_y = vect->vect_y / vect->vect_w;
 	result.vect_z = vect->vect_z / vect->vect_w;
-
 	return (result);
 }
 
@@ -32,7 +30,6 @@ t_vect4	set_homogen(t_vect *vect)
 	result.vect_y = vect->vect_y;
 	result.vect_z = vect->vect_z;
 	result.vect_w = 1;
-
 	return (result);
 }
 

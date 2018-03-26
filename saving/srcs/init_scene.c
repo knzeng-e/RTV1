@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 03:01:40 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 21:37:02 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,9 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 void	init_scene(t_params *params)
 {
 	init_mlx(params);
-	//params->transforms = 
-	params->other_intersect = 0;
+	params->eye.from = set_vector(1, 4, 0); 
+	params->eye.to = set_vector(0, 0, -1); 
+	params->rotation_val = 1;
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
 	create_plane(params);

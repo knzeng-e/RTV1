@@ -6,13 +6,13 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 09:16:53 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 21:36:39 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
-# define WIDTH 1000
+# define WIDTH 600
 //# define WIDTH 300
 # define HEIGHT 600
 //# define HEIGHT 300
@@ -118,6 +118,8 @@ typedef struct	s_camera
 	t_vect		up_vect;
 	t_vect		right_vect;
 	t_vect		forward_vect;
+	t_vect		from;
+	t_vect		to;
 	t_matrix	cam_to_world;
 //	t_vect		viewpoint;
 }				t_camera;
@@ -217,6 +219,7 @@ typedef struct		s_params
 	t_cylinder		cylinder_list[NB_CYLINDERS];
 	t_cone			cone_list[NB_CONES];
 	t_ray			*tab_rays[WIDTH][HEIGHT];
+	t_ray			current_ray;
 	t_light			light[NB_LIGHTS];
 	t_plane			*plane;
 	t_plane			*vertical_plane;
@@ -236,6 +239,7 @@ typedef struct		s_params
 	double			fov;
 	double			specularity;
 	double			distance_to_light;
+	double			rotation_val;
 	/*MLX PARAMS*/
 	void			*mlx;
 	void			*win;
@@ -336,6 +340,7 @@ t_vect			vect_divide(t_vect vect, double cste);
 t_vect			vect_multiply(t_vect vect, double cste);
 t_vect			vect_add(t_vect vect1, t_vect vect2);
 t_vect			set_vector(double x, double y, double z);
+t_vect			set_reverse_homogen(t_vect4 *vect);
 t_vect4			set_homogen(t_vect *vect);
 t_vect4			vect_matrx_multiply(t_vect4 *vect, t_matrix *mat);
 t_matrix		matrix_multiply(t_matrix *mat1, t_matrix *mat2);

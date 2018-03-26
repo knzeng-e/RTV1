@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 03:01:52 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 21:37:17 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,12 @@ int		key_hook(int keycode, t_params *params)
 		params->light[0].is_selected = !(params->light[0].is_selected);
 	if (keycode == SPACE_KEY)
 	{
+		params->rotation_val += 5;
+		//rotate_y_axis(&(params->eye.to), 10, &params->transforms);
 		//rotate_x_axis(&(params->cylinder_list[0].center), 30, &params->transforms);
 		//rotate_x_axis(&(params->cylinder_list[0].axe), 1.3, &params->transforms);
 	//	rotate_y_axis(&(params->cylinder_list[0].axe), 2, &params->transforms);
-		rotate_z_axis(&(params->cone_list[0].axe), 2, &params->transforms);
+		//rotate_z_axis(&(params->cone_list[0].axe), 2, &params->transforms);
 	}
 	if (keycode == LEFT_KEY)
 	{
