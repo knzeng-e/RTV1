@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 05:34:53 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/26 09:16:53 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@
 # define L_KEY 37
 # define SPACE_KEY 49
 # define ZOOM_IN 69
-//# define ZOOM_IN 44
 # define ZOOM_OUT 78
-//# define ZOOM_OUT 24
 # define RADIUS 20.0
 # define OK 0
 # define FREE_OK 0
@@ -53,6 +51,8 @@
 # define INVALID_DESCRIPTION 0
 # define NO_INTERSECTION 0
 # define IS_INTERSECTION 1
+# define NO_SHADOW 0
+# define IS_SHADOWED 1
 # define CORRECT_OBJECT_DESCRIPTION 1
 # define ERROR_OBJECT_DESCRIPTION 0
 # define ERROR_NB_PARAMS 0
@@ -65,7 +65,6 @@
 # define RED 0x00FF0000
 # define TRUE 1
 # define FALSE 0
-//# define GREEN 0x0000FF00
 # define GREEN 0x00088e40
 # define BLUE 0x000000FF
 # define YELLOW 0x00FFFF00

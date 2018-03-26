@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shadow.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/26 08:30:37 by knzeng-e          #+#    #+#             */
+/*   Updated: 2018/03/26 09:15:35 by knzeng-e         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rt_v1.h"
 
 char	*get_item(int obj_item)
@@ -18,42 +30,37 @@ char	*get_item(int obj_item)
 	return (output);
 }
 
-int	is_shadowed(t_vect intersection, t_params *params, t_object *obj)
+int		is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 {
-	int			output;
 	int			index_light;
-	double		length;
-	double		t_min;
 	t_ray		shadow_ray;
 	t_object	*current_obj;
 	t_vect		saved_normal;
+	t_vect		light_pos;
 
 	current_obj = params->objects;
-	output = 0;
-	t_min = MAX_DISTANCE;
 	while (current_obj)
 	{
 		if (current_obj->id != obj->id && current_obj->item != LIGHT)
 		{
-		//	if (obj->item == PLANE)
-				//printf("\t%s and %s", get_item(current_obj->item), get_item(obj->item));
 			index_light = -1;
 			while (++index_light < NB_LIGHTS)
 			{
+				light_pos = params->light[index_light].position;
 				shadow_ray.origin = intersection;
-				shadow_ray.direction = vect_sub(params->light[index_light].position, intersection);
-				length = get_length(&shadow_ray.direction);
+				shadow_ray.direction = vect_sub(light_pos, intersection);
 				ray_normalize(&shadow_ray.direction);
 				saved_normal = params->current_normal;
-				if (intersect(&shadow_ray, current_obj, params) && shadow_ray.t >= 0)
+				if (intersect(&shadow_ray, current_obj, params))
 				{
 					params->current_normal = saved_normal;
-					return (1);
+					if (shadow_ray.t >= 0)
+						return (IS_SHADOWED);
 				}
 				params->current_normal = saved_normal;
 			}
 		}
 		current_obj = current_obj->next;
 	}
-	return (0);
+	return (NO_SHADOW);
 }
