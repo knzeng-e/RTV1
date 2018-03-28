@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 21:36:39 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/27 01:32:04 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,6 +255,7 @@ typedef struct		s_params
 	double			ray_depth;
 	int				t;
 	int				color;
+	int				background_color;
 	int				nb_objects;
 	int				current_index;
 	int				current_sphere_index;

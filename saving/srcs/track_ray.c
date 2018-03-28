@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/31 13:42:53 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 21:43:37 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/28 01:33:00 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,19 @@ int		track_ray(t_params *params)
 	//to = set_vector(0, 0, -100);
 //	set_camera_look_at(&ray, params, &from, &to);
 	//params->eye.from = set_vector(0, 10, 0);
-	print_objects(params->objects);
+	//print_objects(params->objects);
 	//params->eye.to = set_vector(0, 0, -10);
 	while (i < WIDTH)
 	{
 		j = 0;
 		while (j < HEIGHT)
 		{
-			set_origin(i, j, &ray, params);
+			//draw_pixel(params, i, j, params->background_color);
+			//set_origin(i, j, &ray, params);
+			ray.origin = params->eye.from;
+			//params->eye.to = set_vector(0, 0, 0);
 			set_camera(&ray, params, i, j);
+			//set_camera_look_at(&ray, params, &params->eye.from, &params->eye.to);
 			params->current_ray = ray;
 
 		//	rotate_x_axis(&(params->current_ray.direction), params->rotation_val, &params->transforms);
@@ -67,17 +71,13 @@ int		track_ray(t_params *params)
 
 
 		//	rotate_x_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
-			rotate_y_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
+			//rotate_y_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
 		//	rotate_z_axis(&(params->current_ray.origin), params->rotation_val, &params->transforms);
 
 
-
-
-
-
 			//	set_camera_look_at(&ray, params, &params->eye.from, &params->eye.to);
-			/*apply_transform(&ray.origin, params);
-			  apply_transform(&ray.direction, params);*/
+			/*apply_transform(&ray.origin, params);*/
+			 // apply_transform(&ray.direction, params);
 			//from = set_vector(0, 0, -1);
 			cpt = 0;
 			t_min = MAX_DISTANCE;

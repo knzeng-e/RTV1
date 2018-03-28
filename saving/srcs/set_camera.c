@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 23:07:38 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/09 22:07:56 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/28 01:25:58 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void	set_camera(t_ray *ray, t_params *params, int i, int j)
 	double	pix_camera_x;
 	double	pix_camera_y;
 
+
 	pix_norm_x = (i + 0.5) / WIDTH; //Normalize Pix_dimension to [0;1]
 	pix_norm_y = (j + 0.5) / HEIGHT;
+	pix_norm_x += params->eye.to.vect_x;
+	pix_norm_y += params->eye.to.vect_y;
 	image_aspect_ratio = WIDTH/ HEIGHT;
 	pix_remap_x = (2 * pix_norm_x - 1) * image_aspect_ratio;
 	pix_remap_y = 1 - 2 * pix_norm_y;

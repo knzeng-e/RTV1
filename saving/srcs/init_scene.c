@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 21:37:02 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/28 09:52:55 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,13 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 void	init_scene(t_params *params)
 {
 	init_mlx(params);
-	params->eye.from = set_vector(1, 4, 0); 
+//	params->background_color = rgb_to_int(0xb0, 0xe0, 0xe6);
+	params->background_color = rgb_to_int(0xff, 0xff, 0xff);
+//	params->background_color = rgb_to_int(0xf5, 0xf5, 0xd5);
+	params->eye.from = set_vector(0, 0, 0); 
 	params->eye.to = set_vector(0, 0, -1); 
+	//params->eye.from = set_vector(-14, 0, 5); 
+//	params->eye.to = set_vector(0.5, 0, 0); 
 	params->rotation_val = 1;
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
