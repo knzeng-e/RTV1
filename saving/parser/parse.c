@@ -141,7 +141,7 @@ int		read_block(t_params *params, char *line, int *num_line, int object_id)
 		ft_parse_error(*num_line, "SHOULD HAVE A '{' AFTER OBJECT TYPE");
 	if (parse_object(object_id, line, params, num_line) == 0)
 		ft_parse_error(*num_line, "ERROR IN OBJECT DESCRIPTION");
-	if (ft_strcmp(line, "}") != 0) /* The block ended without '}' character */	
+	if (ft_strcmp(line, "}") != 0) /* The block ended without '}' character */
 		ft_parse_error(++(*num_line), "MISSING '}'");
 	++(*num_line);
 	return (PARSE_OK);
@@ -155,7 +155,7 @@ void	parse_file(t_params *params)
 	int		nb_lus;
 	int		has_content;
 
-	params->fd = open(params->file, O_RDONLY);
+	params->fd = open(params->file, O_RDONLY);*
 	if (params->fd == ERROR_OPEN)
 		exit (ERROR_OPEN);
 	num_line = 0;

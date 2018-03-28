@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/28 02:34:48 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/28 17:16:31 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,17 +111,23 @@ int		key_hook(int keycode, t_params *params)
 	}
 	if (keycode == RIGHT_KEY)
 	{
-		//rotate_y_axis(&(params->eye.to), 2, &params->transforms);
-		params->eye.to.vect_x += 0.04;
-	/*	if (params->sphere_list[0].is_selected)
+		/*rotate_z_axis(&(params->eye.to), 10, &params->transforms);
+		rotate_x_axis(&(params->eye.to), 10, &params->transforms);
+		rotate_y_axis(&(params->eye.to), 10, &params->transforms);*/
+
+		rotate_z_axis(&(params->eye.from), 2.3, &params->transforms);
+		rotate_x_axis(&(params->eye.from), 2.3, &params->transforms);
+		rotate_y_axis(&(params->eye.from), 2.3, &params->transforms);
+		//params->eye.to.vect_x += 0.04;
+		/*	if (params->sphere_list[0].is_selected)
 			params->sphere_list[0].center.vect_x += MOVE_DIST;
-		if (params->sphere_list[1].is_selected)
+			if (params->sphere_list[1].is_selected)
 			params->sphere_list[1].center.vect_x += MOVE_DIST;
-		if (params->sphere_list[2].is_selected)
+			if (params->sphere_list[2].is_selected)
 			params->sphere_list[2].center.vect_x += MOVE_DIST;
-		if (params->sphere_list[3].is_selected)
+			if (params->sphere_list[3].is_selected)
 			params->sphere_list[3].center.vect_x += MOVE_DIST;
-		if (params->light[0].is_selected)
+			if (params->light[0].is_selected)
 			params->light[0].position.vect_x += MOVE_DIST;*/
 	}
 	if (keycode == ZOOM_IN)
@@ -132,34 +138,34 @@ int		key_hook(int keycode, t_params *params)
 	{
 		params->eye.to.vect_y -= 0.04;
 		/*if (params->sphere_list[0].is_selected)
-			params->sphere_list[0].center.vect_y += MOVE_DIST;
-		if (params->sphere_list[1].is_selected)
-			params->sphere_list[1].center.vect_y += MOVE_DIST;
-		if (params->sphere_list[2].is_selected)
-			params->sphere_list[2].center.vect_y += MOVE_DIST;
-		if (params->sphere_list[3].is_selected)
-			params->sphere_list[3].center.vect_y += MOVE_DIST;
-		if (params->light[0].is_selected)
-			params->light[0].position.vect_y += MOVE_DIST;*/
+		  params->sphere_list[0].center.vect_y += MOVE_DIST;
+		  if (params->sphere_list[1].is_selected)
+		  params->sphere_list[1].center.vect_y += MOVE_DIST;
+		  if (params->sphere_list[2].is_selected)
+		  params->sphere_list[2].center.vect_y += MOVE_DIST;
+		  if (params->sphere_list[3].is_selected)
+		  params->sphere_list[3].center.vect_y += MOVE_DIST;
+		  if (params->light[0].is_selected)
+		  params->light[0].position.vect_y += MOVE_DIST;*/
 	}
 	if (keycode == DOWN_KEY)
 	{
 		params->eye.to.vect_y += 0.04;
 		/*if (params->sphere_list[0].is_selected)
-			params->sphere_list[0].center.vect_y -= MOVE_DIST;
-		if (params->sphere_list[1].is_selected)
-			params->sphere_list[1].center.vect_y -= MOVE_DIST;
-		if (params->sphere_list[2].is_selected)
-			params->sphere_list[2].center.vect_y -= MOVE_DIST;
-		if (params->sphere_list[3].is_selected)
-			params->sphere_list[3].center.vect_y -= MOVE_DIST;
-		if (params->light[0].is_selected)
-			params->light[0].position.vect_y -= MOVE_DIST;*/
+		  params->sphere_list[0].center.vect_y -= MOVE_DIST;
+		  if (params->sphere_list[1].is_selected)
+		  params->sphere_list[1].center.vect_y -= MOVE_DIST;
+		  if (params->sphere_list[2].is_selected)
+		  params->sphere_list[2].center.vect_y -= MOVE_DIST;
+		  if (params->sphere_list[3].is_selected)
+		  params->sphere_list[3].center.vect_y -= MOVE_DIST;
+		  if (params->light[0].is_selected)
+		  params->light[0].position.vect_y -= MOVE_DIST;*/
 	}
 	printf("\neye_from: [%f, %f, %f]", params->eye.from.vect_x, params->eye.from.vect_y, params->eye.from.vect_z);
-		fflush(stdout);
+	fflush(stdout);
 	printf("\neye_to: [%f, %f, %f]", params->eye.to.vect_x, params->eye.to.vect_y, params->eye.to.vect_z);
-		fflush(stdout);
+	fflush(stdout);
 	expose_hook(params);
 	return (keycode);
 }
