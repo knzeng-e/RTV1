@@ -44,11 +44,15 @@ void		quit(t_params *params)
 	ft_free(params);
 }
 
-int			main(void)
+int			main(int ac, char **av)
 {
 	t_params	*params;
 
 	params = init_params();
+	if (ac == 2)
+		params->file = av[1];
+	else
+		params->file = "test";
 	mlx_draw(params);
 	quit(params);
 	return (OK);

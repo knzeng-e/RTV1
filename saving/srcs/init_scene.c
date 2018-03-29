@@ -14,7 +14,7 @@
 
 void	init_mlx(t_params *params)
 {
-	//parse_file("test");
+	parse_file(params);
 	/*Penser à proteger le mlx_init*/
 	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
@@ -119,14 +119,14 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->intensity = 15;
 	light->diffuse_light = DIFFUSE_LIGHT;
 	light->is_selected = 0;
-	light->color = set_color(0xFF, 0xFF, 0xFF); 
+	light->color = set_color(0xFF, 0xFF, 0xFF);
 	params->light[0] = *light;
 
 	/*light2->position = set_vector(-x_pos, 5, -4);
 	  light2->intensity = 300;
 	  light2->diffuse_light = DIFFUSE_LIGHT;
 	  light2->is_selected = 0;
-	  light2->color = set_color(0xFF, 0xFF, 0xFF); 
+	  light2->color = set_color(0xFF, 0xFF, 0xFF);
 	params->light[1] = *light2;*/
 }
 
@@ -136,10 +136,10 @@ void	init_scene(t_params *params)
 //	params->background_color = rgb_to_int(0xb0, 0xe0, 0xe6);
 	params->background_color = rgb_to_int(0xff, 0xff, 0xff);
 //	params->background_color = rgb_to_int(0xf5, 0xf5, 0xd5);
-	params->eye.from = set_vector(0, 0, 0); 
-	params->eye.to = set_vector(0, 0, 0); 
-	//params->eye.from = set_vector(-14, 0, 5); 
-//	params->eye.to = set_vector(0.5, 0, 0); 
+	params->eye.from = set_vector(0, 0, 0);
+	params->eye.to = set_vector(0, 0, 0);
+	//params->eye.from = set_vector(-14, 0, 5);
+//	params->eye.to = set_vector(0.5, 0, 0);
 	params->rotation_val = 1;
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);

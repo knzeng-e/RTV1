@@ -5,6 +5,7 @@ int	get_obj_color(t_params *params, char **infos, int object_id)
 	int		color[3];
 	int		nb_coord;
 
+	params += 0;
 	nb_coord = -1;
 	while (*infos && ++nb_coord < 3)
 	{

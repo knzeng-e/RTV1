@@ -16,10 +16,10 @@
 
 typedef struct	s_sphere
 {
-	int			color;
-	int			is_selected;
-	double		rayon;
-	double		specular;
-	t_vect		center;
-}				t_sphere;
+	int						color;
+	int						is_selected;
+	double				rayon;
+	double				specular;
+	t_vect				center;
+}								t_sphere;
 #endif
