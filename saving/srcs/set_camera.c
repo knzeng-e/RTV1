@@ -6,49 +6,21 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 23:07:38 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/28 01:25:58 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/31 22:54:41 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
-
-void	set_camera(t_ray *ray, t_params *params, int i, int j)
-{
-	t_vect	p_camera_space;
-	double	pix_norm_x;
-	double	pix_norm_y;
-	double	image_aspect_ratio;
-	double	pix_remap_x;
-	double	pix_remap_y;
-	double	pix_camera_x;
-	double	pix_camera_y;
-
-
-	pix_norm_x = (i + 0.5) / WIDTH; //Normalize Pix_dimension to [0;1]
-	pix_norm_y = (j + 0.5) / HEIGHT;
-	pix_norm_x += params->eye.to.vect_x;
-	pix_norm_y += params->eye.to.vect_y;
-	image_aspect_ratio = WIDTH/ HEIGHT;
-	pix_remap_x = (2 * pix_norm_x - 1) * image_aspect_ratio;
-	pix_remap_y = 1 - 2 * pix_norm_y;
-	pix_camera_x = pix_remap_x * tan(radians(params->fov) / 2); // FOV 30 degrees
-	pix_camera_y = pix_remap_y * tan(radians(params->fov) / 2);
-	p_camera_space = set_vector(pix_camera_x, pix_camera_y, -1);
-	ray->direction = vect_sub(p_camera_space, ray->origin);
-	ray_normalize(&ray->direction);
-}
 
 void	set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to)
 {
 	t_vect	arbitrary_vect;
 
 	arbitrary_vect = set_vector(0, 1, 0);
-	//ray_normalize(&arbitrary_vect);
 	params->eye.forward_vect = vect_sub(*to, *from);
 	ray_normalize(&(params->eye.forward_vect));
 	params->eye.right_vect = cross_product(arbitrary_vect, params->eye.forward_vect);
 	params->eye.up_vect = cross_product(params->eye.forward_vect, params->eye.right_vect);
-
 
 	params->eye.cam_to_world.mat[0][0] = params->eye.right_vect.vect_x; 
 	params->eye.cam_to_world.mat[0][1] = params->eye.right_vect.vect_y; 
@@ -69,25 +41,36 @@ void	set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to)
 	params->eye.cam_to_world.mat[3][3] = 1; 
 
 	ray->origin = *from;
-	ray->direction = vect_multiply(params->eye.forward_vect, -1);
-	
-	/*t_vect	p_camera_space;
-	  double	pix_norm_x;
-	  double	pix_norm_y;
-	  double	image_aspect_ratio;
-	  double	pix_remap_x;
-	  double	pix_remap_y;
-	  double	pix_camera_x;
-	  double	pix_camera_y;
+	//ray->direction = vect_multiply(params->eye.forward_vect, -1);
+}
 
-	  pix_norm_x = (i + 0.5) / WIDTH; //Normalize Pix_dimension to [0;1]
-	  pix_norm_y = (j + 0.5) / HEIGHT;
-	  image_aspect_ratio = WIDTH/ HEIGHT;
-	  pix_remap_x = (2 * pix_norm_x - 1) * image_aspect_ratio;
-	  pix_remap_y = 1 - 2 * pix_norm_y;
-	  pix_camera_x = pix_remap_x * tan(radians(params->fov) / 2); // FOV 30 degrees
-	  pix_camera_y = pix_remap_y * tan(radians(params->fov) / 2);
-	  p_camera_space = set_vector(pix_camera_x, pix_camera_y, -1);
-	  ray->direction = vect_sub(p_camera_space, ray->origin);
-	  ray_normalize(&ray->direction);*/
+void	set_camera(t_ray *ray, t_params *params, int i, int j)
+{
+	t_vect	p_camera_space;
+	double	pix_norm_x;
+	double	pix_norm_y;
+	double	image_aspect_ratio;
+	double	pix_remap_x;
+	double	pix_remap_y;
+	double	pix_camera_x;
+	double	pix_camera_y;
+
+	pix_norm_x = (i + 0.5) / WIDTH; //Normalize Pix_dimension to [0;1]
+	pix_norm_y = (j + 0.5) / HEIGHT;
+	//pix_norm_x += params->eye.to.vect_x;
+	//pix_norm_y += params->eye.to.vect_y;
+	image_aspect_ratio = WIDTH/ HEIGHT;
+	pix_remap_x = (2 * pix_norm_x - 1) * image_aspect_ratio;
+	pix_remap_y = 1 - 2 * pix_norm_y;
+	pix_camera_x = pix_remap_x * tan(radians(params->fov) / 2); // FOV 30 degrees
+	pix_camera_y = pix_remap_y * tan(radians(params->fov) / 2);
+	p_camera_space = set_vector(pix_camera_x, pix_camera_y, -1);
+	//apply reverse__cam_to_world
+	ray->direction = vect_sub(p_camera_space, ray->origin);
+	//rotate_x_axis(&(ray->direction), params->rotation_val, &params->transforms);
+	//rotate_y_axis(&(ray->direction), params->rotation_val, &params->transforms);
+	/*rotate_y_axis(&(ray->direction), 30, &params->transforms);
+	rotate_z_axis(&(ray->direction), 30, &params->transforms);*/
+	set_camera_look_at(ray, params, &params->eye.from, &params->eye.to);
+	ray_normalize(&ray->direction);
 }

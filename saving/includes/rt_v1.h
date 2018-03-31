@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/27 01:32:04 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/31 23:47:50 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define NB_SPHERES 4
 # define NB_PLANES 1
 # define NB_CYLINDERS 1
-# define NB_LIGHTS 1
+# define NB_LIGHTS 2
 # define NB_CONES 1
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES + NB_LIGHTS
 # define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES

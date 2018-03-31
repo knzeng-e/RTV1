@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/28 17:16:31 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/31 10:26:11 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,8 @@ int		key_hook(int keycode, t_params *params)
 		params->fov += 0.5;
 	if (keycode == UP_KEY)
 	{
-		params->eye.to.vect_y -= 0.04;
+		params->rotation_val += 5;
+		//params->eye.to.vect_y -= 0.04;
 		/*if (params->sphere_list[0].is_selected)
 		  params->sphere_list[0].center.vect_y += MOVE_DIST;
 		  if (params->sphere_list[1].is_selected)
@@ -150,7 +151,8 @@ int		key_hook(int keycode, t_params *params)
 	}
 	if (keycode == DOWN_KEY)
 	{
-		params->eye.to.vect_y += 0.04;
+		params->rotation_val -= 5;
+		//params->eye.to.vect_y += 0.04;
 		/*if (params->sphere_list[0].is_selected)
 		  params->sphere_list[0].center.vect_y -= MOVE_DIST;
 		  if (params->sphere_list[1].is_selected)

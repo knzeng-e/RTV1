@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/28 14:51:02 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/31 23:48:02 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_mlx(t_params *params)
 {
-	parse_file(params);
+//	parse_file(params);
 	/*Penser à proteger le mlx_init*/
 	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
@@ -55,7 +55,7 @@ void	create_sphere(t_params *params)
 	params->sphere_list[2].specular = 500;
 	/* RED */
 	params->sphere_list[3].rayon = 0.9;
-	params->sphere_list[3].center = set_vector(-3.3, -3, -19);
+	params->sphere_list[3].center = set_vector(-3.3, 1, -19);
 	params->sphere_list[3].color = rgb_to_int(80, 0, 3);
 	params->sphere_list[3].specular = 242;
 }
@@ -122,12 +122,12 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 	light->color = set_color(0xFF, 0xFF, 0xFF);
 	params->light[0] = *light;
 
-	/*light2->position = set_vector(-x_pos, 5, -4);
+	light2->position = set_vector(-3, 0, -19);
 	  light2->intensity = 300;
 	  light2->diffuse_light = DIFFUSE_LIGHT;
 	  light2->is_selected = 0;
 	  light2->color = set_color(0xFF, 0xFF, 0xFF);
-	params->light[1] = *light2;*/
+	params->light[1] = *light2;
 }
 
 void	init_scene(t_params *params)
@@ -135,6 +135,7 @@ void	init_scene(t_params *params)
 	init_mlx(params);
 //	params->background_color = rgb_to_int(0xb0, 0xe0, 0xe6);
 	params->background_color = rgb_to_int(0xff, 0xff, 0xff);
+	params->rotation_val = 5;
 //	params->background_color = rgb_to_int(0xf5, 0xf5, 0xd5);
 	params->eye.from = set_vector(0, 0, 0);
 	params->eye.to = set_vector(0, 0, 0);
@@ -146,7 +147,7 @@ void	init_scene(t_params *params)
 	create_plane(params);
 	create_cylinder(params);
 	create_cone(params);
-	put_light(params, 4, 16, -1);
+	put_light(params, 4, 16, -4);
 	//put_light(params, -3.3, -3, -19);
 	//params->sphere_list[3].center = set_vector(-3.3, -3, -19);
 	init_objects(params);

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 08:30:37 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/28 14:53:18 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/03/31 23:45:34 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ int		is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 				light_pos = params->light[index_light].position;
 				shadow_ray.origin = intersection;
 				shadow_ray.direction = vect_sub(light_pos, intersection);
+				params->distance_to_light = get_length(&shadow_ray.direction);	
 				ray_normalize(&shadow_ray.direction);
 				saved_normal = params->current_normal;
 				if (intersect(&shadow_ray, current_obj, params))
 				{
 					params->current_normal = saved_normal;
-					if (shadow_ray.t >= 0)
+					if ((shadow_ray.t >= 0) && (shadow_ray.t < params->distance_to_light))
+					//if (shadow_ray.t >= 0)
 						return (IS_SHADOWED);
 				}
 				params->current_normal = saved_normal;
