@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 19:51:41 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/25 05:07:04 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/01 23:27:20 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ t_params	*init_params(void)
 
 void		quit(t_params *params)
 {
-	ft_free(params);
+	//ft_free(params);
+	free_lights(params);
+	free_objects_list(params);
 }
 
 int			main(int ac, char **av)
@@ -54,6 +56,5 @@ int			main(int ac, char **av)
 	else
 		params->file = "test";
 	mlx_draw(params);
-	quit(params);
 	return (OK);
 }

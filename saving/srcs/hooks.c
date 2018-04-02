@@ -6,36 +6,11 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/31 10:26:11 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/02 03:48:56 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
-
-int		ft_free_rays(t_params *params)
-{
-	int	i;
-	int	j;
-	int	cpt;
-
-	i = -1;
-	cpt = -1;
-	while (++i < WIDTH)
-	{
-		j = -1;
-		while (++j < HEIGHT)
-		{
-			if (++cpt <= params->rays_to_free)
-			{
-				free(params->tab_rays[j][i]);
-				params->rays_to_free--;
-			}
-			else
-				return (FREE_OK);
-		}
-	}
-	return (-1);
-}
 
 int		expose_hook(t_params *infos)
 {
@@ -63,12 +38,15 @@ int		mouse_hook(int button, int x, int y, t_params *infos)
 int		key_hook(int keycode, t_params *params)
 {
 
-	printf("\nKey pressed ==> %d", keycode);
-		fflush(stdout);
+//	printf("\nKey pressed ==> %d", keycode);
+//		fflush(stdout);
 	if (keycode == I_KEY)
 		params->light[0].intensity += 0.5;
 	if (keycode == 53)
-		exit (0);
+	{
+		quit(params);
+		exit (OK);
+	}
 	if (keycode == V_KEY)
 		params->sphere_list[1].is_selected = !(params->sphere_list[1].is_selected);
 	if (keycode == J_KEY)
@@ -82,16 +60,17 @@ int		key_hook(int keycode, t_params *params)
 	if (keycode == SPACE_KEY)
 	{
 		//params->eye.to.vect_y -= 0.04;
-	//	params->eye.from.vect_x = 0.01;
+		//	params->eye.from.vect_x = 0.01;
 		params->eye.from.vect_z += 0.01;
+		params->eye.from.vect_x -= 0.01;
 		//params->eye.from.vect_y += 0.01;
-	//	printf("\neye_from: [%f, %f, %f]", params->eye.from.vect_x, params->eye.from.vect_y, params->eye.from.vect_z);
-	//	printf("\neye_to: [%f, %f, %f]", params->eye.to.vect_x, params->eye.to.vect_y, params->eye.to.vect_z);
+		//	printf("\neye_from: [%f, %f, %f]", params->eye.from.vect_x, params->eye.from.vect_y, params->eye.from.vect_z);
+		//	printf("\neye_to: [%f, %f, %f]", params->eye.to.vect_x, params->eye.to.vect_y, params->eye.to.vect_z);
 		//params->rotation_val += 5;
-	//	rotate_y_axis(&(params->eye.to), 10, &params->transforms);
+		//	rotate_y_axis(&(params->eye.to), 10, &params->transforms);
 		//rotate_x_axis(&(params->cylinder_list[0].center), 30, &params->transforms);
 		//rotate_x_axis(&(params->cylinder_list[0].axe), 1.3, &params->transforms);
-	//	rotate_y_axis(&(params->cylinder_list[0].axe), 2, &params->transforms);
+		//	rotate_y_axis(&(params->cylinder_list[0].axe), 2, &params->transforms);
 		//rotate_z_axis(&(params->cone_list[0].axe), 2, &params->transforms);
 	}
 	if (keycode == LEFT_KEY)
@@ -99,21 +78,21 @@ int		key_hook(int keycode, t_params *params)
 		//rotate_y_axis(&(params->eye.to), -5, &params->transforms);
 		params->eye.to.vect_x -= 0.04;
 		/*if (params->sphere_list[0].is_selected)
-			params->sphere_list[0].center.vect_x -= MOVE_DIST;
-		if (params->sphere_list[1].is_selected)
-			params->sphere_list[1].center.vect_x -= MOVE_DIST;
-		if (params->sphere_list[2].is_selected)
-			params->sphere_list[2].center.vect_x -= MOVE_DIST;
-		if (params->sphere_list[3].is_selected)
-			params->sphere_list[3].center.vect_x -= MOVE_DIST;
-		if (params->light[0].is_selected)
-			params->light[0].position.vect_x -= MOVE_DIST;*/
+		  params->sphere_list[0].center.vect_x -= MOVE_DIST;
+		  if (params->sphere_list[1].is_selected)
+		  params->sphere_list[1].center.vect_x -= MOVE_DIST;
+		  if (params->sphere_list[2].is_selected)
+		  params->sphere_list[2].center.vect_x -= MOVE_DIST;
+		  if (params->sphere_list[3].is_selected)
+		  params->sphere_list[3].center.vect_x -= MOVE_DIST;
+		  if (params->light[0].is_selected)
+		  params->light[0].position.vect_x -= MOVE_DIST;*/
 	}
 	if (keycode == RIGHT_KEY)
 	{
 		/*rotate_z_axis(&(params->eye.to), 10, &params->transforms);
-		rotate_x_axis(&(params->eye.to), 10, &params->transforms);
-		rotate_y_axis(&(params->eye.to), 10, &params->transforms);*/
+		  rotate_x_axis(&(params->eye.to), 10, &params->transforms);
+		  rotate_y_axis(&(params->eye.to), 10, &params->transforms);*/
 
 		rotate_z_axis(&(params->eye.from), 2.3, &params->transforms);
 		rotate_x_axis(&(params->eye.from), 2.3, &params->transforms);
@@ -164,10 +143,11 @@ int		key_hook(int keycode, t_params *params)
 		  if (params->light[0].is_selected)
 		  params->light[0].position.vect_y -= MOVE_DIST;*/
 	}
-	printf("\neye_from: [%f, %f, %f]", params->eye.from.vect_x, params->eye.from.vect_y, params->eye.from.vect_z);
-	fflush(stdout);
-	printf("\neye_to: [%f, %f, %f]", params->eye.to.vect_x, params->eye.to.vect_y, params->eye.to.vect_z);
-	fflush(stdout);
+	//printf("\nFOV == %f\n", params->fov);
+	/*printf("\neye_from: [%f, %f, %f]", params->eye.from.vect_x, params->eye.from.vect_y, params->eye.from.vect_z);
+	  fflush(stdout);
+	  printf("\neye_to: [%f, %f, %f]", params->eye.to.vect_x, params->eye.to.vect_y, params->eye.to.vect_z);*/
+	//fflush(stdout);
 	expose_hook(params);
 	return (keycode);
 }

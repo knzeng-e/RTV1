@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/31 23:47:50 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/02 05:19:36 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define ZOOM_OUT 78
 # define RADIUS 20.0
 # define OK 0
-# define FREE_OK 0
+# define FREE_OK 1
 # define MAX_DISTANCE 20000
 # define INVALID_OBJECT 0
 # define INVALID_DESCRIPTION 0
@@ -60,7 +60,8 @@
 # define ERROR_OPEN -1
 # define FREE_ERROR -4
 # define MALLOC_ERROR -3
-# define FOV 30
+# define LIGHT_ERROR -5
+# define FOV 60
 # define MAX_FOV 150
 # define RED 0x00FF0000
 # define TRUE 1
@@ -79,7 +80,6 @@
 # include <pthread.h>
 # include "rayon.h"
 # include "sphere.h"
-# define free(aa) {printf("[%s][ligne %d] Liberation bloc %s a %p\n",__FILE__,__LINE__,#aa,aa);free(aa);}
 # define RGB(r, g, b)(256 * 256 * (unsigned int)(r) + 256 * (unsigned int)(g) + (unsigned int)(b))
 
 typedef struct	s_view
@@ -121,12 +121,11 @@ typedef struct	s_camera
 	t_vect		from;
 	t_vect		to;
 	t_matrix	cam_to_world;
-//	t_vect		viewpoint;
 }				t_camera;
 
 typedef struct	s_cylinder
 {
-	int			size;
+	double		size;
 	double		radius;
 	double		hauteur;
 	double		specular;
@@ -146,8 +145,6 @@ typedef struct	s_cone
 	double		specular;
 	t_color		color;
 }				t_cone;
-
-
 
 typedef struct	s_plane
 {
@@ -252,7 +249,6 @@ typedef struct		s_params
 	int				size_line;
 	int				endian;
 	int				rays_to_free;
-	//int				ray_depth;
 	double			ray_depth;
 	int				t;
 	int				color;
@@ -294,16 +290,22 @@ int				get_nb_objects(t_params *params);
 int				get_sphere_position(t_params *params, char **infos);
 int				get_obj_color(t_params *params, char **infos, int object_id);
 int				ft_isnumber(char *number);
-
+void			create_cone(t_params *params);
+void			create_cylinder(t_params *params);
+void			create_plane(t_params *params);
+void			create_sphere(t_params *params);
 void			draw_pixel(t_params *params, int i, int j, int color);
-void			set_origin(int i, int j, t_ray *ray, t_params *params);
+void			free_lights(t_params *params);
+void			free_objects_list(t_params *params);
 void			init_mlx(t_params *params);
-void			init_scene(t_params *params);
 void			init_objects(t_params *params);
-void			set_camera(t_ray *ray, t_params *params, int i, int j);
-void			set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to);
+void			init_scene(t_params *params);
 void			init_transform_matrices(t_transform *transforms);
 void			parse_file(t_params *params);
+void			put_light(t_params *params, double x_pos, double y_pos, double z_pos);
+void			set_origin(int i, int j, t_ray *ray, t_params *params);
+void			set_camera(t_ray *ray, t_params *params, int i, int j);
+void			set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to);
 void			set_view(t_params *params);
 void			ray_equation(t_ray *ray);
 void			ray_normalize(t_vect *vect);
@@ -326,6 +328,7 @@ void			show_object_type(t_object *current_obj);
 void			print_objects(t_object *objects);
 void			init_objects(t_params *params);
 void			clamp(int *r, int *g, int *b);
+void			quit(t_params *params);
 double			radians(double angle);
 double			get_length(t_vect *vect);
 double			dot_product(t_vect vect1, t_vect vect2);
