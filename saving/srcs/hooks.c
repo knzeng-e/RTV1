@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/02 03:48:56 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/02 11:56:38 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,11 +143,6 @@ int		key_hook(int keycode, t_params *params)
 		  if (params->light[0].is_selected)
 		  params->light[0].position.vect_y -= MOVE_DIST;*/
 	}
-	//printf("\nFOV == %f\n", params->fov);
-	/*printf("\neye_from: [%f, %f, %f]", params->eye.from.vect_x, params->eye.from.vect_y, params->eye.from.vect_z);
-	  fflush(stdout);
-	  printf("\neye_to: [%f, %f, %f]", params->eye.to.vect_x, params->eye.to.vect_y, params->eye.to.vect_z);*/
-	//fflush(stdout);
 	expose_hook(params);
 	return (keycode);
 }

@@ -2,19 +2,27 @@
 
 int	get_obj_color(t_params *params, char **infos, int object_id)
 {
-	int		color[3];
-	int		nb_coord;
+	int				color[3];
+	static int		nb_coord = -1;
 
 	params += 0;
-	nb_coord = -1;
-	while (*infos && ++nb_coord < 3)
+	if (*infos && ++nb_coord < 3)
 	{
+		printf("\nSAVING ==> [%s] && nb_coord == %d\n", *infos, nb_coord);
+		fflush(stdout);
 		if (!ft_isnumber(*infos))
+		{
+			printf("\nNOT A NUMBER");
+			fflush(stdout);
 			return (ERROR_OBJECT_DESCRIPTION);
+		}
 		color[nb_coord] = ft_atoi(*infos);
-		infos++;
+		//infos++;
+		//printf("\nNext coord ==> [%s]\n", *infos);
+		//fflush(stdout);
 	}
-	if (nb_coord != 2)
+	printf("\nNB_COORDS output == %d\n", nb_coord);
+	if (nb_coord > 2)
 		return (ERROR_OBJECT_DESCRIPTION);
 	if (object_id == SPHERE)
 	{

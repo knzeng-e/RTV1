@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 05:22:46 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/02 08:04:44 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/02 09:34:28 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 t_vect	get_normal_cylinder(t_vect intersection, t_cylinder *cylinder)
 {
+/*	t_vect	v;
+
+	v = vect_multiply(cylinder->center, -1);
+	v = vect_add(intersection, v);
+	ray_normalize(&v);
+	return (v);*/
+
 	t_vect	base_tmp;
 	t_vect	normal;
 	t_vect	intersection_tmp;

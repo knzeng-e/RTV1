@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 18:29:26 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/25 16:39:36 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/02 12:03:17 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void	show_object(int object_id)
 {
 	char	*object;
 
-	object = (object_id == SPHERE) ? "Sphere" : (((object_id == PLANE) ? "Plane" : (object_id == CONE ? "Cone": ((object_id == CYLINDER) ? "Cylinder" : "Uknown Object"))));
+	object = (object_id == SPHERE) ? "Sphere" : \
+			 (((object_id == PLANE) ? "Plane" : \
+			   (object_id == CONE ? "Cone": \
+				((object_id == CYLINDER) ? "Cylinder" : "Uknown Object"))));
 	ft_putstr("\nObject ==> ");
 	ft_putstr(object);
 	ft_putchar('\n');

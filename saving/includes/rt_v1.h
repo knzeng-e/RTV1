@@ -6,16 +6,14 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/02 05:19:36 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/02 11:45:50 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
 # define WIDTH 600
-//# define WIDTH 300
 # define HEIGHT 600
-//# define HEIGHT 300
 # define ACC 0.001
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
