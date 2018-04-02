@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 05:22:46 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/26 01:47:05 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/02 08:04:44 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ int		cylinder_intersect(t_ray *ray, t_cylinder *cylinder, t_params *params)
 	b = 2 * (dot_product(ray->direction, dist) - (dot_product(ray->direction, cylinder->axe) * dot_product(dist, cylinder->axe)));
 	c = dot_product(dist, dist) - pow(dot_product(dist, cylinder->axe), 2) - pow(cylinder->size, 2);
 	discr = b * b - 4 * a * c;
-
-	//ray_normalize(&ray->direction);
 	if (discr > 0)
 	{
 		root = (-b - sqrt(discr)) / (2 * a);
