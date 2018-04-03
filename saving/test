@@ -2,7 +2,7 @@ sphere
 {
 	position: 40,0,0
 	radius: 4
-	color: 255, 255, 255
+	color: 255,255,255
 	specular: 45
 }
 

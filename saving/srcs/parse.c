@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 18:29:26 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/02 12:58:22 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/02 18:55:18 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		check_object_params(int object_id, t_params *params)
 	if (object_id == SPHERE)
 	{
 		ft_putstr("d'une sphere\n");
-		printf("\nNew line_content ==> [%s]\n", *params->line_content);
+		printf("\nNew ENTIRE LINE_content ==> [%s]\n", *params->line_content);
 		fflush(stdout);
 		params->current_sphere_index++;
 		if (check_sphere_params(params))
@@ -143,8 +143,11 @@ int		read_block(t_params *params, char *line, int *num_line, int object_id)
 		ft_parse_error(*num_line, "SHOULD HAVE A '{' AFTER OBJECT TYPE");
 	if (parse_object(object_id, line, params, num_line) == 0)
 		ft_parse_error(*num_line, "ERROR IN OBJECT DESCRIPTION");
-	if (ft_strcmp(line, "}") != 0) /* The block ended without '}' character */
-		ft_parse_error(++(*num_line), "MISSING '}'");
+	if (ft_strcmp(line, "}") != 0)
+	{	/* The block ended without '}' character */
+		printf("\n\tEND BLOSCK ==> [line == %s]\n", line);
+		ft_parse_error(++(*num_line), "MISSING '}'"); 
+	}
 	++(*num_line);
 	return (PARSE_OK);
 }

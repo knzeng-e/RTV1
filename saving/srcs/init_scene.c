@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/02 14:34:46 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/03 08:25:45 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_mlx(t_params *params)
 {
-	//parse_file(params);
+//	parse_file(params);
 	/*Penser à proteger le mlx_init*/
 	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);

@@ -23,7 +23,10 @@ int	get_obj_color(t_params *params, char **infos, int object_id)
 	}
 	printf("\nNB_COORDS output == %d\n", nb_coord);
 	if (nb_coord > 2)
+	{
+		printf("\nnb_coord = %d : Revois tes parametres.. ou pas !\n", nb_coord);
 		return (ERROR_OBJECT_DESCRIPTION);
+	}
 	if (object_id == SPHERE)
 	{
 		//params->sphere_list[params->current_sphere_index++].color = rgb_to_int(color[0], color[1], color[2]);
