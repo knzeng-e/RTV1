@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/25 16:42:44 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/03 00:20:43 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/04 08:52:39 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	check_sphere_params(t_params *params)
 	while (values && values[++i])
 	{
 		content = ft_remove_spaces(values[i]);
-		/*printf("\nContent to parse ==> [%s]\n", content);
+		printf("\n-Content to parse ==> [%s]\n\tnb_params_to_parse ==> %d", content, cpt_params);
 		fflush(stdout);
-		printf("\nOld content ==> [%s]\n", *params->line_content);
+	/*	printf("\nOld content ==> [%s]\n", *params->line_content);
 		fflush(stdout);*/
 		if (cpt_params < 0)
 		{
@@ -99,11 +99,14 @@ int	check_sphere_params(t_params *params)
 			{
 				cpt_params--;
 				(params->line_content)++;
+				content = *params->line_content;
+				printf("\n Content AFTER ==> %s\n", content);
+				fflush(stdout);
 				/* get_specular */
 				/*Risque de pb ici: ++(params->line_content)*/
-				if ((ft_isnumber(*(params->line_content)) == 0) || (++(params->line_content)))
+				if ((ft_isnumber(content) == 0) || *(++(params->line_content)))
 					return (ERROR_OBJECT_DESCRIPTION);
-				params->sphere_list[params->current_sphere_index++].specular = (double)ft_atoi(*(params->line_content));
+				params->sphere_list[params->current_sphere_index++].specular = (double)ft_atoi(content);
 			}
 			ft_putstr("\n- ");
 			ft_putstr((content));

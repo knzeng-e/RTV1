@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/01 18:20:13 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/02 08:38:19 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/04 16:42:24 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	create_sphere(t_params *params)
 	/* YELLOW */
 	params->sphere_list[0].rayon = 1.3;
 	params->sphere_list[0].center = set_vector(3.5, -3.2, -10);
+	//params->sphere_list[0].center = set_vector(0, 0, -11);
 	params->sphere_list[0].specular = 242;
 	params->sphere_list[0].color = rgb_to_int(0xff, 1, 42);
 	/* GREEN */

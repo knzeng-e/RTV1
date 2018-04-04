@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/25 16:42:40 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/25 19:07:55 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/04 17:25:32 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	get_sphere_position(t_params *params, char **infos)
 		nb_coord++;
 		printf("OK\n");
 	}
-	if (nb_coord != 3)
+	if (*infos || nb_coord != 3)
 		return (ERROR_OBJECT_DESCRIPTION);
 	return (CORRECT_OBJECT_DESCRIPTION);
 }

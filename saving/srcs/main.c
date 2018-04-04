@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 19:51:41 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/01 23:27:20 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/03 15:18:23 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,15 @@ int			main(int ac, char **av)
 
 	params = init_params();
 	if (ac == 2)
+	{
+		params->parsing_on = 1;
 		params->file = av[1];
+	}
 	else
-		params->file = "test";
+	{
+		params->parsing_on = 0;
+		//params->file = "test";
+	}
 	mlx_draw(params);
 	return (OK);
 }

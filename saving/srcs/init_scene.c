@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/03 08:25:45 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/04 16:41:57 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	init_mlx(t_params *params)
 {
-//	parse_file(params);
+	if (params->parsing_on)
+		parse_file(params);
+
 	/*Penser à proteger le mlx_init*/
 	params->win = mlx_new_window(params->mlx, WIDTH, HEIGHT, "RTV1");
 	params->ptr_img = mlx_new_image(params->mlx, WIDTH, HEIGHT);
@@ -37,7 +39,7 @@ void	init_scene(t_params *params)
 	params->background_color = rgb_to_int(0xff, 0xff, 0xff);
 	params->rotation_val = 5;
 	params->eye.from = set_vector(0, 0, 0);
-	params->eye.to = set_vector(0, 0, -1);	
+	params->eye.to = set_vector(0, 0, -199);	
 	params->rotation_val = 1;
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);

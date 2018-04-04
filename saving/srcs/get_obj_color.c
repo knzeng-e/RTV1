@@ -2,14 +2,12 @@
 
 int	get_obj_color(t_params *params, char **infos, int object_id)
 {
-	int				color[3];
+	static int				color[3];
 	static int		nb_coord = -1;
 
 	params += 0;
 	if (*infos && ++nb_coord < 3)
 	{
-		printf("\nSAVING ==> [%s] && nb_coord == %d\n", *infos, nb_coord);
-		fflush(stdout);
 		if (!ft_isnumber(*infos))
 		{
 			printf("\nNOT A NUMBER");
@@ -21,15 +19,14 @@ int	get_obj_color(t_params *params, char **infos, int object_id)
 		//printf("\nNext coord ==> [%s]\n", *infos);
 		//fflush(stdout);
 	}
-	printf("\nNB_COORDS output == %d\n", nb_coord);
 	if (nb_coord > 2)
 	{
-		printf("\nnb_coord = %d : Revois tes parametres.. ou pas !\n", nb_coord);
 		return (ERROR_OBJECT_DESCRIPTION);
 	}
 	if (object_id == SPHERE)
 	{
-		//params->sphere_list[params->current_sphere_index++].color = rgb_to_int(color[0], color[1], color[2]);
+		params->sphere_list[params->current_sphere_index++].color = rgb_to_int(color[0], color[1], color[2]);
+		printf("\nSphere Color = [%d, %d, %d]\n", color[0], color[1], color[2]);
 	}
 	if (object_id == CONE)
 	{

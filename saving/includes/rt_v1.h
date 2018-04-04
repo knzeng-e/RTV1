@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/02 11:45:50 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/04 16:41:43 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,6 +252,7 @@ typedef struct		s_params
 	int				color;
 	int				background_color;
 	int				nb_objects;
+	int				object_id;
 	int				current_index;
 	int				current_sphere_index;
 	int				current_plane_index;
@@ -260,6 +261,7 @@ typedef struct		s_params
 	int				current_light_index;
 	int				vector_lenght;
 	int				other_intersect;
+	int				parsing_on;
 }					t_params;
 
 int				expose_hook(t_params *params);
@@ -282,6 +284,7 @@ int				check_cone_params(t_params *params);
 int				check_light_params(t_params *params);
 int				couleur(double angle);
 int				get_color(t_color color);
+int				read_block(t_params *params, char *line, int *num_line);
 int				rgb_to_int(int r, int g, int b);
 int				calc_color(int color, double intensity);
 int				get_nb_objects(t_params *params);

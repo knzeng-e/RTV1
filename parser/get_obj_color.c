@@ -2,7 +2,7 @@
 
 int	get_obj_color(t_params *params, char **infos, int object_id)
 {
-	int		color[3];
+	double	color[3];
 	int		nb_coord;
 
 	nb_coord = -1;
@@ -10,11 +10,13 @@ int	get_obj_color(t_params *params, char **infos, int object_id)
 	{
 		if (!ft_isnumber(*infos))
 			return (ERROR_OBJECT_DESCRIPTION);
-		color[nb_coord] = ft_atoi(*infos);
+		color[nb_coord] = (double)ft_atoi(*infos);
 		infos++;
 	}
 	if (nb_coord != 2)
 		return (ERROR_OBJECT_DESCRIPTION);
+	printf("\nColor: %f - %f - %f\n", color[0], color[1], color[2]);
+	ffluush(stdout);
 	if (object_id == SPHERE)
 	{
 		//params->sphere_list[params->current_sphere_index++].color = rgb_to_int(color[0], color[1], color[2]);
