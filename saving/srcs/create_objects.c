@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/01 18:20:13 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/04 16:42:24 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/05 10:28:26 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	create_sphere(t_params *params)
 {
 	int	cpt;
 
+	params->current_sphere_index = 0;
 	cpt = -1;
 	while (++cpt < NB_SPHERES)
 		params->sphere_list[cpt].is_selected = 0;
@@ -44,6 +45,7 @@ void	create_sphere(t_params *params)
 
 void	create_plane(t_params *params)
 {
+	params->current_plane_index = 0;
 	if ((params->plane = (t_plane *)malloc(sizeof(t_plane))) == NULL)
 		exit(ft_free(params));
 
@@ -64,6 +66,7 @@ void	create_plane(t_params *params)
 
 void	create_cylinder(t_params *params)
 {
+	params->current_cylinder_index = 0;
 	params->cylinder_list[0].center = set_vector(-3, 0, -20);
 	params->cylinder_list[0].axe = set_vector(0, 1, 0);
 	params->cylinder_list[0].radius = 3.7;
@@ -74,6 +77,7 @@ void	create_cylinder(t_params *params)
 
 void	create_cone(t_params *params)
 {
+	params->current_cone_index = 0;
 	params->cone_list[0].center = set_vector(2, 8, -26);
 	params->cone_list[0].axe = set_vector(0.4, 1, 0.2);
 	params->cone_list[0].size = 12;
@@ -86,6 +90,7 @@ void	put_light(t_params *params, double x_pos, double y_pos, double z_pos)
 {
 	int	index;
 
+	params->current_light_index = 0;
 	index = -1;
 	while (++index < NB_LIGHTS)
 	{

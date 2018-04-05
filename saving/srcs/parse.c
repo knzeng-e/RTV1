@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/22 18:29:26 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/04 10:00:22 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/05 12:07:09 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int		check_object_params(int object_id, t_params *params)
 {
 	if (object_id == SPHERE)
 	{
+		printf("\nParsing Sphere:\n\tBegin with index => [%d]", params->current_sphere_index);
+		fflush(stdout);
 		params->current_sphere_index++;
 		if (check_sphere_params(params)) /* 4 : check_sphere_params*/
 			return (CORRECT_OBJECT_DESCRIPTION);

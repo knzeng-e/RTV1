@@ -2,11 +2,11 @@
 
 int	get_obj_color(t_params *params, char **infos, int object_id)
 {
-	static int				color[3];
+	static int				color[3] = {-1, -1, -1};
 	static int		nb_coord = -1;
 
 	params += 0;
-	if (*infos && ++nb_coord < 3)
+	if (++nb_coord < 3 /*&& *infos*/)
 	{
 		if (!ft_isnumber(*infos))
 		{
@@ -23,10 +23,16 @@ int	get_obj_color(t_params *params, char **infos, int object_id)
 	{
 		return (ERROR_OBJECT_DESCRIPTION);
 	}
+	if ((nb_coord >= 2) && ((color[0] == -1) || color[1] == -1 || color[2] == -1 ))
+		return (ERROR_OBJECT_DESCRIPTION);
 	if (object_id == SPHERE)
 	{
+		printf("\nSetting Current Sphere index ==> %d", params->current_sphere_index);
+		fflush(stdout);
 		params->sphere_list[params->current_sphere_index++].color = rgb_to_int(color[0], color[1], color[2]);
 		printf("\nSphere Color = [%d, %d, %d]\n", color[0], color[1], color[2]);
+		fflush(stdout);
+	
 	}
 	if (object_id == CONE)
 	{
@@ -44,5 +50,6 @@ int	get_obj_color(t_params *params, char **infos, int object_id)
 	{
 		//params->sphere_list[params->current_light_index++].color = rgb_to_int(color[0], color[1], color[2]);
 	}
+
 	return (PARSE_OK);
 }
