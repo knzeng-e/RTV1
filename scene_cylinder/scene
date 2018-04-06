@@ -1,0 +1,5 @@
+sphere
+{
+	position: 40,5,0
+	radius: 1
+}
