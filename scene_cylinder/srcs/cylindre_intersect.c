@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 05:22:46 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/06 22:21:49 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/07 13:58:08 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,16 @@ int		cylinder_intersect(t_ray *ray, t_cylinder *cylinder, t_params *params)
 		if (root <= 0)
 			root = (-b + sqrt(discr)) / (2 * a);
 		ray->t = root;
-        ray->t_min = cylinder->center.vect_y - (cylinder->hauteur / 2);
-        ray->t_max = cylinder->center.vect_y + (cylinder->hauteur / 2);
-		save_intersection(ray);
-		params->current_normal = get_normal_cylinder(ray->intersection, cylinder);
-		return (IS_INTERSECTION && ray->is_inter);
-	}
-	return (NO_INTERSECTION);
+        ray->t_max = (cylinder->hauteur > 0) ? cylinder->center.vect_y : (cylinder->center.vect_y - cylinder->hauteur);
+        ray->t_min = (cylinder->hauteur > 0) ? (cylinder->center.vect_y - (cylinder->hauteur)) : (cylinder->center.vect_y);
+
+
+
+      //  ray->t_min = cylinder->center.vect_y - (cylinder->hauteur / 2);
+        //ray->t_max = cylinder->center.vect_y + (cylinder->hauteur / 2);
+        save_intersection(ray);
+        params->current_normal = get_normal_cylinder(ray->intersection, cylinder);
+        return (IS_INTERSECTION && ray->is_inter);
+    }
+    return (NO_INTERSECTION);
 }

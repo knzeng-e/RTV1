@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/01 18:20:13 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/06 23:11:09 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/07 13:51:27 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ void	create_cylinder(t_params *params)
 void	create_cone(t_params *params)
 {
     params->current_cone_index = 0;
-    params->cone_list[0].center = set_vector(0, 0, -15);
+    params->cone_list[0].center = set_vector(0, 2, -15);
     params->cone_list[0].axe = set_vector(0, 1, 0);
     params->cone_list[0].size = 12;
-    params->cone_list[0].hauteur = 7;
+    params->cone_list[0].hauteur = -5;
     params->cone_list[0].angle = radians(10);
     params->cone_list[0].specular = 300;
     params->cone_list[0].color = set_color(0xff, 0x8f, 42);

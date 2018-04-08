@@ -6,14 +6,14 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/04 16:41:43 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/08 03:35:40 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
-# define WIDTH 600
-# define HEIGHT 600
+# define WIDTH 1000
+# define HEIGHT 800
 # define ACC 0.001
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
@@ -21,9 +21,9 @@
 # define SHININESS 128
 # define NB_SPHERES 4
 # define NB_PLANES 1
-# define NB_CYLINDERS 1
+# define NB_CYLINDERS 2
 # define NB_LIGHTS 2
-# define NB_CONES 1
+# define NB_CONES 2
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES + NB_LIGHTS
 # define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES
 # define NB_SPHERES_PARAMS 4
@@ -140,6 +140,7 @@ typedef struct	s_cone
 	t_vect		axe;
 	double		angle;
 	double		size;
+    double      hauteur;
 	double		specular;
 	t_color		color;
 }				t_cone;
@@ -259,6 +260,8 @@ typedef struct		s_params
 	int				current_cylinder_index;
 	int				current_cone_index;
 	int				current_light_index;
+    int             t_min_saved;
+    int             t_max_saved;
 	int				vector_lenght;
 	int				other_intersect;
 	int				parsing_on;

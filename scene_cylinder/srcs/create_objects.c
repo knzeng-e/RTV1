@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/01 18:20:13 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/06 22:38:32 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/08 00:36:29 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	create_sphere(t_params *params)
 	params->sphere_list[1].specular = 250;
 	/* POURPRE */
 	params->sphere_list[2].rayon = 1.7;
-	params->sphere_list[2].center = set_vector(-3.9, -2.4, -11);
+	params->sphere_list[2].center = set_vector(-3.9, -2.4, -13);
 	params->sphere_list[2].color = rgb_to_int(70, 0, 42);
 	params->sphere_list[2].specular = 240;
 	/* CYAN */
@@ -67,10 +67,10 @@ void	create_plane(t_params *params)
 void	create_cylinder(t_params *params)
 {
 	params->current_cylinder_index = 0;
-	params->cylinder_list[0].center = set_vector(0, 0, -15);
+	params->cylinder_list[0].center = set_vector(0, 6, -15);
 	params->cylinder_list[0].axe = set_vector(0, 1, 0);
 	params->cylinder_list[0].radius = 3.7;
-	params->cylinder_list[0].hauteur = 0;
+	params->cylinder_list[0].hauteur = 21;
 	params->cylinder_list[0].size = 0.8;
 	params->cylinder_list[0].specular = 100;
 	//params->cylinder_list[0].color = set_color(0xa, 0xa, 0x2c);
@@ -78,10 +78,10 @@ void	create_cylinder(t_params *params)
 
 
 
-    params->cylinder_list[1].center = set_vector(-5, 0, -15);
+    params->cylinder_list[1].center = set_vector(-5, 5, -15);
 	params->cylinder_list[1].axe = set_vector(0, 1, 0);
 	params->cylinder_list[1].radius = 3.7;
-	params->cylinder_list[1].hauteur = 10;
+	params->cylinder_list[1].hauteur = 7;
 	params->cylinder_list[1].size = 1.5;
 	params->cylinder_list[1].specular = 100;
 	params->cylinder_list[1].color = set_color(0xa5, 0x1a, 0x2c);

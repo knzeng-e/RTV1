@@ -36,8 +36,8 @@ int		cone_intersect(t_ray *ray, t_cone *cone, t_params *params)
 		else
 			ray->t = (-b + sqrt(disc)) / (2 * a);
 		ray->t = rslt;
-        ray->t_min = cone->center.vect_y - (cone->hauteur / 2);
-        ray->t_max = cone->center.vect_y + (cone->hauteur / 2);
+        ray->t_max = (cone->hauteur > 0) ? cone->center.vect_y : (cone->center.vect_y - cone->hauteur);
+        ray->t_min = (cone->hauteur > 0) ? (cone->center.vect_y - (cone->hauteur)) : (cone->center.vect_y);
 		save_intersection(ray);
 		params->current_normal = get_normal_cone(ray->intersection, cone);
 		return (IS_INTERSECTION && ray->is_inter);
