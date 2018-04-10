@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/10 22:37:20 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/10 21:50:14 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,11 +328,7 @@ void			ray_normalize(t_vect *vect);
 void			set_x_rotation(t_transform *transforms);
 void			set_y_rotation(t_transform *transforms);
 void			set_z_rotation(t_transform *transforms);
-void			set_reverse_x_rotation(t_transform *transforms);
-void			set_reverse_y_rotation(t_transform *transforms);
-void			set_reverse_z_rotation(t_transform *transforms);
 void	        set_translation(t_transform *transforms, double dx, double dy, double dz);
-void	        set_reverse_translation(t_transform *transforms, double dx, double dy, double dz);
 void			save_intersection(t_ray *ray);
 void			set_sphere(t_object *current_obj, t_params *params, int cpt_spheres);
 void			save_sphere_coord(t_params *params, char *infos, int *nb_coord);
