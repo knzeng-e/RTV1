@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 23:07:38 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/08 18:45:19 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/09 22:54:01 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void	set_camera(t_ray *ray, t_params *params, int i, int j)
 	//rotate_z_axis(&(params->eye.from), 90, &params->transforms);
     set_translation(&params->transforms, 0, 6, 8);
     quaternion = set_homogen(&params->eye.from);
-    vect_matrx_multiply(&quaternion, &params->transforms.translation);
-    params->eye.from = set_reverse_homogen(&quaternion);
-	rotate_x_axis(&(params->eye.from), 10, &params->transforms);
+    //vect_matrx_multiply(&quaternion, &params->transforms.translation);
+    //params->eye.from = set_reverse_homogen(&quaternion);
+	//rotate_x_axis(&(params->eye.from), 10, &params->transforms);
 	ray->direction = vect_sub(p_camera_space, ray->origin);
 	//rotate_y_axis(&(ray->direction), 90, &params->transforms);
 	//rotate_z_axis(&(ray->direction), 90, &params->transforms);
-	rotate_x_axis(&(ray->direction), 10, &params->transforms);
+	//rotate_x_axis(&(ray->direction), 10, &params->transforms);
 	//rotate_y_axis(&(ray->direction), params->rotation_val, &params->transforms);
 	/*rotate_y_axis(&(ray->direction), 30, &params->transforms);
 	rotate_z_axis(&(ray->direction), 30, &params->transforms);*/

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 23:42:39 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/04 15:31:45 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/09 20:48:06 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,43 +26,68 @@ void	show_object_type(t_object *current_obj)
 		ft_putstr("\nLIGHT\n");
 }
 
+void	print_object(int obj_id, t_object *objects)
+{
+
+	t_object	*current_obj;
+
+    if (obj_id < 0)
+    {
+        ft_putstr("\nNO Object touched!");
+    }
+    else
+    {
+        current_obj = objects;
+        while(current_obj && current_obj->id != obj_id)
+            current_obj = current_obj->next;
+        if (current_obj)
+        {
+            ft_putstr("\n\tObject touched ");
+            show_object_type(current_obj);
+
+        }
+        else
+            ft_putstr("\nThis Object doesn't exist");
+    }
+}
+
 void	print_objects(t_object *objects)
 {
-	t_object	*current_obj;
-	int			cpt;
+    t_object	*current_obj;
+    int			cpt;
 
-	cpt = 0;
-	current_obj = objects;
-	ft_putstr("\n LIST OF OBJECTS SAVED");
-	ft_putstr("\n =====================\n");
-	while (current_obj)
-	{
-		++cpt;
-		show_object_type(current_obj);
-		ft_putstr("\t id == ");
-		ft_putnbr(current_obj->id);
-		ft_putchar('\n');
-		current_obj = current_obj->next;
-	}
-	ft_putstr("\n NB_OBJECTS SAVED ==> ");
-	ft_putnbr(cpt);
-	ft_putstr("\n\n");
+    cpt = 0;
+    current_obj = objects;
+    ft_putstr("\n LIST OF OBJECTS SAVED");
+    ft_putstr("\n =====================\n");
+    while (current_obj)
+    {
+        ++cpt;
+        show_object_type(current_obj);
+        ft_putstr("\t id == ");
+        ft_putnbr(current_obj->id);
+        ft_putchar('\n');
+        current_obj = current_obj->next;
+    }
+    ft_putstr("\n NB_OBJECTS SAVED ==> ");
+    ft_putnbr(cpt);
+    ft_putstr("\n\n");
 }
 
 void	init_objects(t_params *params)
 {
-	int			cpt;
-	t_object	*current_obj;
+    int			cpt;
+    t_object	*current_obj;
 
-	cpt = -1;
-	while (++cpt < NB_OBJECTS)
-	{
-		current_obj = params->objects;
-		save_cylinders(current_obj, params, &cpt);
-		save_planes(current_obj, params, &cpt);
-		save_cones(current_obj, params, &cpt);
-		save_spheres(current_obj, params, &cpt);
-		save_lights(current_obj, params, &cpt);
-	}
-	current_obj = NULL;
+    cpt = -1;
+    while (++cpt < NB_OBJECTS)
+    {
+        current_obj = params->objects;
+        save_cylinders(current_obj, params, &cpt);
+        save_planes(current_obj, params, &cpt);
+        save_cones(current_obj, params, &cpt);
+        save_spheres(current_obj, params, &cpt);
+        save_lights(current_obj, params, &cpt);
+    }
+    current_obj = NULL;
 }

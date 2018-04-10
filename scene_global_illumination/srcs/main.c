@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 19:51:41 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/03 15:18:23 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/09 21:41:14 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ int			main(int ac, char **av)
 		params->file = av[1];
 	}
 	else
-	{
 		params->parsing_on = 0;
-		//params->file = "test";
-	}
 	mlx_draw(params);
 	return (OK);
 }

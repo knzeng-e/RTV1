@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   matrix.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/10 15:03:10 by knzeng-e          #+#    #+#             */
+/*   Updated: 2018/04/10 15:03:44 by knzeng-e         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rt_v1.h"
 
 t_matrix		matrix_multiply(t_matrix *mat1, t_matrix *mat2)
@@ -20,15 +32,6 @@ t_matrix		matrix_multiply(t_matrix *mat1, t_matrix *mat2)
 	}
 	return (result);
 }
-
-/*
-   for (I=0; I<N; I++)
-   for (J=0; J<P; J++)
-   {
-   C[I][J]=0;
-   for (K=0; K<M; K++)
-   C[I][J] += A[I][K]*B[K][J];
-   }*/
 
 t_vect4			vect_matrx_multiply(t_vect4 *vect, t_matrix *transform)
 {

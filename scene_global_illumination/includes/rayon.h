@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 00:10:43 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/06 22:16:57 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/10 10:53:40 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct	s_ray
 {
-	t_vect		origin;
+	t_vect 		origin;
 	t_vect		direction;
 	t_vect		intersection;
 	double		t;

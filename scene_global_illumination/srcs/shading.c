@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/18 04:12:55 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/31 23:46:15 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/09 23:14:04 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ double	shading(t_ray *ray, t_params *params)
 	t_object	*light;
 	double		angle;
 	double		lightning;
+    double      distance;
 
 	lightning = 0;
 	light = params->objects;
@@ -26,6 +27,7 @@ double	shading(t_ray *ray, t_params *params)
 	{
 		params->current_light.intensity = light->specular;
 		params->light_vector = vect_sub(light->position, ray->intersection);	
+        distance = dot_product(params->light_vector, params->light_vector);
 	//	params->distance_to_light = get_length(&params->light_vector);	
 		ray_normalize(&params->light_vector);
 		ray_normalize(&params->current_normal);

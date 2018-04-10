@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/08 17:35:28 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/10 21:50:14 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define UP_KEY 126
 # define DOWN_KEY 125
 # define MOVE_DIST 0.3
+# define LEFT_BUTTON 1
+# define RIGHT_BUTTON 2
 # define V_KEY 9
 # define B_KEY 11
 # define R_KEY 15
@@ -123,6 +125,7 @@ typedef struct	s_camera
 
 typedef struct	s_cylinder
 {
+    int         id;
 	double		size;
 	double		radius;
 	double		hauteur;
@@ -136,6 +139,7 @@ typedef struct	s_cylinder
 
 typedef struct	s_cone
 {
+    int         id;
 	t_vect		center;
 	t_vect		axe;
 	double		angle;
@@ -147,6 +151,7 @@ typedef struct	s_cone
 
 typedef struct	s_plane
 {
+    int         id;
 	t_vect		position;
 	t_vect		normale;
 	t_vect		distance;
@@ -162,6 +167,11 @@ typedef struct	s_transform
 	t_matrix	y_rotation;
 	t_matrix	z_rotation;
 	t_matrix	translation;
+
+    t_matrix	x_reverse_rotation;
+	t_matrix	y_reverse_rotation;
+	t_matrix	z_reverse_rotation;
+	t_matrix	reverse_translation;
 }				t_transform;
 
 typedef struct	s_light
@@ -171,6 +181,7 @@ typedef struct	s_light
 	double		intensity;
 	double		diffuse_light;
 	int			is_selected;
+    int         id;
 	enum		e_type
 	{
 		POINT,
@@ -271,7 +282,7 @@ int				expose_hook(t_params *params);
 int				mouse_hook(int button, int x, int y, t_params *params);
 int				key_hook(int keycode, t_params *params);
 int				track_ray(t_params *params);
-int				throw_ray(t_ray *ray);
+int				throw_ray(t_params *params, int *pixel_i, int *pixel_j);
 int				ft_free(t_params *params);
 int				is_shadowed(t_vect intersection, t_params *params, t_object *obj);
 int				intersect(t_ray *ray, t_object *obj, t_params *params);
@@ -306,6 +317,7 @@ void			init_objects(t_params *params);
 void			init_scene(t_params *params);
 void			init_transform_matrices(t_transform *transforms);
 void			parse_file(t_params *params);
+void	        print_object(int obj_id, t_object *objects);
 void			put_light(t_params *params, double x_pos, double y_pos, double z_pos);
 void			set_origin(int i, int j, t_ray *ray, t_params *params);
 void			set_camera(t_ray *ray, t_params *params, int i, int j);
