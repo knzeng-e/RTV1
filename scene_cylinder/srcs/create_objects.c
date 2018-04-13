@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/01 18:20:13 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/08 00:36:29 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/11 19:00:17 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	create_cylinder(t_params *params)
 
 
     params->cylinder_list[1].center = set_vector(-5, 5, -15);
-	params->cylinder_list[1].axe = set_vector(0, 1, 0);
+	params->cylinder_list[1].axe = set_vector(1, 0, 0);
 	params->cylinder_list[1].radius = 3.7;
 	params->cylinder_list[1].hauteur = 7;
 	params->cylinder_list[1].size = 1.5;

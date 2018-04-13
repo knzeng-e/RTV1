@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 11:08:52 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/09 21:52:38 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/14 00:13:32 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ void	init_mlx(t_params *params)
 	params->objects->next = NULL;
 	params->objects->is_set = 0;
 	params->objects->id = params->current_index;
-	//params->specularity = 400;
 }
 
 void	init_scene(t_params *params)
 {
 	init_mlx(params);
-	//params->background_color = rgb_to_int(0xff, 0xff, 0xff);
-	params->eye.from = set_vector(0, 0, 0);
-	params->eye.to = set_vector(0, 0, -199);	
-	params->rotation_val = 1;
+	params->eye.from = set_vector(0, 1, 0);
+	//params->eye.to = set_vector(-0.5, -3, -11);	
+	params->eye.to = set_vector(0, 0, -1);	
+    params->rotation = set_vector(0, 0, 0);
+    params->translation = set_vector(0, 0, 0);
 	params->nb_objects = get_nb_objects(params);
 	create_sphere(params);
 	create_plane(params);

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/01 13:37:56 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/10 14:17:15 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/13 17:39:53 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int throw_ray(t_params *params, int *i, int *j)
 	int			sphere_hit;
 	int			hit;
 	int			cpt;
-//	int			cpt_light;
 
     ray.origin = params->eye.from;
     set_camera(&ray, params, *i, *j);
@@ -45,7 +44,6 @@ int throw_ray(t_params *params, int *i, int *j)
         if (sphere_hit != -1)
         {
             params->current_obj = *obj;
-            //cpt_light = -1;
             lightning = AMBIANT_LIGHT;
             saved_normal = params->current_normal;
             t_min_saved = params->t_min_saved;

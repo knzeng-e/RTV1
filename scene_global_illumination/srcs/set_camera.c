@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 23:07:38 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/09 22:54:01 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/13 22:33:55 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to)
 void	set_camera(t_ray *ray, t_params *params, int i, int j)
 {
 	t_vect	p_camera_space;
-    t_vect4 quaternion;
+    //t_vect4 quaternion;
 	double	pix_norm_x;
 	double	pix_norm_y;
 	double	image_aspect_ratio;
@@ -66,13 +66,13 @@ void	set_camera(t_ray *ray, t_params *params, int i, int j)
 	//apply reverse__cam_to_world
 	//rotate_y_axis(&(params->eye.from), 90, &params->transforms);
 	//rotate_z_axis(&(params->eye.from), 90, &params->transforms);
-    set_translation(&params->transforms, 0, 6, 8);
-    quaternion = set_homogen(&params->eye.from);
+    //set_translation(&params->transforms, 0, 6, 8);
+    //quaternion = set_homogen(&params->eye.from);
     //vect_matrx_multiply(&quaternion, &params->transforms.translation);
     //params->eye.from = set_reverse_homogen(&quaternion);
 	//rotate_x_axis(&(params->eye.from), 10, &params->transforms);
 	ray->direction = vect_sub(p_camera_space, ray->origin);
-	//rotate_y_axis(&(ray->direction), 90, &params->transforms);
+	//rotate_x_axis(&(ray->direction), -30, &params->transforms);
 	//rotate_z_axis(&(ray->direction), 90, &params->transforms);
 	//rotate_x_axis(&(ray->direction), 10, &params->transforms);
 	//rotate_y_axis(&(ray->direction), params->rotation_val, &params->transforms);

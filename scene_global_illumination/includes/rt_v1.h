@@ -6,14 +6,14 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/10 21:50:14 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/13 22:54:28 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_V1_H
 # define RT_V1_H
-# define WIDTH 1000
-# define HEIGHT 800
+# define WIDTH 200
+# define HEIGHT 200
 # define ACC 0.001
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
@@ -31,15 +31,19 @@
 # define RIGHT_KEY 124
 # define UP_KEY 126
 # define DOWN_KEY 125
-# define MOVE_DIST 0.3
+# define MOVE_DIST 0.03
 # define LEFT_BUTTON 1
 # define RIGHT_BUTTON 2
+# define A_KEY 0
+# define S_KEY 1
+# define D_KEY 2
 # define V_KEY 9
 # define B_KEY 11
+# define W_KEY 13
 # define R_KEY 15
-# define J_KEY 38
 # define I_KEY 34
 # define L_KEY 37
+# define J_KEY 38
 # define SPACE_KEY 49
 # define ZOOM_IN 69
 # define ZOOM_OUT 78
@@ -78,6 +82,7 @@
 # include <stdio.h>
 # include <math.h>
 # include <pthread.h>
+# include "OpenCL/opencl.h"
 # include "rayon.h"
 # include "sphere.h"
 # define RGB(r, g, b)(256 * 256 * (unsigned int)(r) + 256 * (unsigned int)(g) + (unsigned int)(b))
@@ -166,11 +171,10 @@ typedef struct	s_transform
 	t_matrix	x_rotation;
 	t_matrix	y_rotation;
 	t_matrix	z_rotation;
-	t_matrix	translation;
-
     t_matrix	x_reverse_rotation;
 	t_matrix	y_reverse_rotation;
 	t_matrix	z_reverse_rotation;
+	t_matrix	translation;
 	t_matrix	reverse_translation;
 }				t_transform;
 
@@ -237,6 +241,8 @@ typedef struct		s_params
 	t_light			current_light;
 	t_vect			current_normal;
 	t_vect			light_vector;
+    t_vect          rotation;
+    t_vect          translation;
 	t_transform		transforms;
 	t_matrix		transform_matrx;
 	double			x_indent;
@@ -328,7 +334,11 @@ void			ray_normalize(t_vect *vect);
 void			set_x_rotation(t_transform *transforms);
 void			set_y_rotation(t_transform *transforms);
 void			set_z_rotation(t_transform *transforms);
+void			set_reverse_x_rotation(t_transform *transforms);
+void			set_reverse_y_rotation(t_transform *transforms);
+void			set_reverse_z_rotation(t_transform *transforms);
 void	        set_translation(t_transform *transforms, double dx, double dy, double dz);
+void	        set_reverse_translation(t_transform *transforms, double dx, double dy, double dz);
 void			save_intersection(t_ray *ray);
 void			set_sphere(t_object *current_obj, t_params *params, int cpt_spheres);
 void			save_sphere_coord(t_params *params, char *infos, int *nb_coord);
@@ -363,6 +373,9 @@ t_vect			vect_multiply(t_vect vect, double cste);
 t_vect			vect_add(t_vect vect1, t_vect vect2);
 t_vect			set_vector(double x, double y, double z);
 t_vect			set_reverse_homogen(t_vect4 *vect);
+
+t_vect          translate(t_vect *elm, t_vect translation, t_params *params);
+t_vect          reverse_translate(t_vect *elm, t_vect translation, t_params *params);
 t_vect4			set_homogen(t_vect *vect);
 t_vect4			vect_matrx_multiply(t_vect4 *vect, t_matrix *mat);
 t_matrix		matrix_multiply(t_matrix *mat1, t_matrix *mat2);

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/06 22:50:20 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/11 17:48:01 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,10 @@ typedef struct	s_transform
 	t_matrix	x_rotation;
 	t_matrix	y_rotation;
 	t_matrix	z_rotation;
+    t_matrix	x_reverse_rotation;
+	t_matrix	y_reverse_rotation;
+	t_matrix	z_reverse_rotation;
+	t_matrix	reverse_translation;
 	t_matrix	translation;
 }				t_transform;
 
@@ -311,9 +315,14 @@ void			set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to
 void			set_view(t_params *params);
 void			ray_equation(t_ray *ray);
 void			ray_normalize(t_vect *vect);
+void	        set_translation(t_transform *transforms, double dx, double dy, double dz);
 void			set_x_rotation(t_transform *transforms);
 void			set_y_rotation(t_transform *transforms);
 void			set_z_rotation(t_transform *transforms);
+void			set_reverse_x_rotation(t_transform *transforms);
+void			set_reverse_y_rotation(t_transform *transforms);
+void			set_reverse_z_rotation(t_transform *transforms);
+void	        set_reverse_translation(t_transform *transforms, double dx, double dy, double dz);
 void			save_intersection(t_ray *ray);
 void			set_sphere(t_object *current_obj, t_params *params, int cpt_spheres);
 void			save_sphere_coord(t_params *params, char *infos, int *nb_coord);

@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/04 14:00:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/06 20:49:56 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/11 19:02:18 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int		key_hook(int keycode, t_params *params)
 	if (keycode == B_KEY)
         ;
 	if (keycode == R_KEY)
+    {
+	    rotate_y_axis(&(params->cylinder_list[1].axe), 2, &params->transforms);
 	    rotate_z_axis(&(params->cylinder_list[0].axe), 2, &params->transforms);
+    }
 	if (keycode == L_KEY)
 		params->light[0].is_selected = !(params->light[0].is_selected);
 	if (keycode == SPACE_KEY)
