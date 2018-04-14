@@ -1,0 +1,23 @@
+sphere
+{
+	position: 40,0,0
+	radius: 4
+	color: 255, 255, 255
+	specular: 45
+}
+
+plane
+{
+	position: 1,0,0
+	color: 0x00FFFFFF
+}
+
+cylinder
+{
+	position: 1,0,0
+	color: 0x00FFFFFF
+}
+
+plane
+{
+}
