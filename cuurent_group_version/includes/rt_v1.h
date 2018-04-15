@@ -12,8 +12,8 @@
 
 #ifndef RT_V1_H
 # define RT_V1_H
-# define WIDTH 1000
-# define HEIGHT 800
+# define WIDTH 400
+# define HEIGHT 300
 # define ACC 0.001
 # define AMBIANT_LIGHT 0.2
 # define DIFFUSE_LIGHT 0.8
@@ -27,6 +27,7 @@
 # define NB_OBJECTS NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES + NB_LIGHTS
 # define NB_ACTIVE_OBJ NB_PLANES + NB_SPHERES + NB_CYLINDERS + NB_CONES
 # define NB_SPHERES_PARAMS 4
+# define ECHAP_KEY 53
 # define LEFT_KEY 123
 # define RIGHT_KEY 124
 # define UP_KEY 126
@@ -111,9 +112,7 @@ typedef struct	s_matrix
 
 typedef struct	s_camera
 {
-	t_view		viewpoint;
-	t_vect		view_left_up;
-	t_vect		cam_pos;
+	t_vect		orientation;
 	t_vect		vect_dir;
 	t_vect		up_vect;
 	t_vect		right_vect;
