@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/14 23:42:39 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/14 18:47:04 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/15 23:29:18 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,4 @@ void	print_objects(t_object *objects)
 	ft_putstr("\n NB_OBJECTS SAVED ==> ");
 	ft_putnbr(cpt);
 	ft_putstr("\n\n");
-}
-
-void	init_objects(t_params *params)
-{
-	int			cpt;
-	t_object	*current_obj;
-
-	cpt = -1;
-	while (++cpt < params->nb_objects)
-	{
-		current_obj = params->objects;
-        if (params->nb_cylinders > 0)
-            save_cylinders(current_obj, params, &cpt);
-        if (params->nb_planes > 0)
-            save_planes(current_obj, params, &cpt);
-        if (params->nb_cones > 0)
-            save_cones(current_obj, params, &cpt);
-        if (params->nb_spheres > 0)
-            save_spheres(current_obj, params, &cpt);
-        save_lights(current_obj, params, &cpt);
-    }
-    current_obj = NULL;
 }

@@ -6,21 +6,36 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/01 18:05:31 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/01 23:35:05 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/16 08:03:03 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
 
-void	free_lights(t_params *params)
+int		ft_free(t_params *params)
 {
-	int	current_light;
+	int	i;
+	int	j;
 
-	current_light = -1;
-	while (++current_light < NB_LIGHTS)
-		ft_putstr("\n Turning OFF Light");
-	params->current_light_index = 0;
-	ft_putstr("\nALL LIGHTS FREED!");
+	i = 0;
+	while (i < WIDTH)
+	{
+		j = 0;
+		while (j < HEIGHT)
+		{
+			if (params->rays_to_free == 0)
+			{
+				free(params);
+				return (0);
+			}
+			free(params->tab_rays[j][i]);
+			params->rays_to_free--;
+			j++;
+		}
+		i++;
+	}
+	free(params);
+	return (1);
 }
 
 void	free_objects_list(t_params *params)
@@ -37,5 +52,4 @@ void	free_objects_list(t_params *params)
 			free(*current_obj);
 		}
 	}
-	ft_putstr("\nALL OBJECTS FREED!");
 }

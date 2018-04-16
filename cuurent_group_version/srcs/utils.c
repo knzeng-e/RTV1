@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: neprocur <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/04/15 23:41:09 by neprocur          #+#    #+#             */
+/*   Updated: 2018/04/15 23:42:07 by neprocur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rt_v1.h"
 
 t_vect	addition(t_vect vect1, t_vect vect2)
@@ -46,10 +58,9 @@ void	init_transform_matrices(t_transform *transforms)
 
 	transforms = (t_transform *)malloc(sizeof(t_transform));
 	if (transforms == NULL)
-		exit (MALLOC_TRANSFORM_ERROR);
+		exit(MALLOC_TRANSFORM_ERROR);
 	angle = 30;
 	set_x_rotation(transforms);
 	set_y_rotation(transforms);
 	set_z_rotation(transforms);
-	//angle = transforms->angle_rotation;
 }

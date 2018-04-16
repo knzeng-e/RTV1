@@ -13,7 +13,7 @@ SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
 CC = gcc
 CFLAGS = -g -Wall -Werror -Wextra
-FFLAGS = -framework AppKit -framework OpenGL -L. -Llibft -lft -lmlx -Lmlx -lpthread
+FFLAGS = -framework AppKit -framework OpenGL -L. -Llibft -lft -lmlx -lpthread
 ASAN := -O1 -g -fsanitize=address   \
 	-fno-omit-frame-pointer
 

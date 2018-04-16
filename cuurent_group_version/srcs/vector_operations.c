@@ -1,37 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_length.c                                       :+:      :+:    :+:   */
+/*   vector_add.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: neprocur <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/16 03:44:41 by neprocur          #+#    #+#             */
-/*   Updated: 2018/04/16 08:03:22 by neprocur         ###   ########.fr       */
+/*   Created: 2018/04/15 23:43:27 by neprocur          #+#    #+#             */
+/*   Updated: 2018/04/16 08:03:49 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
 
-int		ft_isnumber(char *number)
+t_vect	vect_sub(t_vect vect1, t_vect vect2)
 {
-	int	i;
+	t_vect	result;
 
-	i = -1;
-	while (number[++i])
-	{
-		if (!ft_isdigit(number[i]))
-			return (FALSE);
-	}
-	return (TRUE);
+	result.vect_x = vect1.vect_x - vect2.vect_x;
+	result.vect_y = vect1.vect_y - vect2.vect_y;
+	result.vect_z = vect1.vect_z - vect2.vect_z;
+	return (result);
 }
 
-double	get_length(t_vect *vect)
+t_vect	vect_add(t_vect vect1, t_vect vect2)
 {
-	double	module;
+	t_vect	result;
 
-	module = 0;
-	module += vect->vect_x * vect->vect_x;
-	module += vect->vect_y * vect->vect_y;
-	module += vect->vect_z * vect->vect_z;
-	return (sqrt(module));
+	result.vect_x = vect1.vect_x + vect2.vect_x;
+	result.vect_y = vect1.vect_y + vect2.vect_y;
+	result.vect_z = vect1.vect_z + vect2.vect_z;
+	return (result);
 }

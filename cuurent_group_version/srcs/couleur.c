@@ -6,28 +6,35 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/06 07:39:00 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/02/15 04:59:44 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/16 07:41:11 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
 
-void	clamp(int *r, int *g, int *b)
+t_color	set_color(double red, double green, double blue)
 {
-	*r = ( *r > 255) ? 255 : *r;
-	*g = ( *g > 255) ? 255 : *g;
-	*r = ( *b > 255) ? 255 : *b;
+	t_color	color;
+
+	color.red = red;
+	color.green = green;
+	color.blue = blue;
+	return (color);
 }
 
 int		rgb_to_int(int r, int g, int b)
 {
-	/*C = 256^2* R + 256* G + B  */
 	int	color;
+	int	red;
+	int	green;
+	int	blue;
 
-	//clamp(&r, &g, &b);
-	r = (r > 255) ? 255 : ((r < 0) ? 0 : r);
-	g = (g > 255) ? 255 : ((g < 0) ? 0 : g);
-	b = (b > 255) ? 255 : ((b < 0) ? 0 : b);
+	red = ((r < 0) ? 0 : r);
+	green = ((g < 0) ? 0 : g);
+	blue = ((b < 0) ? 0 : b);
+	r = ((r > 255) ? 255 : red);
+	g = ((g > 255) ? 255 : green);
+	b = ((b > 255) ? 255 : blue);
 	color = (256 * 256 * r) + (256 * g) + b;
 	return (color);
 }
@@ -35,57 +42,14 @@ int		rgb_to_int(int r, int g, int b)
 t_color	get_rgb(int color)
 {
 	t_color	rgb;
-	
-	/*
-	 *
-	 * R = C/256^2;
-	 *
-	 * G = C/256 % 256^2;
-	 *
-	 * B = C%256;
-	 *
-	 * */
+
 	rgb.red = color / (256 * 256);
 	rgb.green = color / 256 % 256 * 256;
 	rgb.blue = color % 256;
 	return (rgb);
 }
 
-int	couleur(double intensity)
-{
-	int	r;
-	int	g;
-	int	b;
-
-	r = 127.5 * cos(intensity) + 1;
-	g = 127.5 * sin(intensity) + 1;
-	b = 127.5 * (1 - cos(intensity));
-	//clamp(&r, &g, &b);
-	return (RGB(r, g, b));
-}
-
-int		calc_color(int color, double i)
-{
-	double	r;
-	double	g;
-	double	b;
-
-	b = (color % 256);
-	r = (color / (256 * 256));
-	g = (color / 256) - r * 256;
-	b =  b * i;
-	r =  r * i;
-	g =  g * i;
-	if (r > 255)
-		r = 255;
-	if (g > 255)
-		g = 255;
-	if (b > 255)
-		b = 255;
-	return (RGB(r, g, b));
-}
-
-int	get_color(t_color color)
+int		get_color(t_color color)
 {
 	return (rgb_to_int(color.red, color.green, color.blue));
 }

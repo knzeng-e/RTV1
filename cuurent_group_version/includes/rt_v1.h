@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 12:32:50 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/15 00:07:22 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/16 09:14:55 by knzeng-e         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@
 # define RIGHT_KEY 124
 # define UP_KEY 126
 # define DOWN_KEY 125
-# define MOVE_DIST 0.3
+# define ANGLE 10
+# define MOVE_DIST 0.5
 # define V_KEY 9
+# define W_KEY 13
 # define B_KEY 11
 # define R_KEY 15
 # define J_KEY 38
@@ -71,128 +73,129 @@
 # define MALLOC_TRANSFORM_ERROR -2
 # define PARSE_OK 1
 # define DISTANCE 1
-# define SHAPE_ERROR_MESSAGE "You provided an invalid argument\n\tUsage: ./rtv1 [sphere | cylinder | cone | plane | all]\n"
-# define ARG_ERROR_MESSAGE "Too many arguments !\n\tUsage: ./rtv1 [sphere | cylinder | cone | plane | all]\n"
-# include "../mlx/mlx.h"
+# include <mlx.h>
 # include <libft.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <math.h>
-# include <pthread.h>
 # include "rayon.h"
 # include "sphere.h"
-# define RGB(r, g, b)(256 * 256 * (unsigned int)(r) + 256 * (unsigned int)(g) + (unsigned int)(b))
 
-typedef struct	s_view
+typedef struct			s_view
 {
-	double		view_width;
-	double		view_height;
-	double		dist;
-}				t_view;
+	double				view_width;
+	double				view_height;
+	double				pix_norm_x;
+	double				pix_norm_y;
+	double				image_aspect_ratio;
+	double				pix_remap_x;
+	double				pix_remap_y;
+	double				pix_camera_x;
+	double				pix_camera_y;
+	double				dist;
+}						t_view;
 
-typedef struct	s_color
+typedef struct			s_color
 {
-	int			red;
-	int			green;
-	int			blue;
-}				t_color;
+	int					red;
+	int					green;
+	int					blue;
+}						t_color;
 
-typedef struct	s_vect4
+typedef struct			s_vect4
 {
-	double		vect_x;
-	double		vect_y;
-	double		vect_z;
-	double		vect_w;
-}				t_vect4;
+	double				vect_x;
+	double				vect_y;
+	double				vect_z;
+	double				vect_w;
+}						t_vect4;
 
-typedef struct	s_matrix
+typedef struct			s_matrix
 {
-	double		mat[4][4];
-}				t_matrix;
+	double				mat[4][4];
+}						t_matrix;
 
-typedef struct	s_camera
+typedef struct			s_camera
 {
-	t_vect		orientation;
-	t_vect		vect_dir;
-	t_vect		up_vect;
-	t_vect		right_vect;
-	t_vect		forward_vect;
-	t_vect		from;
-	t_vect		to;
-	t_matrix	cam_to_world;
-}				t_camera;
+	t_vect				orientation;
+	t_vect				vect_dir;
+	t_vect				up_vect;
+	t_vect				right_vect;
+	t_vect				forward_vect;
+	t_vect				from;
+	t_vect				to;
+	t_matrix			cam_to_world;
+}						t_camera;
 
-typedef struct	s_cylinder
+typedef struct			s_cylinder
 {
-	double		size;
-	double		radius;
-	double		hauteur;
-	double		specular;
-	t_vect		center;
-	t_vect		axe;
-	t_vect		top;
-	t_vect		bottom;
-	t_color		color;
-}				t_cylinder;
+	double				size;
+	double				radius;
+	double				hauteur;
+	double				specular;
+	t_vect				center;
+	t_vect				axe;
+	t_vect				top;
+	t_vect				bottom;
+	t_color				color;
+}						t_cylinder;
 
-typedef struct	s_cone
+typedef struct			s_cone
 {
-	t_vect		center;
-	t_vect		axe;
-	double		angle;
-	double		size;
-    double      hauteur;
-	double		specular;
-	t_color		color;
-}				t_cone;
+	t_vect				center;
+	t_vect				axe;
+	double				angle;
+	double				size;
+	double				hauteur;
+	double				specular;
+	t_color				color;
+}						t_cone;
 
-typedef struct	s_plane
+typedef struct			s_plane
 {
-	t_vect		position;
-	t_vect		normale;
-	t_vect		distance;
-	t_color		color;
-	double		specular;
-}				t_plane;
+	t_vect				position;
+	t_vect				normale;
+	t_vect				distance;
+	t_color				color;
+	double				specular;
+}						t_plane;
 
-
-typedef struct	s_transform
+typedef struct			s_transform
 {
-	double		angle_rotation;
-	t_matrix	x_rotation;
-	t_matrix	y_rotation;
-	t_matrix	z_rotation;
-	t_matrix	translation;
-    t_matrix	x_reverse_rotation;
-	t_matrix	y_reverse_rotation;
-	t_matrix	z_reverse_rotation;
-	t_matrix	reverse_translation;
-}				t_transform;
+	double				angle_rotation;
+	t_matrix			x_rotation;
+	t_matrix			y_rotation;
+	t_matrix			z_rotation;
+	t_matrix			translation;
+	t_matrix			x_reverse_rotation;
+	t_matrix			y_reverse_rotation;
+	t_matrix			z_reverse_rotation;
+	t_matrix			reverse_translation;
+}						t_transform;
 
-typedef struct	s_light
+typedef struct			s_light
 {
-	t_vect		position;
-	t_color		color;
-	double		intensity;
-	double		diffuse_light;
-	int			is_selected;
-	enum		e_type
+	t_vect				position;
+	t_color				color;
+	double				intensity;
+	double				diffuse_light;
+	int					is_selected;
+	enum				e_type
 	{
 		POINT,
 		DIRECTIONAL,
 		AMBIANT
-	}			t_type;
-}				t_light;
+	}					t_type;
+}						t_light;
 
-typedef struct		s_object t_object;
+typedef struct s_object	t_object;
 
-struct				s_object
+struct					s_object
 {
-	int				id;
-	int				is_set;
-	double			specular;
-	t_vect			position;
-	t_color			color;
+	int					id;
+	int					is_set;
+	double				specular;
+	t_vect				position;
+	t_color				color;
 	enum
 	{
 		SPHERE = 1,
@@ -200,175 +203,213 @@ struct				s_object
 		CYLINDER,
 		CONE,
 		LIGHT
-	}				item;
+	}					item;
 	union
 	{
-		t_cone		*cone;
-		t_cylinder	*cylinder;
-		t_light		*light;
-		t_plane		*plane;
-		t_sphere	*sphere;
-	}				type;
-	struct s_object	*next;
+		t_cone			*cone;
+		t_cylinder		*cylinder;
+		t_light			*light;
+		t_plane			*plane;
+		t_sphere		*sphere;
+	}					type;
+	struct s_object		*next;
 };
 
-typedef struct		s_params
+typedef struct			s_params
 {
-	t_camera		eye;
-	t_sphere		sphere_list[NB_SPHERES];
-	t_plane			plane_list[NB_PLANES];
-	t_cylinder		cylinder_list[NB_CYLINDERS];
-	t_cone			cone_list[NB_CONES];
-	t_ray			*tab_rays[WIDTH][HEIGHT];
-	t_ray			current_ray;
-	t_light			light[NB_LIGHTS];
-	t_plane			*plane;
-	t_plane			*vertical_plane;
-	t_list			*obj_list;
-	t_object		*objects;
-	t_object		**objects_ptr;
-	t_object		current_obj;
-	t_light			current_light;
-	t_vect			current_normal;
-	t_vect			light_vector;
-	t_transform		transforms;
-	t_matrix		transform_matrx;
-	double			x_indent;
-	double			y_indent;
-	double			x_resolution;
-	double			y_resolution;
-	double			fov;
-	double			specularity;
-	double			distance_to_light;
-	double			rotation_val;
-	/*MLX PARAMS*/
-	void			*mlx;
-	void			*win;
-	int				*ptr_img;
-	char			*img_data;
-	char			*file;
-	char			*forme;
-	char			**line_content;
-	int				fd;
-	int				bpp;
-	int				size_line;
-	int				endian;
-	int				rays_to_free;
-	double			ray_depth;
-	int				t;
-	int				color;
-	int				background_color;
-	int				object_id;
-	int				current_index;
-	int				current_sphere_index;
-	int				current_plane_index;
-	int				current_cylinder_index;
-	int				current_light_index;
-	int				current_cone_index;
-    int             nb_objects;
-    int             nb_spheres;
-	int				nb_planes;
-	int				nb_cylinders;
-	int				nb_cones;
-	int				nb_lights;
-    int             t_min_saved;
-    int             t_max_saved;
-	int				vector_lenght;
-	int				other_intersect;
-	int				parsing_on;
-}					t_params;
-
-int				expose_hook(t_params *params);
-int				mouse_hook(int button, int x, int y, t_params *params);
-int				key_hook(int keycode, t_params *params);
-int				track_ray(t_params *params);
-int				throw_ray(t_ray *ray);
-int				ft_free(t_params *params);
-int				is_shadowed(t_vect intersection, t_params *params, t_object *obj);
-int				intersect(t_ray *ray, t_object *obj, t_params *params);
-int				shadow_intersect(t_ray *ray, t_object *obj, t_params *params);
-int				sphere_intersect(t_ray *ray, t_sphere sphere, t_params *params);
-int				cylinder_intersect(t_ray *ray, t_cylinder *cyl, t_params *params);
-int				plane_intersect(t_ray *ray, t_plane *plane, t_params *params);
-int				cone_intersect(t_ray *ray, t_cone *cone, t_params *params);
-int				check_sphere_params(t_params *params);
-int				check_plane_params(t_params *params);
-int				check_cylinder_params(t_params *params);
-int				check_cone_params(t_params *params);
-int				check_light_params(t_params *params);
-int				couleur(double angle);
-int				get_color(t_color color);
-int				read_block(t_params *params, char *line, int *num_line);
-int				rgb_to_int(int r, int g, int b);
-int				calc_color(int color, double intensity);
-int				get_nb_objects(t_params *params);
-int				get_sphere_position(t_params *params, char **infos);
-int				get_obj_color(t_params *params, char **infos, int object_id);
-int				ft_isnumber(char *number);
-void			create_cone(t_params *params);
-void			create_cylinder(t_params *params);
-void			create_plane(t_params *params);
-void			create_sphere(t_params *params);
-void			draw_pixel(t_params *params, int i, int j, int color);
-void			free_lights(t_params *params);
-void			free_objects_list(t_params *params);
-void			init_mlx(t_params *params);
-void			init_objects(t_params *params);
-void			init_scene(t_params *params, char *forme);
-void			init_transform_matrices(t_transform *transforms);
-void			parse_file(t_params *params);
-void			put_light(t_params *params, double x_pos, double y_pos, double z_pos);
-void			set_origin(int i, int j, t_ray *ray, t_params *params);
-void			set_camera(t_ray *ray, t_params *params, int i, int j);
-void			set_camera_look_at(t_ray *ray, t_params *params, t_vect *from, t_vect *to);
-void			set_view(t_params *params);
-void			ray_equation(t_ray *ray);
-void			ray_normalize(t_vect *vect);
-void	        set_translation(t_transform *transforms, double dx, double dy, double dz);
-void	        set_reverse_translation(t_transform *transforms, double dx, double dy, double dz);
-void			set_x_rotation(t_transform *transforms);
-void			set_y_rotation(t_transform *transforms);
-void			set_z_rotation(t_transform *transforms);
-void            set_reverse_x_rotation(t_transform *transforms);
-void			set_reverse_y_rotation(t_transform *transforms);
-void			set_reverse_z_rotation(t_transform *transforms);
-void			save_intersection(t_ray *ray);
-void			set_sphere(t_object *current_obj, t_params *params, int cpt_spheres);
-void			save_sphere_coord(t_params *params, char *infos, int *nb_coord);
-void			save_spheres(t_object *current_obj, t_params *params, int *cpt_objects);
-void			set_plane(t_object *current_obj, t_params *params, int cpt_planes);
-void			save_planes(t_object *current_obj, t_params *params, int *cpt_objects);
-void			set_light(t_object *current_obj, t_params *params, int cpt_lights);
-void			save_lights(t_object *current_obj, t_params *params, int *cpt_objects);
-void			set_cylinder(t_object *current_obj, t_params *params, int cpt_cylinders);
-void			save_cylinders(t_object *current_obj, t_params *params, int *cpt_objects);
-void			set_cone(t_object *current_obj, t_params *params, int cpt_cones);
-void			save_cones(t_object *obj, t_params *params, int *cpt_objects);
-void			show_object_type(t_object *current_obj);
-void			print_objects(t_object *objects);
-void			init_objects(t_params *params);
-void			clamp(int *r, int *g, int *b);
-void			quit(t_params *params);
-double			radians(double angle);
-double			get_length(t_vect *vect);
-double			dot_product(t_vect vect1, t_vect vect2);
-double			get_specular(t_vect normal, t_ray *ray, t_params *params);
-double			shading(t_ray *ray, t_params *params);
-double			max(double nbre1, double nbre2);
-t_vect			rotate_x_axis(t_vect *vect, double angle, t_transform *transform, int is_point);
-t_vect			rotate_y_axis(t_vect *vect, double angle, t_transform *transform, int is_point);
-t_vect			rotate_z_axis(t_vect *vect, double angle, t_transform *transform, int is_point);
-t_vect			cross_product(t_vect vect1, t_vect vect2);
-t_vect			get_normal(t_vect intersection, t_sphere sphere);
-t_vect			vect_sub(t_vect vect1, t_vect vect2);
-t_vect			vect_divide(t_vect vect, double cste);
-t_vect			vect_multiply(t_vect vect, double cste);
-t_vect			vect_add(t_vect vect1, t_vect vect2);
-t_vect			set_vector(double x, double y, double z);
-t_vect			set_reverse_homogen(t_vect4 *vect);
-t_vect4			set_homogen(t_vect *vect, int is_point);
-t_vect4			vect_matrx_multiply(t_vect4 *vect, t_matrix *mat);
-t_matrix		matrix_multiply(t_matrix *mat1, t_matrix *mat2);
-t_color			set_color(double red, double green, double blue);
-t_color			get_rgb(int color);
+	t_camera			eye;
+	t_sphere			sphere_list[NB_SPHERES];
+	t_plane				plane_list[NB_PLANES];
+	t_cylinder			cylinder_list[NB_CYLINDERS];
+	t_cone				cone_list[NB_CONES];
+	t_ray				*tab_rays[WIDTH][HEIGHT];
+	t_ray				ray;
+	t_light				light[NB_LIGHTS];
+	t_plane				*plane;
+	t_plane				*vertical_plane;
+	t_list				*obj_list;
+	t_object			*objects;
+	t_object			*obj;
+	t_object			**objects_ptr;
+	t_object			current_obj;
+	t_light				current_light;
+	t_vect				current_normal;
+	t_vect				saved_normal;
+	t_vect				light_vector;
+	t_transform			transforms;
+	t_matrix			transform_matrx;
+	double				x_indent;
+	double				y_indent;
+	double				x_resolution;
+	double				y_resolution;
+	double				fov;
+	double				specularity;
+	double				distance_to_light;
+	double				rotation_val;
+	double				lightning;
+	double				t_min;
+	double				ray_depth;
+	double				a;
+	double				b;
+	double				c;
+	double				disc;
+	void				*mlx;
+	void				*win;
+	int					*ptr_img;
+	char				*img_data;
+	char				*file;
+	char				*forme;
+	char				**line_content;
+	int					fd;
+	int					bpp;
+	int					size_line;
+	int					endian;
+	int					rays_to_free;
+	int					t;
+	int					hit;
+	int					i;
+	int					j;
+	int					index_light;
+	int					sphere_hit;
+	int					cpt;
+	int					color;
+	int					background_color;
+	int					object_id;
+	int					current_index;
+	int					current_sphere_index;
+	int					current_plane_index;
+	int					current_cylinder_index;
+	int					current_light_index;
+	int					current_cone_index;
+	int					nb_objects;
+	int					nb_spheres;
+	int					nb_planes;
+	int					nb_cylinders;
+	int					nb_cones;
+	int					nb_lights;
+	int					t_min_saved;
+	int					t_max_saved;
+	int					vector_lenght;
+	int					other_intersect;
+	int					parsing_on;
+}						t_params;
+int						expose_hook(t_params *params);
+int						mouse_hook(int button, int x, int y, t_params *params);
+int						key_hook(int keycode, t_params *params);
+int						track_ray(t_params *params);
+int						is_shadowed(t_vect intersection, t_params *params,\
+						t_object *obj);
+int						intersect(t_ray *ray, t_object *obj, t_params *params);
+int						shadow_intersect(t_ray *ray, t_object *obj,\
+						t_params *params);
+int						sphere_intersect(t_ray *ray, t_sphere sphere,\
+						t_params *params);
+int						cylinder_intersect(t_ray *ray, t_cylinder *cyl,\
+						t_params *params);
+int						plane_intersect(t_ray *ray, t_plane *plane,\
+						t_params *params);
+int						cone_intersect(t_ray *ray, t_cone *cone,\
+						t_params *params);
+int						check_sphere_params(t_params *params);
+int						check_plane_params(t_params *params);
+int						check_cylinder_params(t_params *params);
+int						check_cone_params(t_params *params);
+int						check_light_params(t_params *params);
+int						get_color(t_color color);
+int						read_block(t_params *params, char *line, int *num_line);
+int						rgb_to_int(int r, int g, int b);
+int						get_nb_objects(t_params *params);
+int						get_sphere_position(t_params *params, char **infos);
+int						get_obj_color(t_params *params, char **infos,\
+						int object_id);
+int						ft_isnumber(char *number);
+void					throw_ray(t_params *params);
+void					create_cone(t_params *params);
+void					create_cylinder(t_params *params);
+void					create_plane(t_params *params);
+void					create_sphere(t_params *params);
+void					draw_pixel(t_params *params, int i, int j, int color);
+void					free_objects_list(t_params *params);
+void					init_mlx(t_params *params);
+void					init_objects(t_params *params);
+void					init_scene(t_params *params, char *forme);
+void					init_transform_matrices(t_transform *transforms);
+void					put_light(t_params *params, double x_pos, double y_pos,\
+						double z_pos);
+void					set_origin(int i, int j, t_ray *ray, t_params *params);
+void					set_camera(t_ray *ray, t_params *params, int i, int j);
+void					set_camera_look_at(t_ray *ray, t_params *params,\
+						t_vect *from, t_vect *to);
+void					set_view(t_params *params);
+void					ray_normalize(t_vect *vect);
+void					set_translation(t_transform *transforms, double dx,\
+						double dy, double dz);
+void					set_reverse_translation(t_transform *transforms,\
+						double dx, double dy, double dz);
+void					set_x_rotation(t_transform *transforms);
+void					set_y_rotation(t_transform *transforms);
+void					set_z_rotation(t_transform *transforms);
+void					set_reverse_x_rotation(t_transform *transforms);
+void					set_reverse_y_rotation(t_transform *transforms);
+void					set_reverse_z_rotation(t_transform *transforms);
+void					save_intersection(t_ray *ray);
+void					set_sphere(t_object *current_obj, t_params *params,\
+						int cpt_spheres);
+void					save_sphere_coord(t_params *params, char *infos,\
+						int *nb_coord);
+void					save_spheres(t_object *current_obj, t_params *params,\
+						int *cpt_objects);
+void					set_plane(t_object *current_obj, t_params *params,\
+						int cpt_planes);
+void					save_planes(t_object *current_obj, t_params *params,\
+						int *cpt_objects);
+void					set_light(t_object *current_obj, t_params *params,\
+						int cpt_lights);
+void					save_lights(t_object *current_obj, t_params *params,\
+						int *cpt_objects);
+void					set_cylinder(t_object *current_obj, t_params *params,\
+						int cpt_cylinders);
+void					save_cylinders(t_object *current_obj, t_params *params,\
+						int *cpt_objects);
+void					set_cone(t_object *current_obj, t_params *params,\
+						int cpt_cones);
+void					save_cones(t_object *obj, t_params *params,\
+						int *cpt_objects);
+void					show_object_type(t_object *current_obj);
+void					print_objects(t_object *objects);
+void					init_objects(t_params *params);
+void					clamp(int *r, int *g, int *b);
+void					quit(t_params *params);
+void                    translate_sphere(t_sphere *sphere, t_vect translation);
+void                    translate_cone(t_cone *cone, t_vect translation);
+void                    translate_cylinder(t_cylinder *cyl, t_vect translation);
+void                    rotate_cone(t_cone *cone, t_vect rota, t_params *param);
+void                    rotate_cylinder(t_cylinder *c, t_vect ro, t_params *pa);
+void                    rotate_plane(t_plane *plane, t_vect rota, t_params *pa);
+double					radians(double angle);
+double					get_length(t_vect *vect);
+double					dot_product(t_vect vect1, t_vect vect2);
+double					get_specular(t_vect normal, t_ray *ray,\
+						t_params *params);
+double					shading(t_ray *ray, t_params *params);
+double					max(double nbre1, double nbre2);
+t_vect					rotate_x_axis(t_vect *vect, double angle,\
+						t_transform *transform, int is_point);
+t_vect					rotate_y_axis(t_vect *vect, double angle,\
+						t_transform *transform, int is_point);
+t_vect					rotate_z_axis(t_vect *vect, double angle,\
+						t_transform *transform, int is_point);
+t_vect					cross_product(t_vect vect1, t_vect vect2);
+t_vect					get_normal(t_vect intersection, t_sphere sphere);
+t_vect					vect_sub(t_vect vect1, t_vect vect2);
+t_vect					vect_divide(t_vect vect, double cste);
+t_vect					vect_multiply(t_vect vect, double cste);
+t_vect					vect_add(t_vect vect1, t_vect vect2);
+t_vect					set_vector(double x, double y, double z);
+t_vect					set_reverse_homogen(t_vect4 *vect);
+t_vect4					set_homogen(t_vect *vect, int is_point);
+t_vect4					vect_matrx_multiply(t_vect4 *vect, t_matrix *mat);
+t_matrix				matrix_multiply(t_matrix *mat1, t_matrix *mat2);
+t_color					set_color(double red, double green, double blue);
+t_color					get_rgb(int color);
 #endif

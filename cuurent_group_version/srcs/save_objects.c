@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/15 02:52:46 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/14 19:16:29 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/16 00:50:22 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	save_spheres(t_object *obj, t_params *params, int *cpt_objects)
 			last->next = obj;
 		if (obj == NULL)
 		{
-			ft_free(params);
+			free(params);
 			exit(MALLOC_ERROR);
 		}
 		params->current_index = *cpt_objects;
@@ -57,7 +57,7 @@ void	save_planes(t_object *obj, t_params *params, int *cpt_objects)
 			last->next = obj;
 		if (obj == NULL)
 		{
-			ft_free(params);
+			free(params);
 			exit(MALLOC_ERROR);
 		}
 		params->current_index = *cpt_objects;
@@ -84,7 +84,7 @@ void	save_lights(t_object *obj, t_params *params, int *cpt_objects)
 			last->next = obj;
 		if (obj == NULL)
 		{
-			ft_free(params);
+			free(params);
 			exit(MALLOC_ERROR);
 		}
 		params->current_index = *cpt_objects;
@@ -111,7 +111,7 @@ void	save_cylinders(t_object *obj, t_params *params, int *cpt_objects)
 			last->next = obj;
 		if (obj == NULL)
 		{
-			ft_free(params);
+			free(params);
 			exit(MALLOC_ERROR);
 		}
 		params->current_index = *cpt_objects;
@@ -138,7 +138,7 @@ void	save_cones(t_object *obj, t_params *params, int *cpt_objects)
 			last->next = obj;
 		if (obj == NULL)
 		{
-			ft_free(params);
+			free(params);
 			exit(MALLOC_ERROR);
 		}
 		params->current_index = *cpt_objects;

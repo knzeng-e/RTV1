@@ -6,11 +6,21 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 23:03:58 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/03/07 23:06:49 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/15 23:35:56 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
+
+t_vect	set_vector(double x, double y, double z)
+{
+	t_vect	result;
+
+	result.vect_x = x;
+	result.vect_y = y;
+	result.vect_z = z;
+	return (result);
+}
 
 double	radians(double angle)
 {

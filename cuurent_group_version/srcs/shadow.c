@@ -6,11 +6,37 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/26 08:30:37 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/07 19:45:26 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/16 08:02:21 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_v1.h"
+
+double	shading(t_ray *ray, t_params *params)
+{
+	t_object	*light;
+	double		angle;
+	double		lightning;
+
+	lightning = 0;
+	light = params->objects;
+	while (light && light->item != LIGHT)
+		light = light->next;
+	while (light && light->item == LIGHT)
+	{
+		params->current_light.intensity = light->specular;
+		params->light_vector = vect_sub(light->position, ray->intersection);
+		ray_normalize(&params->light_vector);
+		ray_normalize(&params->current_normal);
+		angle = dot_product(params->current_normal, params->light_vector);
+		if (angle < 0)
+			angle = 0;
+		lightning += (DIFFUSE_LIGHT * angle) + \
+					get_specular(params->current_normal, ray, params);
+		light = light->next;
+	}
+	return (lightning);
+}
 
 char	*get_item(int obj_item)
 {
@@ -30,42 +56,39 @@ char	*get_item(int obj_item)
 	return (output);
 }
 
+void	check_shadow(t_params *params, int *index_light, t_vect *i, t_ray *ray)
+{
+	t_vect	light_pos;
+
+	light_pos = params->light[*index_light].position;
+	ray->origin = *i;
+	ray->direction = vect_sub(light_pos, *i);
+	params->distance_to_light = get_length(&ray->direction);
+	ray_normalize(&ray->direction);
+}
+
 int		is_shadowed(t_vect intersection, t_params *params, t_object *obj)
 {
-	int			index_light;
-    int         t_min_saved;
-    int         t_max_saved;
-	t_ray		shadow_ray;
 	t_object	*current_obj;
-	t_vect		saved_normal;
-	t_vect		light_pos;
+	t_ray		ray;
 
 	current_obj = params->objects;
 	while (current_obj)
 	{
 		if (current_obj->id != obj->id && current_obj->item != LIGHT)
 		{
-			index_light = -1;
-			while (++index_light < NB_LIGHTS)
+			params->index_light = -1;
+			while (++params->index_light < params->nb_lights)
 			{
-				light_pos = params->light[index_light].position;
-				shadow_ray.origin = intersection;
-				shadow_ray.direction = vect_sub(light_pos, intersection);
-				params->distance_to_light = get_length(&shadow_ray.direction);	
-				ray_normalize(&shadow_ray.direction);
-				saved_normal = params->current_normal;
-                t_min_saved = params->t_min_saved;
-                t_max_saved = params->t_max_saved;
-				if (intersect(&shadow_ray, current_obj, params))
+				check_shadow(params, &params->index_light, &intersection, &ray);
+				params->saved_normal = params->current_normal;
+				if (intersect(&ray, current_obj, params))
 				{
-					params->current_normal = saved_normal;
-                    params->t_min_saved = t_min_saved;
-                    params->t_max_saved = t_max_saved;
-					if ((shadow_ray.t >= 0) && (shadow_ray.t < params->distance_to_light))
-					//if (shadow_ray.t >= 0)
+					params->current_normal = params->saved_normal;
+					if ((ray.t >= 0) && (ray.t < params->distance_to_light))
 						return (IS_SHADOWED);
 				}
-				params->current_normal = saved_normal;
+				params->current_normal = params->saved_normal;
 			}
 		}
 		current_obj = current_obj->next;

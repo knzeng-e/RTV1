@@ -6,7 +6,7 @@
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 00:10:43 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/06 22:16:57 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/16 07:00:25 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,8 @@ typedef struct	s_ray
 	t_vect		direction;
 	t_vect		intersection;
 	double		t;
-    double      t_min;
-    double      t_max;
-    int         is_inter;
-	/*ray = O + DIR * t*/;
-	/*equation of line: (y - y_1)(x_2 - x_1) = (x - x_1)(y_2 -y_1) */
+	double		t_min;
+	double		t_max;
+	int			is_inter;
 }				t_ray;
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rt_v1.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knzeng-e <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/30 19:51:41 by knzeng-e          #+#    #+#             */
-/*   Updated: 2018/04/14 19:22:09 by knzeng-e         ###   ########.fr       */
+/*   Updated: 2018/04/16 07:32:13 by neprocur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		mlx_draw(t_params *infos)
 {
-	int	key_press_mask;
-	int	key_press;
+	int		key_press_mask;
+	int		key_press;
 
 	key_press_mask = 1L << 0;
 	key_press = 2;
@@ -41,22 +41,23 @@ t_params	*init_params(void)
 
 void		quit(t_params *params)
 {
-	//ft_free(params);
-	free_lights(params);
 	free_objects_list(params);
 }
 
 int			is_valid_forme(char *forme)
 {
-	int	output;
+	int		output;
 
-	output =  (!ft_strcmp(forme, "cone") || !ft_strcmp(forme, "cylinder") || !ft_strcmp(forme, "plane") || !ft_strcmp(forme, "sphere") || !ft_strcmp(forme, "all"));
+	output = (!ft_strcmp(forme, "cone") || !ft_strcmp(forme, "cylinder") ||
+			!ft_strcmp(forme, "plane") || !ft_strcmp(forme, "sphere") ||
+			!ft_strcmp(forme, "all"));
 	if (output == 0)
 	{
-		ft_putstr(SHAPE_ERROR_MESSAGE);
+		ft_putstr("You provided an invalid argument\n");
+		ft_putendl("Usage: ./rtv1 [sphere | cylinder | cone | plane | all]");
 		return (INVALID_OBJECT);
 	}
-    return (output);
+	return (output);
 }
 
 int			main(int ac, char **av)
@@ -71,22 +72,19 @@ int			main(int ac, char **av)
 			free(params);
 			return (-1);
 		}
-        params->forme = av[1];
+		params->forme = av[1];
 	}
 	else
-    {
-        if (ac == 1)
-            params->forme = "all";
-        else
-        {
-            ft_putstr(ARG_ERROR_MESSAGE);
-            free(params);
-            return (-2);
-        }
-    }
-    ft_putstr("\nShape(s) to render : ");
-    ft_putstr(params->forme);
-    ft_putstr("\n");
-    mlx_draw(params);
-    return (OK);
+	{
+		if (ac == 1)
+			params->forme = "all";
+		else
+		{
+			ft_putendl("Usage: sphere | cylinder | cone | plane | all");
+			free(params);
+			return (-2);
+		}
+	}
+	mlx_draw(params);
+	return (OK);
 }
